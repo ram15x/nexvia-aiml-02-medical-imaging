@@ -1,12 +1,12 @@
 # Medical Imaging AI Review Platform
 
-**Nexvia Technologies · AIML-02 · Project 1**
+**Nexvia Technologies · AIML-02**
 
-My Project 1 is an educational prototype for two separate medical-imaging tasks: chest X-ray finding classification and 3D spleen segmentation from CT. The portal’s assigned title is **AI-Assisted Medical Imaging and Diagnosis System**. This repository shows the prototype, the checks I ran, and the limits of the results. It is not for diagnosis or treatment.
+I built this educational prototype for two separate medical-imaging tasks: chest X-ray finding classification and 3D spleen segmentation from CT. The internship portal describes the assignment as **AI-Assisted Medical Imaging and Diagnosis System**. This repository documents what I built, the checks I ran, and the limits of the results. It is not for diagnosis or treatment.
 
-## Project 1 status
+## Current status
 
-The local Project 1 package is assembled for final presentation. Its full test suite passed 56 tests with 2 warnings in a disposable Python 3.12 CPU container; this does not verify the pinned Windows/CUDA setup. The synthetic Orthanc DX route was demonstrated, while CT-series segmentation through Orthanc remains unverified. I still need to record the presentation and write my own reflection. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; Project 1 has not been submitted.
+The local release package is assembled for my final presentation. Its full test suite passed 56 tests with 2 warnings in a disposable Python 3.12 CPU container; this does not verify the pinned Windows/CUDA setup. The synthetic Orthanc DX route was demonstrated, while CT-series segmentation through Orthanc remains unverified. I still need to record the presentation and write my own reflection. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
 
 ## What the prototype does
 
