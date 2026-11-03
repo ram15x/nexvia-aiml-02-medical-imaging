@@ -16,6 +16,7 @@ api/orthanc.py
 artifacts/best_densenet121.pt
 artifacts/best_spleen_unet_candidate_20261103.pt
 data_audit.py
+deliverables/AIML02_Project1_Presentation_2026-11-03_v21.pptx
 deliverables/README.md
 docker-compose.yml
 docs/architecture.md
