@@ -48,10 +48,10 @@ Historical classifier and segmentation experiments are retained in the local `re
   The `/health` model metadata includes optional `promotion_evaluation`, copied from checkpoint metadata when present; otherwise it is `null`. This pass-through is not a metric calculation or model-promotion action. It was added to expose any saved promotion-evaluation record at runtime. The current soup checkpoint does not contain that key.
 - `web/`: React review and CT panels. Browser uploads passed the Nov 3 verification; the Orthanc workflow remains NOT VERIFIED.
 - `docker-compose.yml`: local-only API and web services, with an optional Orthanc profile.
-- DVC: historical pipeline configuration and reports remain. Raw input data/pointers and a configured DVC remote are absent; a small `.dvc/cache` with model artifacts remains. Training cannot be reproduced until inputs and a remote are restored.
+- DVC: historical pipeline configuration remains. The package excludes the local cache, raw data pointers, datasets, and remote credentials. Training cannot be reproduced until approved inputs and a remote are configured.
 - `docs/`: architecture, model card, data inventory, presentation outline, and research notes. The local `reports/` archive contains historical experiments; only the current, scrubbed audits are in the public release.
 - `scripts/compare_spleen_soft_vote.py`, `scripts/compare_spleen_flip_tta.py`: validation-only model blend and flip-TTA comparisons. Their small validation set does not provide independent performance estimates.
-- `deliverables/`: the 10-slide presentation and a short local demo recording for AIML-02.
+- `deliverables/`: the current 10-slide v21 presentation. The older local demo recording is excluded from the compact package and public release.
 
 ## Data handling
 

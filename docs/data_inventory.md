@@ -20,7 +20,7 @@ The Task09 official challenge test set contains 20 unlabeled volumes in the sour
 ## DVC and local versus GitHub
 
 - The project root has no `data/` directory. `dvc.yaml` refers to missing local paths under `data/NexviaProjectData/nih/` and a machine-local Python environment.
-- `.dvc/config` contains a site-cache setting but no DVC remote. A small local `.dvc/cache` remains, including a cached model object; it does not supply the missing image/volume datasets or training manifests.
+- In the private working copy, `.dvc/config` contains a site-cache setting but no DVC remote; a small local `.dvc/cache` remains. Neither the cache nor DVC config is included in the public package. They do not supply the missing image/volume datasets or training manifests.
 - `.gitignore` excludes `.env`, bulk data, DVC cache, and most `.pt` files. Keep credentials out of GitHub. The `.env` file is local configuration and is not part of `submission_final`.
 - The public GitHub repository is `https://github.com/ram15x/nexvia-aiml-02-medical-imaging`. It contains a scrubbed source snapshot, the two deployed model files, one current presentation deck, and selected aggregate audit reports. Raw datasets, sample inputs, per-patient outputs, environment files, historical checkpoints, and archived experiments are excluded.
 
