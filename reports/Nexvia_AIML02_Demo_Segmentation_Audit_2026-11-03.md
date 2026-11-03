@@ -31,7 +31,7 @@ Used the pre-existing `data\NexviaProjectData\aiml02-venv310` runtime as a fallb
 - Later live HTTP requests timed out or were refused. The captured errors were `curl: (7) Failed to connect to 127.0.0.1:8765` and `The request was canceled due to the configured HttpClient.Timeout of 5 seconds elapsing.`
 - An in-process ASGI request to `/predict` succeeded: HTTP 200, 14 findings, disclaimer present, checkpoint SHA-256 `082bc9dc5ff0399a6eeb07ae4dd9146ab258c39829e2c19a5c3eccc2c1cd8cc8`.
 - Input was `00026095_000.png`, listed in the already-audited clean 2,250 panel and `train_val_list.txt`. It is an internal development image, not an official NIH test image.
-- ASGI response is saved at [api_prediction_response.json](api_prediction_response.json). The helper used for the ASGI request is [api_asgi_smoke.py](api_asgi_smoke.py).
+- The ASGI response JSON and one-off helper remain in the private audit workspace; they are excluded from the compact handoff and public repository.
 
 ### Frontend
 
@@ -51,11 +51,7 @@ I then used a temporary config in the writable workspace with `cacheDir` there a
 
 A fresh inference was run with the existing `artifacts\best_spleen_unet.pt` on `Task09_Spleen/imagesTr/spleen_10.nii.gz`, which is in the frozen validation split. Its paired reference is `Task09_Spleen/labelsTr/spleen_10.nii.gz`. No challenge test image was read.
 
-Fresh workspace outputs:
-
-- [Prediction/reference overlay](segmentation_audit_output/spleen_10_validation_overlay.png)
-- [Overlay measurements](segmentation_audit_output/overlay_metrics.json)
-- Binary mask: `segmentation_audit_output/spleen_10_spleen-mask.nii.gz`
+The prediction/reference overlay, its measurements, and binary mask were produced in the private audit workspace. Those image- and case-level artifacts are excluded from the compact handoff and public repository.
 
 The overlay shows the reference in green, prediction in red, and overlap in yellow. It also shows substantial red spill outside the reference on several slices. The case-specific source-grid display Dice is 0.4096; prediction volume is 2.160 times the reference volume. The project’s previously reported six-case held-out mean Dice is 0.3272; this audit did not recompute that metric or alter the model.
 

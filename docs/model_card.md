@@ -42,4 +42,4 @@ The full NIH and MSD datasets are not included in this project folder. Only smal
 - [November 3 classifier comparisons](../reports/Nexvia_AIML02_Inference_Comparisons_2026-11-03.md)
 - [November 3 closeout](../reports/project1_closeout_2026-11-03.md)
 - [API and regression audit](../reports/project1_api_fix_regression_2026-11-03.md)
-- [Final browser, CPU, clean-install, and Docker verification](../reports/verification_screenshots/final_verification_results_2026-11-03.md)
+- [Final browser, CPU, clean-install, and Docker verification](../reports/project1_final_checks_2026-11-03.md)
