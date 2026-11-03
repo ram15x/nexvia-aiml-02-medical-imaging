@@ -1,6 +1,6 @@
-# Data inventory and reproducibility — Project 1
+# Data inventory and reproducibility — Medical Imaging AI Review Platform
 
-**Reviewed:** 4 November 2026. This inventory describes files present in the project folder and the saved audit records. It does not claim the original full datasets are present.
+This inventory describes files present in the project folder and the saved audit records. The full original datasets are not included.
 
 ## Selected data sources and roles
 
@@ -31,7 +31,7 @@ The packaged checkpoints support inference on user-supplied inputs; example inpu
 ## Evidence
 
 - `README.md` — historical NIH inventory and cleanup notes.
-- `reports/project1_closeout_2026-11-03.md` — model cohorts, segmentation splits, checkpoint selection, and evaluation caveats.
-- `reports/project1_final_checks_2026-11-03.md` — six-case validation and internal-holdout scores/history.
+- `reports/project_closeout.md` — model cohorts, segmentation splits, checkpoint selection, and evaluation caveats.
+- `reports/final_checks.md` — six-case validation and internal-holdout scores/history.
 - `dvc.yaml` and `.dvc/config` — pipeline inputs and absence of a configured remote.
 
