@@ -4,6 +4,7 @@ FILE_LIST.txt and SHA256SUMS.txt are not included in the hash list.
 .dockerignore
 .dvcignore
 .env.example
+.gitattributes
 .gitignore
 README.md
 api/Dockerfile

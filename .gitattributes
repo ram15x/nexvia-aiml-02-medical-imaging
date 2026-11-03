@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.pt binary
+*.pptx binary
+*.png binary
+*.nii* binary
+*.dcm binary
+*.webm binary
