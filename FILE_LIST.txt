@@ -1,4 +1,4 @@
-Project 1 compact submission file list
+Medical Imaging AI Review Platform — compact submission file list
 All paths are relative to this folder and use forward slashes.
 FILE_LIST.txt and SHA256SUMS.txt are not included in the hash list.
 .dockerignore
@@ -6,21 +6,19 @@ FILE_LIST.txt and SHA256SUMS.txt are not included in the hash list.
 .env.example
 .gitattributes
 .gitignore
-README.md
-api/Dockerfile
 api/__init__.py
 api/app.py
 api/ct_series.py
+api/Dockerfile
 api/modeling.py
 api/orthanc.py
 artifacts/best_densenet121.pt
 artifacts/best_spleen_unet_candidate_20261103.pt
 data_audit.py
-deliverables/AIML02_Project1_Presentation_2026-11-03_v21.pptx
+deliverables/Medical_Imaging_AI_Review_Platform.pptx
 deliverables/README.md
 docker-compose.yml
 docs/architecture.md
-docs/classifier_model_direction.md
 docs/data_inventory.md
 docs/model_card.md
 docs/presentation-outline.md
@@ -32,11 +30,13 @@ evaluate_classifier.py
 evaluate_segmentation.py
 gradcam.py
 params.yaml
-reports/Nexvia_AIML02_Demo_Segmentation_Audit_2026-11-03.md
-reports/Nexvia_AIML02_Inference_Comparisons_2026-11-03.md
-reports/project1_api_fix_regression_2026-11-03.md
-reports/project1_closeout_2026-11-03.md
-reports/project1_final_checks_2026-11-03.md
+README.md
+reports/api_regression.md
+reports/classifier_results.md
+reports/demo_verification.md
+reports/final_checks.md
+reports/project_closeout.md
+reports/requirements_and_verification.md
 requirements-api.lock.txt
 requirements-api.txt
 requirements-dvc.txt
@@ -45,6 +45,8 @@ requirements-torch-cpu.lock.txt
 requirements-training.txt
 requirements-windows-tested.txt
 requirements.txt
+scripts/analyze_validation_threshold_sensitivity.py
+scripts/audit_subgroup_performance.py
 segment_spleen.py
 select_segmentation_threshold.py
 test_api.py
