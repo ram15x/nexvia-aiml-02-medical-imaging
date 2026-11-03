@@ -221,7 +221,7 @@ def test_spleen_route_returns_preview_and_removes_temporary_artifacts(monkeypatc
         rendered = Image.open(BytesIO(base64.b64decode(preview["png_base64"])))
         assert rendered.size[0] > 0 and rendered.size[1] > 0
     assert result["upload_retained"] is False
-    assert observed["use_flip_tta"] is True
+    assert observed["use_flip_tta"] is False
     assert not observed["input_path"].exists()
 
 
