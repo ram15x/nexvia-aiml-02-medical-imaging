@@ -50,7 +50,7 @@ Historical classifier and segmentation experiments are retained in the local `re
 - `docker-compose.yml`: local-only API and web services, with an optional Orthanc profile.
 - DVC: historical pipeline configuration remains. The package excludes the local cache, raw data pointers, datasets, and remote credentials. Training cannot be reproduced until approved inputs and a remote are configured.
 - `docs/`: architecture, model card, data inventory, presentation outline, and research notes. The local `reports/` archive contains historical experiments; only the current, scrubbed audits are in the public release.
-- `scripts/compare_spleen_soft_vote.py`, `scripts/compare_spleen_flip_tta.py`: validation-only model blend and flip-TTA comparisons. Their small validation set does not provide independent performance estimates.
+- One-off comparison and screening scripts remain in the full local workspace but are omitted from this compact handoff. The main training and evaluation entry points are `train_classifier.py`, `train_segmentation.py`, `evaluate_classifier.py`, and `evaluate_segmentation.py`.
 - `deliverables/`: the current 10-slide v21 presentation. The older local demo recording is excluded from the compact package and public release.
 
 ## Data handling
