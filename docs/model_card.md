@@ -1,13 +1,12 @@
-# Model card — AIML-02 medical imaging prototype
+# Model card — Medical Imaging AI Review Platform
 
-**Version:** 4 November 2026  
 **Status:** Educational coursework prototype; not for clinical use  
 **Owner:** Ramnarayanan M  
 **Submission status:** Not submitted
 
 ## System summary
 
-This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. Optional Orthanc routes are implemented, but Orthanc was not verified end to end.
+This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. A synthetic Orthanc DX sync/inference/storage path passed; the Orthanc CT-series segmentation route remains unverified end to end.
 
 ## Classifier
 
@@ -31,7 +30,7 @@ This project contains two separate inference paths: a 2D chest X-ray classifier 
 
 **Not intended for:** screening, diagnosis, triage, treatment planning, clinical workflow, or decisions about an individual. Do not upload real patient data. The interface's Approve/Reject controls are demonstration annotations, not radiologist decisions.
 
-Known limitations include reused development panels, report-mined labels, small segmentation cohorts, checkpoint selection on the six validation cases, incomplete subgroup coverage, no external or prospective validation, and unverified live Orthanc behavior. The age/recorded-sex analysis is exploratory; race/ethnicity and several relevant acquisition subgroups are unavailable. Grad-CAM is a coarse attribution map, not a causal or clinically faithful explanation.
+Known limitations include reused development panels, report-mined labels, small segmentation cohorts, checkpoint selection on the six validation cases, incomplete subgroup coverage, no external or prospective validation, and unverified live Orthanc CT behavior. The age/recorded-sex analysis is exploratory; race/ethnicity and several relevant acquisition subgroups are unavailable. Grad-CAM is a coarse attribution map, not a causal or clinically faithful explanation.
 
 ## Data and reproducibility
 
@@ -39,7 +38,7 @@ The full NIH and MSD datasets are not included in this project folder. Only smal
 
 ## Evidence
 
-- [November 3 classifier comparisons](../reports/Nexvia_AIML02_Inference_Comparisons_2026-11-03.md)
-- [November 3 closeout](../reports/project1_closeout_2026-11-03.md)
-- [API and regression audit](../reports/project1_api_fix_regression_2026-11-03.md)
-- [Final browser, CPU, clean-install, and Docker verification](../reports/project1_final_checks_2026-11-03.md)
+- [Classifier comparisons](../reports/classifier_results.md)
+- [Project closeout](../reports/project_closeout.md)
+- [API and regression audit](../reports/api_regression.md)
+- [Final browser, CPU, clean-install, and Docker verification](../reports/final_checks.md)
