@@ -1,0 +1,6 @@
+# Install a PyTorch/torchvision pair separately for the target runtime.
+# On Colab, prefer the supplied CUDA-enabled runtime packages.
+numpy>=1.26,<3
+pandas>=2.2,<3
+Pillow>=10,<13
+scikit-learn>=1.5,<2

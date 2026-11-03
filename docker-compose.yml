@@ -1,0 +1,59 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "127.0.0.1:${NEXVIA_API_PORT:-8000}:8000"
+    environment:
+      NEXVIA_CHECKPOINT: ${NEXVIA_CHECKPOINT:-artifacts/best_densenet121.pt}
+      NEXVIA_SEGMENTATION_CHECKPOINT: ${NEXVIA_SEGMENTATION_CHECKPOINT:-artifacts/best_spleen_unet_candidate_20261103.pt}
+      NEXVIA_SEGMENTATION_THRESHOLD: ${NEXVIA_SEGMENTATION_THRESHOLD:-0.50}
+      NEXVIA_SEGMENTATION_TTA: ${NEXVIA_SEGMENTATION_TTA:-false}
+      NEXVIA_AUDIT_PATH: ${NEXVIA_AUDIT_PATH:-demo/review_events.jsonl}
+      NEXVIA_ORTHANC_RESULTS_PATH: ${NEXVIA_ORTHANC_RESULTS_PATH:-demo/orthanc_predictions.jsonl}
+      NEXVIA_ORTHANC_SYNC_STATE_PATH: ${NEXVIA_ORTHANC_SYNC_STATE_PATH:-demo/orthanc_sync_state.json}
+      NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH: ${NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH:-demo/orthanc_segmentations.jsonl}
+      NEXVIA_CORS_ORIGINS: ${NEXVIA_CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+      ORTHANC_URL: ${ORTHANC_URL:-http://orthanc:8042}
+      ORTHANC_USERNAME: ${ORTHANC_USERNAME:-orthanc}
+      ORTHANC_PASSWORD: ${ORTHANC_PASSWORD:-}
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+      - ./demo:/app/demo
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    ports:
+      - "127.0.0.1:${NEXVIA_WEB_PORT:-5173}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  orthanc:
+    profiles: ["orthanc"]
+    image: orthancteam/orthanc:26.9.1
+    ports:
+      - "127.0.0.1:${ORTHANC_HTTP_PORT:-18042}:8042"
+      - "127.0.0.1:${ORTHANC_DICOM_PORT:-14242}:4242"
+    environment:
+      ORTHANC__NAME: ${ORTHANC__NAME:-Nexvia AIML-02 local demo}
+      ORTHANC__REMOTE_ACCESS_ALLOWED: ${ORTHANC__REMOTE_ACCESS_ALLOWED:-true}
+      ORTHANC__AUTHENTICATION_ENABLED: ${ORTHANC__AUTHENTICATION_ENABLED:-true}
+      ORTHANC_PASSWORD: ${ORTHANC_PASSWORD:-}
+    volumes:
+      - orthanc-data:/var/lib/orthanc/db
+
+volumes:
+  orthanc-data:
+

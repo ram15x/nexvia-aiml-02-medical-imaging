@@ -1,0 +1,28 @@
+stages:
+  classifier_subset_screen:
+    cmd: >-
+      set "TORCH_HOME=data/NexviaProjectData/nih/torch-cache" &&
+      .\data\NexviaProjectData\aiml02-venv310\Scripts\python.exe train_classifier.py
+      --manifest data/NexviaProjectData/nih/metadata/colab_t4_subset/trainval_manifest.csv
+      --image-root data/NexviaProjectData/nih/images
+      --output reports/dvc_classifier_subset_seed42
+      --architecture ${classifier_subset.architecture}
+      --epochs ${classifier_subset.epochs}
+      --batch-size ${classifier_subset.batch_size}
+      --workers ${classifier_subset.workers}
+      --lr ${classifier_subset.learning_rate}
+      --seed ${classifier_subset.seed}
+      --checkpoint-every-steps ${classifier_subset.checkpoint_every_steps}
+    deps:
+      - train_classifier.py
+      - api/modeling.py
+      - requirements-training.txt
+      - data/NexviaProjectData/nih/metadata/colab_t4_subset/trainval_manifest.csv
+      - data/NexviaProjectData/nih/images
+    params:
+      - classifier_subset
+    outs:
+      - reports/dvc_classifier_subset_seed42/best_densenet121.pt
+    metrics:
+      - reports/dvc_classifier_subset_seed42/training_history.json
+      - reports/dvc_classifier_subset_seed42/run_summary.json

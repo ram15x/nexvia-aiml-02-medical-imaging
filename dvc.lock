@@ -1,0 +1,57 @@
+schema: '2.0'
+stages:
+  classifier_subset_screen:
+    cmd: set "TORCH_HOME=data/NexviaProjectData/nih/torch-cache" && 
+      .\data\NexviaProjectData\aiml02-venv310\Scripts\python.exe 
+      train_classifier.py --manifest 
+      data/NexviaProjectData/nih/metadata/colab_t4_subset/trainval_manifest.csv 
+      --image-root data/NexviaProjectData/nih/images --output 
+      reports/dvc_classifier_subset_seed42 --architecture densenet121 --epochs 3
+      --batch-size 4 --workers 0 --lr 0.0001 --seed 42 --checkpoint-every-steps 
+      500
+    deps:
+    - path: api/modeling.py
+      hash: md5
+      md5: af0db3ac8fd85d7c26834d3bff8ea38c
+      size: 9114
+    - path: data/NexviaProjectData/nih/images
+      hash: md5
+      md5: 0dcaa0f03adcdbfabff6bb71ae5d9045.dir
+      size: 2883330459
+      nfiles: 7271
+    - path: 
+        data/NexviaProjectData/nih/metadata/colab_t4_subset/trainval_manifest.csv
+      hash: md5
+      md5: 2a4419aae47585a6005d333da618dc4c
+      size: 250145
+    - path: requirements-training.txt
+      hash: md5
+      md5: 6354f1ced67503cc35e5f6e577d61207
+      size: 201
+    - path: train_classifier.py
+      hash: md5
+      md5: d7eb6f22d84698926da1b6d926dbdd89
+      size: 20922
+    params:
+      params.yaml:
+        classifier_subset:
+          architecture: densenet121
+          epochs: 3
+          batch_size: 4
+          workers: 0
+          learning_rate: 0.0001
+          seed: 42
+          checkpoint_every_steps: 500
+    outs:
+    - path: reports/dvc_classifier_subset_seed42/best_densenet121.pt
+      hash: md5
+      md5: aac5557f27565c4bb09b1630f4a39e67
+      size: 28486934
+    - path: reports/dvc_classifier_subset_seed42/run_summary.json
+      hash: md5
+      md5: 3874f1aa448e987283ecf5c99346b3d0
+      size: 704
+    - path: reports/dvc_classifier_subset_seed42/training_history.json
+      hash: md5
+      md5: 44263f0287dbce1642a3cd66e7195205
+      size: 14313
