@@ -20,7 +20,7 @@ The architecture is in [docs/architecture.md](docs/architecture.md), API routes 
 
 [Open the hosted demo](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review). It is a separate, lightweight Gradio deployment that uses the same classifier and spleen checkpoint files as the local package (classifier SHA-256 `082bc9dc…`; segmentation SHA-256 `46622de7…`). It is not a hosted copy of the full React/FastAPI application: Grad-CAM, review/audit actions, and Orthanc workflows are available only in the local project.
 
-The public Space reported RUNNING during the latest check. Its Gradio classifier returned 14 scores for a generated synthetic X-ray. A synthetic spleen CT request was rejected because the Space reported its ZeroGPU quota was exceeded, so current hosted spleen inference was not verified in that check. These are route-availability checks only; they do not measure model accuracy. The Space warns users not to upload patient data.
+The public Space is running on ZeroGPU. A generated synthetic X-ray returned 14 scores. After both the ZeroGPU function duration and Gradio event limit were set to 60 seconds, a generated 64³ NIfTI phantom completed spleen inference and returned the preview/output payload. An earlier request was rejected at the quota check (180 seconds requested with 178 seconds remaining). These are route smoke checks only; they do not measure model accuracy. Do not upload patient data.
 
 ## What the results say
 
