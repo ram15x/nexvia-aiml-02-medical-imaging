@@ -1,6 +1,6 @@
 # Project 1 final checks — November 3, 2026
 
-> **Historical snapshot:** This is the Nov 3 verification record. Its Orthanc status predates the synthetic DX/CT and CT-mask persistence checks recorded on Nov 4 in `requirements_and_verification.md`. The earlier results below are retained as dated evidence; the newer checks do not establish compatibility with real-world CT series.
+> **Historical snapshot:** This is the Nov 3 verification record. Its Orthanc status predates the synthetic DX/CT, CT-mask persistence and one public de-identified CT interoperability check recorded in `requirements_and_verification.md`. The newer checks do not establish broad real-world CT compatibility or clinical accuracy.
 
 Inference-only closeout. No training, data download, or checkpoint modification was performed. Start time: 14:32:43 IST; 30-minute stop time: 15:02:43 IST. Local timezone: India Standard Time.
 
