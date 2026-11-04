@@ -6,7 +6,7 @@ I built this educational prototype for two separate medical-imaging tasks: chest
 
 ## Current status
 
-The local release package is assembled for my final presentation. Its full test suite passed 56 tests with 2 warnings in a disposable Python 3.12 CPU container; this does not verify the pinned Windows/CUDA setup. The synthetic Orthanc DX route was demonstrated, while CT-series segmentation through Orthanc remains unverified. I still need to record the presentation and write my own reflection. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
+The local release package is assembled for my final presentation. Its full test suite passed 56 tests with 2 warnings in a disposable Python 3.12 CPU container; this does not verify the pinned Windows/CUDA setup. The synthetic Orthanc DX route was demonstrated, while CT-series segmentation through Orthanc remains unverified. I will record and present this deck after I complete Project 2; I will include a short walkthrough of the local demo because there is no hosted deployment. I will write my own reflection. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
 
 ## What the prototype does
 
@@ -46,8 +46,8 @@ The packaged U-Net was trained on 29 labeled volumes. Its selected checkpoint re
 | React review viewer, overlays, scores, Approve/Reject, audit log | Browser upload, scores/overlays, local review actions, and local JSONL audit output are implemented. | Demo-only review records; no radiologist workflow or clinical audit system. |
 | Docker | API and web containers passed recorded live HTTP checks. | Docker uses CPU-only PyTorch. Orthanc CT segmentation is not verified. |
 | Limits/bias documentation | Model card and data inventory describe report-mined labels, panel reuse, sample limits, and educational use. | No clinical validation or evidence of benefit to care. |
-| Working demo and technical documentation | Local UI/API, setup instructions, architecture, data notes, tests, and this deck are included. | A hosted deployment is not included. The demo is local. |
-| Presentation and reflection | A 10-slide presentation is included. | I still need to record and present it, and write my own reflection accurately. |
+| Working demo and technical documentation | Local UI/API, setup instructions, architecture, data notes, test results, and deck are included. | The app is not hosted or screen-recorded yet. After Project 2, I will include a short walkthrough of the local demo in my 10-minute presentation recording. |
+| Presentation and reflection | The 10-minute deck is included. | I will record and present it after Project 2, with a short local demo walkthrough; I still need to write my own reflection. |
 
 The full item-by-item check against the portal is [reports/requirements_and_verification.md](reports/requirements_and_verification.md).
 
@@ -110,4 +110,4 @@ Open `http://127.0.0.1:15180`. The backend API is at `http://127.0.0.1:18080`. T
 
 ## Before the combined portal submission
 
-The portal accepts one Google Drive link for **both** assigned projects and locks the submission after it is sent. Project 2 is separate and must be included before I submit. I have not submitted the link. My presentation recording and personal reflection remain mine to complete.
+The portal accepts one Google Drive link for **both** assigned projects and locks the submission after it is sent. Project 2 is separate and must be included before I submit. I have not submitted the link. After Project 2, I will record and present the 10-minute deck with a short walkthrough of the local demo, then write my own reflection.
