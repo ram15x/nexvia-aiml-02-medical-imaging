@@ -17,11 +17,11 @@ The portal specifies one master Google Drive folder for both assigned projects a
 | React viewer and review actions | Implemented; browser upload checks recorded | The UI supports image/volume upload, scores or masks, and demo approve/reject actions. Review events are local JSONL records, not a clinical audit workflow. |
 | Docker | API/web checks passed previously | The API and web services returned successful live HTTP responses in recorded checks. Docker uses CPU-only PyTorch. The test suite below also ran in the local CPU Docker test image. |
 | Limits and bias | Documented | The model card and data inventory describe reused panels, report-mined labels, missing input data, limited cohorts, and non-diagnostic use. No clinical validation is claimed. |
-| Working demo | Local demo implemented; checks recorded | Browser upload and live HTTP API/web checks are recorded. Orthanc verification is limited to synthetic DX as stated above; CT segmentation through Orthanc is unverified. There is no hosted deployment URL. |
+| Working demo | Local demo implemented; browser upload and live HTTP checks recorded | No hosted deployment URL or screen recording is included yet. Ram will include a short local app walkthrough in the 10-minute presentation after Project 2. Orthanc verification is limited to synthetic DX; CT segmentation through Orthanc is unverified. |
 | GitHub, README, architecture/data/API docs | Present | The public repository contains the release package and setup documentation. The canonical package for the handoff is `submission_final/`. |
 | Test results | Full suite rerun; 56 passed, 2 warnings | The complete packaged suite reported **56 passed, 2 warnings** in the local Docker test image. The image uses Python 3.12 and CPU PyTorch; this is not the pinned Python 3.10/CUDA 12.8 Windows environment. The two warnings are invalid-escape warnings in `test_ct_series.py`; no test failed. |
-| 10-minute presentation | Deck included; visual check performed | The 10-slide presentation has been opened in PowerPoint and reviewed in slide sorter. Slide 10 remains a prompt for the student’s own reflection. Rendering to slide images was not performed. |
-| Individual reflection and recording | Student action remains | The reflection must describe only what the student personally did and learned. The student will record and present the demo. |
+| 10-minute presentation | Deck included; visual check performed | The 10-slide deck was opened in PowerPoint and reviewed in Slide Sorter; it has not been rendered to slide images. Ram will record and present it after Project 2 with a short local demo walkthrough. Slide 10 remains a prompt for Ram’s own reflection. |
+| Individual reflection and recording | Ram’s action remains | After Project 2, Ram will record and present the deck with a short walkthrough of the local demo. He must write his personal reflection in his own words. |
 
 ## Test-suite details
 
