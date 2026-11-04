@@ -47,7 +47,7 @@ The packaged U-Net was trained on 29 labeled volumes. Its selected checkpoint re
 | Docker | API and web containers passed recorded live HTTP checks. | Docker uses CPU-only PyTorch. Orthanc CT interoperability was checked on one synthetic and one public de-identified series; other scanners and series are not established. |
 | Limits/bias documentation | Model card and data inventory describe report-mined labels, panel reuse, sample limits, and educational use. | No clinical validation or evidence of benefit to care. |
 | Working demo and technical documentation | Local UI/API, setup instructions, architecture, data notes, test results, and deck are included. | The app is not hosted or screen-recorded yet. After Project 2, I will include a short walkthrough of the local demo in my 10-minute presentation recording. |
-| Presentation and reflection | The 10-minute deck is included. | I will record and present it after Project 2, with a short local demo walkthrough; I still need to write my own reflection. |
+| Presentation and reflection | The 10-minute deck is included. | Slides 3, 4 and 9 contain older deployment, Orthanc and test-status wording; see `deliverables/README.md` before recording. I will record and present it after Project 2 and write my own reflection. |
 
 The full item-by-item check against the portal is [reports/requirements_and_verification.md](reports/requirements_and_verification.md).
 

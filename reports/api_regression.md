@@ -1,5 +1,7 @@
 # Project 1 API fixes and regression audit — 2026-11-03
 
+> Historical snapshot: this report records the November 3 checks and configuration at that time. Later changes and successful API, browser, Docker and limited Orthanc checks are recorded in `requirements_and_verification.md`; use that report and the current code for present status.
+
 Scope: deployment-path and input-guard fixes plus inference-only regression checks. No training, downloads, classifier/segmentation checkpoint edits other than copying the already-trained segmentation candidate to a new artifact filename, or official test data use occurred in this audit.
 
 ## F1. Checkpoint packaging and paths — PASS
@@ -9,7 +11,7 @@ Scope: deployment-path and input-guard fixes plus inference-only regression chec
 - `.env:8` selects the artifact by project-relative path: `NEXVIA_SEGMENTATION_CHECKPOINT=artifacts/best_spleen_unet_candidate_20261103.pt`.
 - `docker-compose.yml:10` points to `/app/artifacts/best_spleen_unet_candidate_20261103.pt` inside the existing `./artifacts:/app/artifacts:ro` container mount. This is a container path, not a host-specific path.
 - Protected checkpoint hashes were re-read after the fixes: old segmentation `414266BA20B24D9B4987FAE348BC26E33D14CDD1CF12D1077B35623937C55750`; soup `082BC9DC5FF0399A6EEB07AE4DD9146AB258C39829E2C19A5C3ECCC2C1CD8CC8`; 15.5k `BF144A8A0844F6256B7CDA7D0AAB5AA355F75036BFD409AD2FD1A9B23CC40831`. These match the prior recorded values; none was modified.
-- The API code still has its old-checkpoint default if `NEXVIA_SEGMENTATION_CHECKPOINT` is absent (`api/app.py:46-48`). The tested configuration provided the environment setting. Starting the API without that setting would not select the candidate; retain the `.env`/Compose setting when launching.
+- At the time of this audit, the API had an old-checkpoint default if `NEXVIA_SEGMENTATION_CHECKPOINT` was absent. That default was corrected later; the current `api/app.py` defaults to `artifacts/best_spleen_unet_candidate_20261103.pt`.
 
 ## F2. Clean-copy in-process check — PARTIAL PASS
 
