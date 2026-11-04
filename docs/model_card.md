@@ -6,7 +6,7 @@
 
 ## System summary
 
-This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. Synthetic Orthanc DX sync/inference/storage and one constrained synthetic CT-series segmentation plus local mask retrieval path passed. The CT test used a generated complete series; compatibility with real scanners and ordinary series remains unverified.
+This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. Synthetic Orthanc DX and CT checks passed, as did one public de-identified 81-slice CT interoperability check with an independently supplied matching count. This single real-series check has no reference mask and does not establish broad scanner compatibility or accuracy.
 
 ## Classifier
 
@@ -30,11 +30,11 @@ This project contains two separate inference paths: a 2D chest X-ray classifier 
 
 **Not intended for:** screening, diagnosis, triage, treatment planning, clinical workflow, or decisions about an individual. Do not upload real patient data. The interface's Approve/Reject controls are demonstration annotations, not radiologist decisions.
 
-Known limitations include reused development panels, report-mined labels, small segmentation cohorts, checkpoint selection on the six validation cases, incomplete subgroup coverage, no external or prospective validation, and unverified live Orthanc CT behavior. The age/recorded-sex analysis is exploratory; race/ethnicity and several relevant acquisition subgroups are unavailable. Grad-CAM is a coarse attribution map, not a causal or clinically faithful explanation.
+Known limitations include reused development panels, report-mined labels, small segmentation cohorts, checkpoint selection on the six validation cases, incomplete subgroup coverage, no external or prospective accuracy validation, and limited real-series Orthanc CT testing. The age/recorded-sex analysis is exploratory; race/ethnicity and several relevant acquisition subgroups are unavailable. Grad-CAM is a coarse attribution map, not a causal or clinically faithful explanation.
 
 ## Data and reproducibility
 
-The full NIH and MSD datasets are not included in this project folder. Only small demo examples and trained checkpoints are packaged. The current project copy has no `data/` directory and no configured DVC remote, so it cannot reproduce the training runs without restoring the required datasets and manifests. See [`data_inventory.md`](data_inventory.md).
+The full NIH and MSD datasets and demo image files are not included in the public package; trained checkpoints and DVC pointer files are included. Two small demo examples have a private local DVC store on the development laptop. The original training runs cannot be reproduced without restoring the required datasets and manifests. See [`data_inventory.md`](data_inventory.md).
 
 ## Evidence
 

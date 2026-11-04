@@ -226,12 +226,81 @@ def test_orthanc_fetch_rejects_unconfirmed_series_status_before_download(monkeyp
     monkeypatch.setattr("api.ct_series.requests.get", mock_get)
     output_path = tmp_path / "must-not-exist.nii.gz"
     expected_status = status if status is not None else "missing"
-    with pytest.raises(CTSeriesError, match=f"not confirmed complete \(status: {expected_status}\)"):
+    with pytest.raises(CTSeriesError, match=rf"not confirmed complete \(status: {expected_status}\)"):
         fetch_orthanc_ct_series_to_nifti("series-00000001", output_path)
 
     assert len(calls) == 1
     assert calls[0].endswith("/series/series-00000001")
     assert not output_path.exists()
+
+
+@pytest.mark.parametrize('change_during_fetch', ['none', 'series', 'study', 'status'])
+def test_unknown_series_with_independent_count_checks_stability_and_geometry(monkeypatch, tmp_path, change_during_fetch):
+    monkeypatch.setenv('ORTHANC_PASSWORD', 'test-password')
+    series_uid = generate_uid()
+    ids = ['instance-00000001', 'instance-00000002']
+    datasets = [make_ct_slice(float(i), i + 10, series_uid=series_uid) for i in range(2)]
+    series_requests = 0
+    study_requests = 0
+
+    class Response:
+        def __init__(self, payload):
+            self.payload = payload
+
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return self.payload
+
+    def mock_get(url, **kwargs):
+        nonlocal series_requests, study_requests
+        if '/series/' in url:
+            series_requests += 1
+            current = ids + ['late-instance'] if change_during_fetch == 'series' and series_requests > 1 else ids
+            status = 'Incomplete' if change_during_fetch == 'status' and series_requests > 1 else 'Unknown'
+            return Response({'Status': status, 'Instances': current, 'ParentStudy': 'study-00000001'})
+        if '/studies/' in url:
+            study_requests += 1
+            return Response({'IsStable': not (change_during_fetch == 'study' and study_requests > 1)})
+        raise AssertionError(f'Unexpected Orthanc URL: {url}')
+
+    monkeypatch.setattr('api.ct_series.requests.get', mock_get)
+    monkeypatch.setattr('api.ct_series._read_instance', lambda instance_id, *args: (datasets[ids.index(instance_id)], 100))
+    output = tmp_path / 'converted.nii.gz'
+    if change_during_fetch != 'none':
+        with pytest.raises(CTSeriesError, match='changed during retrieval'):
+            fetch_orthanc_ct_series_to_nifti('series-00000001', output, expected_instances=2)
+        assert not output.exists()
+    else:
+        meta = fetch_orthanc_ct_series_to_nifti('series-00000001', output, expected_instances=2)
+        assert nib.load(str(output)).shape == (3, 2, 2)
+        assert meta['orthanc_series_status'] == 'Unknown'
+        assert meta['completeness_basis'] == 'operator_supplied_count_match'
+        assert meta['expected_instances'] == 2
+
+
+@pytest.mark.parametrize('status,expected,reason', [
+    ('Unknown', 3, 'does not match'),
+    ('Unknown', 1, 'between 2 and 512'),
+    ('Complete', 3, 'does not match'),
+    ('Incomplete', 2, 'not confirmed complete'),
+    ('Inconsistent', 2, 'not confirmed complete'),
+    ('Missing', 2, 'not confirmed complete'),
+    (None, 2, 'not confirmed complete'),
+])
+def test_expected_count_does_not_override_invalid_or_incomplete_series(monkeypatch, tmp_path, status, expected, reason):
+    monkeypatch.setenv('ORTHANC_PASSWORD', 'test-password')
+    class Response:
+        def raise_for_status(self):
+            pass
+        def json(self):
+            return {'Status': status, 'Instances': ['one', 'two'], 'ParentStudy': 'study-00000001'}
+    monkeypatch.setattr('api.ct_series.requests.get', lambda *args, **kwargs: Response())
+    output = tmp_path / 'must-not-exist.nii.gz'
+    with pytest.raises(CTSeriesError, match=reason):
+        fetch_orthanc_ct_series_to_nifti('series-00000001', output, expected_instances=expected)
+    assert not output.exists()
 
 
 def test_orthanc_segmentation_records_compact_non_phi_result(monkeypatch, tmp_path):
@@ -242,9 +311,11 @@ def test_orthanc_segmentation_records_compact_non_phi_result(monkeypatch, tmp_pa
     monkeypatch.setattr(api_module, "ORTHANC_SEGMENTATION_RESULTS_PATH", log_path)
 
     import api.ct_series as ct_module
-    monkeypatch.setattr(ct_module, "fetch_orthanc_ct_series_to_nifti", lambda series_id, path: {
+    monkeypatch.setattr(ct_module, "fetch_orthanc_ct_series_to_nifti", lambda series_id, path, expected_instances=None: {
         "orthanc_series_id": series_id, "instance_count": 2,
         "input_shape": [3, 2, 2], "conversion": "geometry-preserving test conversion",
+        "orthanc_series_status": "Unknown", "completeness_basis": "operator_supplied_count_match",
+        "expected_instances": expected_instances,
     })
     monkeypatch.setattr(api_module, "_process_spleen_volume", lambda input_path, output_dir: {
         "input_shape": [3, 2, 2], "output_geometry_matches_input": True,
@@ -253,10 +324,13 @@ def test_orthanc_segmentation_records_compact_non_phi_result(monkeypatch, tmp_pa
         "output_mask_filename": "spleen-mask.nii.gz",
         "output_mask_nii_gz_base64": "", "disclaimer": "Not for clinical use.",
     })
-    response = api_module.segment_orthanc_ct_series("series-00000001")
+    response = api_module.segment_orthanc_ct_series("series-00000001", expected_instances=2)
     assert response["stored"] is True
     assert response["dicom_instance_count"] == 2
+    assert response["expected_instances"] == 2
+    assert response["completeness_basis"] == "operator_supplied_count_match"
     saved = log_path.read_text(encoding="utf-8")
     assert "orthanc_series_id" in saved
     assert "PatientName" not in saved
     assert "PatientID" not in saved
+    assert '"completeness_basis": "operator_supplied_count_match"' in saved

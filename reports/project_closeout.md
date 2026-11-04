@@ -1,8 +1,10 @@
 # Project 1 closeout — November 3, 2026
 
+> Historical snapshot: the Orthanc statements below describe the November 3 closeout. Subsequent synthetic DX/CT and one public de-identified CT interoperability check are documented in `requirements_and_verification.md`; broad CT compatibility and clinical use remain unverified.
+
 ## Scope and evidence standard
 
-This closeout covers the chest X-ray classifier and spleen CT segmentation coursework prototype. Every result below points to a saved report or run artifact. “Development panel” and “validation” are used literally: neither is an independent test set. The NIH official test split was not read during the final retrain or current inference audit. The protected old segmentation, soup, and 15.5k checkpoints were not modified. Live HTTP, browser uploads, fresh Windows installation, and Docker API/web checks passed on Nov 3. Orthanc remains **NOT VERIFIED**; Docker segmentation is configured for CPU and its runtime device was not logged.
+This closeout covers the chest X-ray classifier and spleen CT segmentation coursework prototype. Every result below points to a saved report or run artifact. “Development panel” and “validation” are used literally: neither is an independent test set. The NIH official test split was not read during the final retrain or current inference audit. The protected old segmentation, soup, and 15.5k checkpoints were not modified. Live HTTP, browser uploads, fresh Windows installation, and Docker API/web checks passed on Nov 3. Orthanc was **NOT VERIFIED at that time**; Docker segmentation was configured for CPU and its runtime device was not logged.
 
 ## Change log since Oct 31 commit
 
@@ -71,7 +73,7 @@ The previous Dice 0.3170 at threshold 0.80, and largest-component mean 0.4200, a
 
 The API segmentation call now uses threshold 0.50 and no flip TTA; its previous configuration was threshold 0.80 plus axis-0 flip probability averaging. A one-command live Uvicorn check returned HTTP 200 from `/health`, HTTP 200 from `/predict`, and HTTP 200 from `/segment/spleen` for spleen_10, spleen_63, and spleen_17. The selected device was CUDA. Segmentation helper times were 7.294, 2.990, and 4.067 seconds; full HTTP request times were 9.518, 3.715, and 5.492 seconds. Response body sizes were 369,888, 437,144, and 415,067 bytes. The earlier TestClient stall did not recur with the live server; its specific cause is **NOT VERIFIED**. The server process was terminated after the requests.
 
-The `/predict` response was 1,192 bytes and completed in 3.012 seconds. A blank PNG returned HTTP 422 with the new near-constant-image error (107-byte response, 0.002 seconds). The guard rejects grayscale variance ≤1.0 on the 8-bit intensity scale. A real PNG returned HTTP 200 with 14 scores. Docker Compose uses the new relative artifact under `/app/artifacts`. Docker API/web checks, browser uploads, and a fresh pinned Windows install passed on Nov 3. Orthanc remains **NOT VERIFIED**. Docker uses CPU-only PyTorch per its image configuration; runtime device was not logged. Exact live HTTP measurements are in the read-only audit output `f4_live_http_result.json` outside this project. The consolidated deployment, input-guard, and regression evidence is in `project1_api_fix_regression_2026-11-03.md`.
+The `/predict` response was 1,192 bytes and completed in 3.012 seconds. A blank PNG returned HTTP 422 with the new near-constant-image error (107-byte response, 0.002 seconds). The guard rejects grayscale variance ≤1.0 on the 8-bit intensity scale. A real PNG returned HTTP 200 with 14 scores. Docker Compose uses the new relative artifact under `/app/artifacts`. Docker API/web checks, browser uploads, and a fresh pinned Windows install passed on Nov 3. Orthanc was **NOT VERIFIED in this Nov 3 check**. Docker uses CPU-only PyTorch per its image configuration; runtime device was not logged. Exact live HTTP measurements are in the read-only audit output `f4_live_http_result.json` outside this project. The consolidated deployment, input-guard, and regression evidence is in `project1_api_fix_regression_2026-11-03.md`.
 
 ## Limitations
 
@@ -80,7 +82,7 @@ The `/predict` response was 1,192 bytes and completed in 3.012 seconds. A blank 
 - NIH labels are report-mined and were not manually adjudicated in this work.
 - Absolute classifier performance is modest; macro AP is prevalence-sensitive.
 - The six-case segmentation validation set selected the checkpoint. The repeat internal holdout was excluded from the final run’s training and selection, but has prior project evaluation history (including nested-CV training use for five cases); it is not a project-wide independent test.
-- The classifier ensemble remains an undeployed inference-only candidate, not an improvement to the API classifier. Live HTTP, browser uploads, and Docker API/web checks passed; Orthanc remains unverified.
+- The classifier ensemble remains an undeployed inference-only candidate, not an improvement to the API classifier. Live HTTP, browser uploads, and Docker API/web checks passed; Orthanc was unverified in the Nov 3 check.
 - The new segmentation configuration values (96³ ROI, 4 samples per volume, balanced sampling, batch 2, AMP, AdamW 1e-4, DiceCE) and argmax threshold were fixed in the user-directed retrain instructions before that run. Epoch 125 was selected by validation Dice only. The six internal holdout cases had been scored in earlier project work; whether earlier holdout results influenced the choice of this configuration is **NOT VERIFIED**. No threshold or epoch was selected on those holdout cases in the recorded final run.
 - This is an educational, non-diagnostic prototype.
 
