@@ -18,12 +18,12 @@ The portal specifies one master Google Drive folder for both assigned projects a
 | Docker | API/web checks passed previously | The API and web services returned successful live HTTP responses in recorded checks. Docker uses CPU-only PyTorch. The test suite below also ran in the local CPU Docker test image. |
 | Limits and bias | Documented | The model card and data inventory describe reused panels, report-mined labels, missing input data, limited cohorts, and non-diagnostic use. No clinical validation is claimed. |
 | Working demo | Local demo implemented; browser upload and live HTTP checks recorded | No hosted deployment URL or screen recording is included yet. Ram will include a short local app walkthrough in the 10-minute presentation after Project 2. Orthanc verification uses synthetic DX and one synthetic CT series with explicit completeness metadata; ordinary CT series reported as Unknown are rejected. |
-| GitHub, README, architecture/data/API docs | Synced | The 64-payload-file canonical package in `submission_final/` was pushed to public `main` in commit `3540f7153d18e1d1421d90443d4bfad0c6323236`. Remote branch head and tracked file inventory were checked after push. |
-| Test results | Prior full suite: 57 passed, 2 warnings; current suite NOT VERIFIED | The last complete packaged suite reported **57 passed, 2 warnings** in the disposable Docker test container before the added orientation test. The current full-suite run stopped during collection because pandas is absent from the cached API image. A focused run of `test_api.py`, `test_ct_series.py`, and `test_segmentation_split.py` passed **38 tests, 2 warnings**. The image uses Python 3.12 and CPU PyTorch; this is not the pinned Python 3.10/CUDA 12.8 Windows environment. That earlier run had two invalid-escape warnings in `test_ct_series.py` and no failures. |
+| GitHub, README, architecture/data/API docs | Synced | The canonical package was pushed to public `main`; last previously verified branch head was `99fe134fabb32de756a3659c807e359bb3f197fe`. This test-status documentation update still needs to be synced. |
+| Test results | **58 passed, 2 warnings** in a disposable Python 3.12 CPU container | Latest full packaged suite passed. Test-only dependencies were installed inside the disposable container; the project mount was read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. |
 | 10-minute presentation | Deck included; visual check performed | The 10-slide deck was opened in PowerPoint and reviewed in Slide Sorter; it has not been rendered to slide images. Ram will record and present it after Project 2 with a short local demo walkthrough. Slide 10 remains a prompt for Ram’s own reflection. |
 | Individual reflection and recording | Ram’s action remains | After Project 2, Ram will record and present the deck with a short walkthrough of the local demo. He must write his personal reflection in his own words. |
 
-A later asymmetric-pixel CT orientation test was added. Its core fixture and RAS-coordinate assertion passed in a direct smoke check in the cached API image. A full pytest rerun used the host’s existing pytest code copied to a temporary read-only mount; collection stopped because pandas is absent from the cached API image. The focused command `python -m pytest -q -p no:cacheprovider test_api.py test_ct_series.py test_segmentation_split.py` passed 38 tests with 2 SyntaxWarnings. The 57-test count above is the last complete suite, before this new test.
+The earlier 57-test run and 38-test focused run below are historical results and have been superseded by the complete 58-test run recorded under “Latest regression verification.”
 
 ## Test-suite details
 
@@ -62,7 +62,7 @@ docker exec nexvia-final-check-api python -m pip install --disable-pip-version-c
 docker exec nexvia-final-check-api python -m pytest -q -p no:cacheprovider
 ```
 
-Result: **57 passed, 2 warnings in 9.83 seconds**. Both warnings are `SyntaxWarning` invalid-escape sequences (`\\(` and `\\)`) in `test_ct_series.py:204`; no tests failed. This is a CPU/Python 3.12 test run, not verification of the pinned Windows/Python 3.10/CUDA environment.
+Historical result: **57 passed, 2 warnings in 9.83 seconds**. Both warnings were invalid-escape `SyntaxWarning`s in `test_ct_series.py`; no tests failed. This older result was superseded by the latest full run below.
 
 For completeness, a direct host attempt (`python -m pytest -q`) stopped during collection because that host environment lacked `torchvision` and `nibabel`. The first direct attempt in the API image also lacked `pytest`. The disposable test run above supplied the missing test dependencies and completed all tests.
 
@@ -93,6 +93,16 @@ The DICOM generator was streamed inline to the API container and not saved as a 
 
 Exact route invocation from PowerShell:
 Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:28000/orthanc/series/0467c267-b4eb5cf0-8215cc60-210bdce6-f006ea65/segment/spleen' -TimeoutSec 360
+
+## Latest full-suite result (Nov 4)
+
+The full package test suite passed **58 tests with 2 warnings in 8.97 seconds**. This ran in a disposable container based on the cached `submission_final-api:latest` image, under Python 3.12 with CPU PyTorch. The project was mounted read-only and `PYTHONDONTWRITEBYTECODE=1` prevented bytecode output in the mount. The only temporary installs were `pytest==9.0.2`, `pandas==2.3.3`, and `scikit-learn==1.7.2`; the container was removed after the run. No model, dataset, checkpoint, or dependency file was downloaded or edited. The two warnings were `SyntaxWarning`s for invalid escape sequences `\(` and `\)` in `test_ct_series.py`; there were no failures. This result does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment.
+
+Exact command:
+
+```powershell
+docker run --rm -e PYTHONDONTWRITEBYTECODE=1 -e NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR=/tmp/nexvia-test-masks -v 'C:\Users\ramna\OneDrive\Desktop\Projects\Nexvia Internship\Project-1:/app:ro' -w /app/submission_final --entrypoint python submission_final-api:latest -c "import subprocess,sys; subprocess.check_call([sys.executable,'-m','pip','install','--no-cache-dir','pytest==9.0.2','pandas==2.3.3','scikit-learn==1.7.2']); subprocess.run([sys.executable,'-m','pytest','-q','-p','no:cacheprovider'],check=True)"
+```
 
 ## DVC/reproduction boundary
 
