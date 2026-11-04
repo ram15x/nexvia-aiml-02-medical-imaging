@@ -6,4 +6,4 @@ Metric sources and caveats are linked from the project README and `docs/model_ca
 
 Synthetic Orthanc DX upload, sync, classifier inference, and JSONL result storage passed. Orthanc CT-series segmentation remains unverified. Docker is configured for CPU-only PyTorch. The 56-test suite passed in the local Docker test image, not the pinned Windows/CUDA environment.
 
-The deck is a ten-minute presentation guide, not a substitute for practice. I still need to record the demo and write my own reflection accurately.
+The deck is a ten-minute presentation guide, not a substitute for practice. Ram will record and present it after Project 2, with a short walkthrough of the local demo; he will write his own reflection. No recording is included yet.
