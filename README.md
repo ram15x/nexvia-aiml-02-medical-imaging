@@ -79,7 +79,7 @@ python -m pip install -r requirements-windows-tested.txt
 python -m pytest -q
 ```
 
-The complete packaged suite passed **57 tests with 2 warnings** in a disposable Python 3.12 CPU container; the project folder was mounted read-only. That run preceded a newly added asymmetric CT orientation regression test. Its core assertions passed in a direct smoke check using the cached API image, but the complete suite has not been rerun. The warnings are invalid-escape warnings in `test_ct_series.py`. A direct run in the host Python 3.10 environment could not collect tests because `torchvision` and `nibabel` were missing there; that environment was left unchanged. This does not verify the pinned Windows/CUDA environment. See `reports/requirements_and_verification.md` for the exact command and details. The pinned Windows install uses a large CUDA PyTorch wheel; allow several gigabytes before choosing this route.
+The complete packaged suite passed **58 tests with 2 warnings** in a disposable Python 3.12 CPU container with the project mounted read-only. The warnings are invalid-escape warnings in `test_ct_series.py`. The pinned Windows/CUDA test environment was not verified by that run. See `reports/requirements_and_verification.md` for the exact command and details. The pinned Windows install uses a large CUDA PyTorch wheel; allow several gigabytes before choosing this route.
 
 Start the API in one PowerShell window:
 
