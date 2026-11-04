@@ -1,6 +1,7 @@
 Medical Imaging AI Review Platform — compact submission file list
 All paths are relative to this folder and use forward slashes.
 .dockerignore
+.dvc/.gitignore
 .dvc/config
 .dvcignore
 .env.example
@@ -17,6 +18,7 @@ artifacts/best_spleen_unet_candidate_20261103.pt
 data_audit.py
 deliverables/Medical_Imaging_AI_Review_Platform.pptx
 deliverables/README.md
+demo/.gitignore
 demo/chest_xray_example.png.dvc
 demo/spleen_volume_example.nii.gz.dvc
 docker-compose.yml
