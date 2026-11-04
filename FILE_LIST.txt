@@ -1,6 +1,5 @@
 Medical Imaging AI Review Platform — compact submission file list
 All paths are relative to this folder and use forward slashes.
-FILE_LIST.txt and SHA256SUMS.txt are not included in the hash list.
 .dockerignore
 .dvcignore
 .env.example
@@ -18,6 +17,7 @@ data_audit.py
 deliverables/Medical_Imaging_AI_Review_Platform.pptx
 deliverables/README.md
 docker-compose.yml
+docs/api.md
 docs/architecture.md
 docs/data_inventory.md
 docs/model_card.md
