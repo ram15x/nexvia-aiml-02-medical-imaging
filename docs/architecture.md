@@ -36,13 +36,17 @@ The spleen path accepts 3D NIfTI. The packaged MONAI 3D U-Net uses a 96×96×96 
 | Grad-CAM | `api/app.py` and classifier feature hooks | Coarse attribution route was smoke-checked. No clinical explanation claim. |
 | Segmentation | `segment_spleen.py`, `api/app.py`, MONAI 3D U-Net checkpoint above | Live HTTP `/segment/spleen` checks are recorded on existing validation cases. The selected validation result is optimistic. |
 | API | FastAPI routes for health, prediction, explanation, NIfTI segmentation, local review log, and optional Orthanc | HTTP checks are recorded in the verification reports. |
-| Web UI | React in `web/` | Browser uploads and API/web container checks are recorded. The UI is a local demo. |
+| Web UI | React in `web/` for the full local app; a separate Gradio UI is hosted on Hugging Face Spaces | Local React workflows have recorded checks. The hosted Gradio browser paths were exercised using generated synthetic inputs; the hosted UI omits Grad-CAM, review/audit, and Orthanc. |
 | Orthanc DX path | Stable-study change sync, single-frame DX inference, local JSONL result | Passed one generated synthetic DX study. This does not verify broad DICOM compatibility or clinical input. |
 | Orthanc CT path | Manual CT-series conversion to NIfTI, spleen inference, local mask storage and retrieval | One synthetic complete CT and one public de-identified 81-slice CT were processed. The latter was Unknown in Orthanc and required a matching independently supplied count; missing or mismatched counts were rejected. JSONL records the status, count basis and checksums. The mask is retrievable locally after checksum verification. This single real-series check has no reference mask and does not establish broad CT compatibility or DICOM SEG/SR write-back. |
 | Docker | Compose API and web services, CPU-only PyTorch image | API and web live HTTP checks are recorded. Docker segmentation uses CPU configuration; the runtime device was not logged in those checks. |
 | DVC/data | dvc.yaml, dvc.lock, audit scripts | The lock records a historical 3-epoch NIH subset screen, not the deployed classifier or segmentation training. It references missing data/manifests and a machine-specific Windows Python path; no DVC remote is configured in the package. Reproduction is not verified and cannot be done from this package alone. |
 
 `.env.example` documents settings. The API logs the segmentation checkpoint path and SHA-256, ROI, threshold, and TTA in startup and health metadata. The packaged checkpoints are under `artifacts/`. CT segmentation-result storage defaults to `demo/orthanc_masks/` with metadata in `demo/orthanc_segmentations.jsonl`; both are local demo state and are git-ignored. See `api.md` for route and response details.
+
+## Hosted deployment boundary
+
+The public [Hugging Face Space](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review) is a separate Gradio interface using the packaged classifier and spleen checkpoints. It is not a deployment of the full React/FastAPI stack shown in the local data-flow diagram. The hosted browser smoke check used generated synthetic inputs; no patient data was uploaded. The Space does not provide Grad-CAM, the React review/audit UI, or Orthanc.
 
 ## Evaluation summary
 
