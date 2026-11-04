@@ -6,7 +6,7 @@ I built this educational prototype for two separate medical-imaging tasks: chest
 
 ## Current status
 
-The local release package is assembled for handoff. The complete packaged test suite most recently passed **69 tests** in a disposable Python 3.12 CPU container. Test-only dependencies were installed inside that temporary container; the package was mounted read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. Synthetic Orthanc DX and CT checks passed, as did an isolated interoperability check on one public de-identified 81-slice CT series. For an Orthanc series marked Unknown, an independently supplied expected slice count is required and must match; this count does not prove completeness. CT segmentation output is saved locally with a SHA-256 record and can be retrieved through the API. These checks do not establish broad DICOM compatibility or clinical use. There is no hosted deployment. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
+The local release package is assembled for handoff. The complete packaged test suite most recently passed **69 tests** in a disposable Python 3.12 CPU container. Test-only dependencies were installed inside that temporary container; the package was mounted read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. Synthetic Orthanc DX and CT checks passed, as did an isolated interoperability check on one public de-identified 81-slice CT series. For an Orthanc series marked Unknown, an independently supplied expected slice count is required and must match; this count does not prove completeness. CT segmentation output is saved locally with a SHA-256 record and can be retrieved through the API. These checks do not establish broad DICOM compatibility or clinical use. A separate public Gradio demo is hosted on Hugging Face Spaces; see the Hosted demo section below. It does not include the full local React/FastAPI workflow. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
 
 ## What the prototype does
 
@@ -15,6 +15,12 @@ The local release package is assembled for handoff. The complete packaged test s
 - **Orthanc:** a synthetic single-frame DX study was uploaded to Orthanc, picked up by the sync route, classified, and written to the local JSONL results log. A synthetic CT series and one public de-identified CT series passed the Orthanc-to-segmentation route. For the latter, Orthanc reported Unknown and an independently supplied count matched all 81 slices. Its NIfTI-GZIP mask and provenance are stored locally and retrievable through the API. These checks do not establish broad CT compatibility. No DICOM SEG/SR object is written back to Orthanc.
 
 The architecture is in [docs/architecture.md](docs/architecture.md), API routes and payloads in [docs/api.md](docs/api.md), and the available data and what is missing from this package in [docs/data_inventory.md](docs/data_inventory.md).
+
+## Hosted demo
+
+[Open the hosted demo](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review). It is a separate, lightweight Gradio deployment that uses the same classifier and spleen checkpoint files as the local package (classifier SHA-256 `082bc9dc…`; segmentation SHA-256 `46622de7…`). It is not a hosted copy of the full React/FastAPI application: Grad-CAM, review/audit actions, and Orthanc workflows are available only in the local project.
+
+I exercised both hosted tabs in a browser with generated, non-patient inputs. The classifier returned 14 scores; the CT path returned sagittal, coronal, and axial previews. This confirms those inference paths ran, not model accuracy or clinical performance. The hosted page warns users not to upload patient data.
 
 ## What the results say
 
@@ -46,7 +52,7 @@ The packaged U-Net was trained on 29 labeled volumes. Its selected checkpoint re
 | React review viewer, overlays, scores, Approve/Reject, audit log | Browser upload, scores/overlays, local review actions, and local JSONL audit output are implemented. | Demo-only review records; no radiologist workflow or clinical audit system. |
 | Docker | API and web containers passed recorded live HTTP checks. | Docker uses CPU-only PyTorch. Orthanc CT interoperability was checked on one synthetic and one public de-identified series; other scanners and series are not established. |
 | Limits/bias documentation | Model card and data inventory describe report-mined labels, panel reuse, sample limits, and educational use. | No clinical validation or evidence of benefit to care. |
-| Working demo and technical documentation | Local UI/API, setup instructions, architecture, data notes, test results, and deck are included. | The app is not hosted or screen-recorded yet. After Project 2, I will include a short walkthrough of the local demo in my 10-minute presentation recording. |
+| Working demo and technical documentation | Local UI/API, setup instructions, architecture, data notes, test results, and deck are included. | A limited Gradio demo is deployed; the full React/FastAPI app remains local. The hosted demo was browser-smoke-tested with generated synthetic inputs and does not include Grad-CAM, review/audit actions, or Orthanc. Ram will record the local demo walkthrough in the 10-minute presentation after Project 2. |
 | Presentation and reflection | The 10-minute deck is included. | Slides 3, 4 and 9 contain older deployment, Orthanc and test-status wording; see `deliverables/README.md` before recording. I will record and present it after Project 2 and write my own reflection. |
 
 The full item-by-item check against the portal is [reports/requirements_and_verification.md](reports/requirements_and_verification.md).
