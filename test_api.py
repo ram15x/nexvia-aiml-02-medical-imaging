@@ -4,6 +4,7 @@ import hashlib
 import gzip
 import json
 import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -223,6 +224,59 @@ def test_spleen_route_returns_preview_and_removes_temporary_artifacts(monkeypatc
     assert result["upload_retained"] is False
     assert observed["use_flip_tta"] is False
     assert not observed["input_path"].exists()
+
+
+def test_orthanc_ct_mask_is_persisted_and_retrievable(monkeypatch, tmp_path):
+    from api import ct_series as ct_series_module
+
+    series_id = "series-12345678"
+    mask_bytes = gzip.compress(b"synthetic NIfTI mask payload")
+    checkpoint = tmp_path / "checkpoint.pt"
+    checkpoint.write_bytes(b"synthetic checkpoint")
+    results_path = tmp_path / "results.jsonl"
+    mask_dir = tmp_path / "masks"
+
+    monkeypatch.setattr(api_module, "SEGMENTATION_CHECKPOINT", checkpoint)
+    monkeypatch.setattr(api_module, "ORTHANC_SEGMENTATION_RESULTS_PATH", results_path)
+    monkeypatch.setattr(api_module, "ORTHANC_SEGMENTATION_MASK_DIR", mask_dir)
+    monkeypatch.setattr(
+        ct_series_module,
+        "fetch_orthanc_ct_series_to_nifti",
+        lambda *_args, **_kwargs: {
+            "conversion": "synthetic geometry check",
+            "instance_count": 24,
+            "input_shape": [8, 8, 24],
+        },
+    )
+    monkeypatch.setattr(
+        api_module,
+        "_process_spleen_volume",
+        lambda *_args, **_kwargs: {
+            "output_mask_nii_gz_base64": base64.b64encode(mask_bytes).decode("ascii"),
+            "predicted_spleen_voxels": 12,
+            "estimated_predicted_volume_ml": 0.03,
+            "disclaimer": "Synthetic test only.",
+        },
+    )
+
+    response = api_module.segment_orthanc_ct_series(series_id)
+
+    assert response["stored"] is True
+    assert response["mask_sha256"] == hashlib.sha256(mask_bytes).hexdigest()
+    assert response["mask_url"].endswith("/mask")
+    saved = api_module.list_orthanc_segmentation_results(series_id)["results"]
+    assert len(saved) == 1
+    assert saved[0]["mask_sha256"] == response["mask_sha256"]
+    assert "PatientName" not in json.loads(results_path.read_text(encoding="utf-8").splitlines()[0])
+
+    downloaded = api_module.download_orthanc_segmentation_mask(series_id, response["result_id"])
+    assert Path(downloaded.path).read_bytes() == mask_bytes
+    assert downloaded.headers["x-content-sha256"] == response["mask_sha256"]
+
+    (mask_dir / f"{response['result_id']}.nii.gz").write_bytes(b"changed")
+    with pytest.raises(HTTPException) as error:
+        api_module.download_orthanc_segmentation_mask(series_id, response["result_id"])
+    assert error.value.status_code == 500
 
 
 def test_score_response_identifies_model_and_returns_all_findings(monkeypatch):

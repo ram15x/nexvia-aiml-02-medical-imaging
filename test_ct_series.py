@@ -13,7 +13,7 @@ from api import app as api_module
 
 
 def make_ct_slice(position_z: float, pixel_value: int, *, series_uid: str,
-                  orientation=(1, 0, 0, 0, 1, 0)) -> FileDataset:
+                  orientation=(1, 0, 0, 0, 1, 0), pixels=None) -> FileDataset:
     sop_uid = generate_uid()
     meta = FileMetaDataset()
     meta.TransferSyntaxUID = ExplicitVRLittleEndian
@@ -37,7 +37,11 @@ def make_ct_slice(position_z: float, pixel_value: int, *, series_uid: str,
     dataset.PixelSpacing = [0.8, 0.5]
     dataset.RescaleSlope = 2
     dataset.RescaleIntercept = -1000
-    pixels = np.full((2, 3), pixel_value, dtype=np.int16)
+    if pixels is None:
+        pixels = np.full((2, 3), pixel_value, dtype=np.int16)
+    else:
+        pixels = np.asarray(pixels, dtype=np.int16)
+        assert pixels.shape == (2, 3)
     dataset.PixelData = pixels.tobytes()
     return dataset
 
@@ -64,6 +68,27 @@ def test_ct_series_sorts_slices_rescales_hu_and_preserves_ras_affine():
         [0, 0, 1, 0],
         [0, 0, 0, 1],
     ], rtol=0, atol=1e-5)
+
+
+def test_ct_series_maps_asymmetric_pixels_to_expected_ras_coordinates():
+    series_uid = generate_uid()
+    orientation = (0, 1, 0, -1, 0, 0)
+    pixels0 = np.array([[10, 11, 12], [20, 21, 22]], dtype=np.int16)
+    pixels1 = pixels0 + 100
+    datasets = [
+        make_ct_slice(1.0, 0, series_uid=series_uid, orientation=orientation, pixels=pixels1),
+        make_ct_slice(0.0, 0, series_uid=series_uid, orientation=orientation, pixels=pixels0),
+    ]
+
+    volume, affine = _series_volume(datasets)
+
+    # NIfTI axes are (column, row, slice); this catches row/column swaps
+    # using distinct values at every pixel and a non-identity DICOM orientation.
+    assert volume.shape == (3, 2, 2)
+    assert volume[2, 1, 1] == pytest.approx((22 + 100) * 2 - 1000)
+    voxel = np.array([2.0, 1.0, 1.0, 1.0])
+    expected_ras = np.array([-9.2, -21.0, 1.0, 1.0])
+    np.testing.assert_allclose(affine @ voxel, expected_ras, rtol=0, atol=1e-5)
 
 
 def test_ct_series_rejects_irregular_slice_spacing():

@@ -27,7 +27,7 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
-from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from torch import nn
 from .modeling import ARCHITECTURE_NAMES, build_classifier, gradcam_target, image_to_tensor
 
@@ -85,6 +85,9 @@ ORTHANC_SYNC_STATE_PATH = Path(
 )
 ORTHANC_SEGMENTATION_RESULTS_PATH = Path(
     _project_path("NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH", "demo/orthanc_segmentations.jsonl")
+)
+ORTHANC_SEGMENTATION_MASK_DIR = _project_path(
+    "NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR", "demo/orthanc_masks"
 )
 _model: nn.Module | None = None
 _load_error: str | None = None
@@ -320,6 +323,9 @@ def segment_spleen(file: UploadFile = File(...)) -> dict[str, Any]:
 @app.post("/orthanc/series/{series_id}/segment/spleen")
 def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
     """Fetch a stable single-frame CT series from Orthanc and run the spleen model."""
+    valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
+    if not 8 <= len(series_id) <= 80 or any(character not in valid_chars for character in series_id):
+        raise HTTPException(status_code=422, detail="Invalid Orthanc series ID")
     if not SEGMENTATION_CHECKPOINT.is_file():
         raise HTTPException(status_code=503, detail="The spleen segmentation checkpoint is not installed.")
     with tempfile.TemporaryDirectory(prefix="nexvia-orthanc-ct-") as scratch:
@@ -339,9 +345,29 @@ def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
             raise HTTPException(status_code=422, detail=f"Could not process this Orthanc CT series: {detail}") from exc
 
         record_id = str(uuid.uuid4())
+        try:
+            mask_bytes = base64.b64decode(result["output_mask_nii_gz_base64"], validate=True)
+        except (KeyError, ValueError) as exc:
+            raise HTTPException(status_code=500, detail="Segmentation mask could not be stored.") from exc
+
+        ORTHANC_SEGMENTATION_MASK_DIR.mkdir(parents=True, exist_ok=True)
+        mask_filename = f"{record_id}.nii.gz"
+        mask_path = ORTHANC_SEGMENTATION_MASK_DIR / mask_filename
+        pending_mask_path = ORTHANC_SEGMENTATION_MASK_DIR / f".{record_id}.tmp"
+        mask_path_sha256 = hashlib.sha256(mask_bytes).hexdigest()
+        try:
+            pending_mask_path.write_bytes(mask_bytes)
+            os.replace(pending_mask_path, mask_path)
+        except OSError as exc:
+            pending_mask_path.unlink(missing_ok=True)
+            raise HTTPException(status_code=500, detail="Segmentation mask could not be stored.") from exc
+
+        mask_url = f"/orthanc/series/{series_id}/segmentation-results/{record_id}/mask"
+        runtime = _segmentation_runtime_info()
         result.update({"result_id": record_id, "source": "orthanc_ct_series",
                        "orthanc_series_id": series_id, "conversion": source["conversion"],
-                       "dicom_instance_count": source["instance_count"], "stored": True})
+                       "dicom_instance_count": source["instance_count"], "stored": True,
+                       "mask_sha256": mask_path_sha256, "mask_url": mask_url})
         record = {
             "result_id": record_id,
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
@@ -351,12 +377,77 @@ def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
             "input_shape": source["input_shape"],
             "predicted_spleen_voxels": result["predicted_spleen_voxels"],
             "estimated_predicted_volume_ml": result["estimated_predicted_volume_ml"],
+            "mask_filename": mask_filename,
+            "mask_sha256": mask_path_sha256,
+            "checkpoint_sha256": runtime["checkpoint_sha256"],
+            "threshold": SEGMENTATION_THRESHOLD,
+            "flip_tta": SEGMENTATION_TTA,
             "disclaimer": result["disclaimer"],
         }
-        ORTHANC_SEGMENTATION_RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with _orthanc_results_lock, ORTHANC_SEGMENTATION_RESULTS_PATH.open("a", encoding="utf-8") as stream:
-            stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+        try:
+            ORTHANC_SEGMENTATION_RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+            with _orthanc_results_lock, ORTHANC_SEGMENTATION_RESULTS_PATH.open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+        except OSError as exc:
+            mask_path.unlink(missing_ok=True)
+            raise HTTPException(status_code=500, detail="Segmentation result could not be stored.") from exc
         return result
+
+
+@app.get("/orthanc/series/{series_id}/segmentation-results")
+def list_orthanc_segmentation_results(series_id: str) -> dict[str, Any]:
+    """Return saved CT result summaries and links to their local NIfTI masks."""
+    valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
+    if not 8 <= len(series_id) <= 80 or any(character not in valid_chars for character in series_id):
+        raise HTTPException(status_code=422, detail="Invalid Orthanc series ID")
+    if not ORTHANC_SEGMENTATION_RESULTS_PATH.exists():
+        return {"orthanc_series_id": series_id, "results": []}
+    try:
+        with _orthanc_results_lock, ORTHANC_SEGMENTATION_RESULTS_PATH.open("r", encoding="utf-8") as stream:
+            records = [json.loads(line) for line in stream if line.strip()]
+    except (OSError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=500, detail="Could not read stored CT segmentation results.") from exc
+    results = []
+    for record in records:
+        if record.get("orthanc_series_id") != series_id:
+            continue
+        results.append({
+            key: record.get(key)
+            for key in (
+                "result_id", "timestamp_utc", "dicom_instance_count", "input_shape",
+                "predicted_spleen_voxels", "estimated_predicted_volume_ml",
+                "mask_sha256", "checkpoint_sha256", "threshold", "flip_tta", "disclaimer",
+            )
+        } | {"mask_url": f"/orthanc/series/{series_id}/segmentation-results/{record.get('result_id')}/mask"})
+    return {"orthanc_series_id": series_id, "results": results}
+
+
+@app.get("/orthanc/series/{series_id}/segmentation-results/{result_id}/mask")
+def download_orthanc_segmentation_mask(series_id: str, result_id: str) -> FileResponse:
+    """Download a previously saved CT segmentation mask as NIfTI-GZIP."""
+    valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
+    if not 8 <= len(series_id) <= 80 or any(character not in valid_chars for character in series_id):
+        raise HTTPException(status_code=422, detail="Invalid Orthanc series ID")
+    try:
+        normalized_result_id = str(uuid.UUID(result_id))
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail="Invalid segmentation result ID") from exc
+    stored = list_orthanc_segmentation_results(series_id)["results"]
+    match = next((item for item in stored if item.get("result_id") == normalized_result_id), None)
+    if match is None:
+        raise HTTPException(status_code=404, detail="Stored segmentation result not found.")
+    mask_path = ORTHANC_SEGMENTATION_MASK_DIR / f"{normalized_result_id}.nii.gz"
+    if not mask_path.is_file():
+        raise HTTPException(status_code=404, detail="Stored segmentation mask not found.")
+    actual_sha256 = _sha256_file(mask_path)
+    if actual_sha256 != match.get("mask_sha256"):
+        raise HTTPException(status_code=500, detail="Stored segmentation mask failed its integrity check.")
+    return FileResponse(
+        mask_path,
+        media_type="application/gzip",
+        filename=f"spleen-mask-{normalized_result_id}.nii.gz",
+        headers={"X-Content-SHA256": actual_sha256},
+    )
 
 
 @app.post("/explain")

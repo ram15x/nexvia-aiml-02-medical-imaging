@@ -6,7 +6,7 @@
 
 ## System summary
 
-This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. A synthetic Orthanc DX sync/inference/storage path passed; the Orthanc CT-series segmentation route remains unverified end to end.
+This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. Synthetic Orthanc DX sync/inference/storage and one constrained synthetic CT-series segmentation plus local mask retrieval path passed. The CT test used a generated complete series; compatibility with real scanners and ordinary series remains unverified.
 
 ## Classifier
 

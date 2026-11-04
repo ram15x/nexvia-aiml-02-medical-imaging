@@ -18,6 +18,8 @@ web/dist/
 demo/review_events.jsonl
 demo/orthanc_predictions.jsonl
 demo/orthanc_sync_state.json
+demo/orthanc_segmentations.jsonl
+demo/orthanc_masks/
 demo/*.log
 .dvc/cache/
 .dvc/tmp/
