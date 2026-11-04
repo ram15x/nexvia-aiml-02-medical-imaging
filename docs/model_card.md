@@ -1,44 +1,35 @@
 # Model card — Medical Imaging AI Review Platform
 
-**Status:** Educational coursework prototype; not for clinical use  
-**Owner:** Ramnarayanan M  
-**Submission status:** Not submitted
+**Project:** Medical Imaging AI Review Platform
+**Owner:** Ramnarayanan M
+**Use:** Educational demonstration of medical-imaging machine learning and review workflows
 
 ## System summary
 
-This project contains two separate inference paths: a 2D chest X-ray classifier and a 3D spleen CT segmenter. They are not a unified multimodal model. The React/FastAPI demo accepts PNG/JPEG chest images and NIfTI spleen volumes, provides coarse Grad-CAM attribution for chest scores, and allows local demo review annotations. Synthetic Orthanc DX and CT checks passed, as did one public de-identified 81-slice CT interoperability check with an independently supplied matching count. This single real-series check has no reference mask and does not establish broad scanner compatibility or accuracy.
+The platform contains two independent inference paths: a 2D NIH ChestX-ray14 classifier and a 3D Task09 spleen CT segmenter. The React/FastAPI application accepts PNG/JPEG radiographs and NIfTI volumes, presents model outputs and coarse Grad-CAM visualizations, and supports local demonstration review events and Orthanc data flows.
 
-## Classifier
+## Chest X-ray classifier
 
-- **Model:** DenseNet-121 classifier for 14 NIH ChestX-ray14 findings. The API checkpoint is the equal-weight soup of the 8k and 10k DenseNet checkpoints with BatchNorm recalibration.
-- **Checkpoint:** `artifacts/best_densenet121.pt`; SHA-256 `082bc9dc5ff0399a6eeb07ae4dd9146ab258c39829e2c19a5c3eccc2c1cd8cc8`.
-- **Output:** 14 uncalibrated sigmoid scores. They are not calibrated diagnostic probabilities.
-- **Evaluation evidence:** On the reused 5,000-patient development panel, macro AUROC/AP was 0.7953/0.1594 across 13 labels with at least 30 positives; the earlier 8k reference (6c32) scored 0.7755/0.1519. On the 2,138-patient common-clean development panel, the soup scored 0.7926/0.2258 across 9 labels with at least 30 positives; 6c32 scored 0.7700/0.2093. Both panels were reused during development and neither is an independent test set. NIH labels are report-mined. Absolute performance is modest and rare-label performance is uneven.
-- **Not deployed:** A separate soup/15.5k probability ensemble scored 0.8028 AUROC on the 2,138 panel, but it is an undeployed candidate; its 15.5k training-manifest link is not verified. It is not the API model and is not presented as an API improvement.
+- **Architecture:** DenseNet-121 with a 14-output sigmoid classification head.
+- **API checkpoint:** `artifacts/best_densenet121.pt` (SHA-256 `082bc9dc5ff0399a6eeb07ae4dd9146ab258c39829e2c19a5c3eccc2c1cd8cc8`). It is an equal-weight average of the 8k and 10k DenseNet checkpoints with BatchNorm recalibration.
+- **Output:** 14 uncalibrated scores corresponding to NIH ChestX-ray14 report-mined findings.
+- **Development metrics:** Macro AUROC/AP is 0.7953/0.1594 across 13 labels with ≥30 positives on the 5,000-patient panel. On the 2,138-patient panel, the corresponding metrics are 0.7926/0.2258 across 9 labels. The earlier 8k reference (6c32) scored 0.7755/0.1519 and 0.7700/0.2093 on those panels.
+- **Evaluation context:** Both panels were reused during development. Report-mined labels have known uncertainty, and AP depends on label prevalence. Grad-CAM is a coarse attribution map rather than a causal explanation or localization annotation.
 
-## Spleen segmenter
+## Spleen CT segmenter
 
-- **Model:** MONAI 3D U-Net for binary spleen masks from Task09 Spleen CT volumes.
-- **Checkpoint:** `artifacts/best_spleen_unet_candidate_20261103.pt`; SHA-256 `46622de72ac91c7e17d36da19d1088e90e1ad836a0d6e00533b37b805b5cb7a4`.
-- **Recorded training:** 29 labeled volumes; 6 validation volumes; 96³ sliding-window ROI; 134 completed epochs. Epoch 125 was selected using mean Dice on the same six validation cases.
-- **Evaluation evidence:** Mean argmax Dice was 0.8327 on those six selected validation cases. This is optimistic, not an independent estimate. A repeated six-case internal holdout scored 0.7883, but those cases had earlier project evaluation history; five appeared in training in separate nested-CV folds. This is not a fresh project-wide test. The 20 unlabeled challenge test volumes were not evaluated.
-- **API settings:** Threshold 0.50 and flip test-time augmentation disabled. Dice measures mask overlap, not classification accuracy or clinical benefit.
+- **Architecture:** MONAI 3D U-Net for binary spleen masks from Task09 Spleen CT volumes.
+- **API checkpoint:** `artifacts/best_spleen_unet_candidate_20261103.pt` (SHA-256 `46622de72ac91c7e17d36da19d1088e90e1ad836a0d6e00533b37b805b5cb7a4`).
+- **Training setup:** 29 training volumes; 6 validation volumes; 96³ sliding-window ROI; 134 completed epochs. The checkpoint was selected by mean Dice on the six validation cases.
+- **Development results:** Mean argmax Dice was 0.8327 on the six checkpoint-selection cases. The six-case internal holdout result was 0.7883 and the cases have prior project evaluation history. These results describe a small development cohort.
+- **API inference settings:** Threshold 0.50 and flip test-time augmentation disabled.
 
-## Intended use and limits
+## Intended use
 
-**Intended use:** educational demonstration of dataset auditing, model training/evaluation, image attribution, segmentation, and a local human-review interface.
+The platform is intended for educational demonstrations of data preparation, classification, attribution, 3D segmentation, API integration, and browser-based model review. It is not intended for screening, diagnosis, triage, treatment planning, or decisions about an individual. Do not upload identifiable patient data.
 
-**Not intended for:** screening, diagnosis, triage, treatment planning, clinical workflow, or decisions about an individual. Do not upload real patient data. The interface's Approve/Reject controls are demonstration annotations, not radiologist decisions.
+## Evaluation boundaries
 
-Known limitations include reused development panels, report-mined labels, small segmentation cohorts, checkpoint selection on the six validation cases, incomplete subgroup coverage, no external or prospective accuracy validation, and limited real-series Orthanc CT testing. The age/recorded-sex analysis is exploratory; race/ethnicity and several relevant acquisition subgroups are unavailable. Grad-CAM is a coarse attribution map, not a causal or clinically faithful explanation.
+The classifier results come from reused development panels; the segmentation validation result comes from cases used to select the checkpoint. These metrics describe model behavior in the stated cohorts. Scores are uncalibrated, and the work is an educational prototype rather than a clinical evaluation. Chest X-ray classification and spleen CT segmentation are separate workflows.
 
-## Data and reproducibility
-
-The full NIH and MSD datasets and demo image files are not included in the public package; trained checkpoints and DVC pointer files are included. Two small demo examples have a private local DVC store on the development laptop. The original training runs cannot be reproduced without restoring the required datasets and manifests. See [`data_inventory.md`](data_inventory.md).
-
-## Evidence
-
-- [Classifier comparisons](../reports/classifier_results.md)
-- [Project closeout](../reports/project_closeout.md)
-- [API and regression audit](../reports/api_regression.md)
-- [Final browser, CPU, clean-install, and Docker verification](../reports/final_checks.md)
+See [the architecture guide](architecture.md), [data guide](data_inventory.md), and [API reference](api.md).

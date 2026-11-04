@@ -1,23 +1,22 @@
-# Ten-minute presentation guide
+# Presentation guide
 
-The slides are in `deliverables/Medical_Imaging_AI_Review_Platform.pptx`. Use these notes to explain the work in your own words; the listed times add to ten minutes. Rehearse with the local demo ready. Do not claim personal work or results you cannot explain.
+The 10-slide deck is `deliverables/Medical_Imaging_AI_Review_Platform.pptx`. This outline follows the project story from the task and data through architecture, measured outputs, and the intended use. Adjust timing to fit a ten-minute walkthrough.
 
-1. **Purpose — 20 sec.** Introduce the portal assignment and its educational, non-diagnostic scope.
-2. **Tasks — 45 sec.** Explain that chest X-ray classification and spleen CT segmentation are separate models and workflows.
-3. **Data and evaluation — 60 sec.** Describe report-mined NIH labels, the 5,000- and 2,138-patient reused panels, and why neither is an independent test. Mention the small MSD cohort.
-4. **Architecture — 60 sec.** Walk through React, FastAPI, DenseNet-121, Grad-CAM, MONAI U-Net, NIfTI masks, and the limited Orthanc DX and CT paths. Explain that one public de-identified CT series passed an interoperability check with an independently supplied count.
-5. **Classifier comparison — 90 sec.** Present the API weight average versus 6c32 metrics on the 5,000-patient and 2,138-patient panels. State the label counts and that both panels were reused.
-6. **Interpretation — 60 sec.** Explain AUROC versus AP, why prevalence matters for AP, and why these results do not establish clinical usefulness.
-7. **Segmentation — 90 sec.** Describe the 29-volume training set, six validation cases, selected checkpoint, mean Dice 0.8327, and why checkpoint selection makes that validation result optimistic. Describe prior use of the internal holdout cases.
-8. **Demo and engineering — 75 sec.** Show upload, scores/overlay, local review event, mask, and the synthetic Orthanc DX path. Describe the single de-identified CT interoperability check without claiming its mask is accurate.
-9. **Limitations and next work — 80 sec.** Discuss data availability, reused panels, limited cohorts, limited CT interoperability evidence, CPU Docker segmentation, and the absence of clinical validation.
-10. **Personal reflection — 40 sec.** Explain what you personally did, what you found difficult, and what you would change next. Write this yourself; do not use a prewritten reflection.
+1. **Project overview — 20 sec.** Introduce the Medical Imaging AI Review Platform and its two independent workflows.
+2. **Scope — 45 sec.** Explain chest X-ray finding classification and 3D spleen CT segmentation.
+3. **Data and evaluation — 60 sec.** Describe NIH report-mined labels, the two classifier development panels, and the Task09 spleen cohorts.
+4. **Architecture — 60 sec.** Trace React uploads through FastAPI to DenseNet-121, Grad-CAM, MONAI 3D U-Net, and the optional Orthanc paths.
+5. **Classifier design — 60 sec.** Explain the deployed 8k/10k DenseNet weight average and the 6c32 comparison model.
+6. **Classifier results — 90 sec.** Present macro AUROC and AP, label support, and paired patient bootstrap intervals for the 5,000-patient panel.
+7. **Second panel — 60 sec.** Present the corresponding 2,138-patient results and note that the panels were reused during development.
+8. **Segmentation — 90 sec.** Describe the 29-volume training cohort, six validation cases, selected checkpoint, and Dice results.
+9. **Application walkthrough — 75 sec.** Show image upload, classifier scores, Grad-CAM overlay, review action, NIfTI segmentation mask, and the Orthanc workflow.
+10. **Reflection — 40 sec.** Share your own contribution, one evidence-led decision, a lesson from the work, and the next improvement you would pursue.
 
-## Terms to use carefully
+## Language for results
 
-- Say **macro AUROC**, **macro average precision**, and **mean case Dice**. Do not call these accuracy.
-- Tie every score to its exact checkpoint and cohort.
-- Distinguish the synthetic Orthanc studies from the one public de-identified CT interoperability case.
-- Attribute the public CT case to the TCIA CMB-CRC collection; the dataset citation is in `reports/requirements_and_verification.md`.
-- Say the classifier panels were reused; they are not independent test data.
-- Keep the education-only notice visible.
+- Use **macro AUROC**, **macro average precision (AP)**, and **mean case Dice**; these are not accuracy percentages.
+- Tie each result to its model and cohort.
+- State that classifier panels were reused and that labels are report-mined.
+- Describe Grad-CAM as a coarse attribution overlay.
+- Keep the educational, non-diagnostic use statement visible.

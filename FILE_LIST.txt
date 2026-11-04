@@ -24,6 +24,7 @@ demo/spleen_volume_example.nii.gz.dvc
 docker-compose.yml
 docs/api.md
 docs/architecture.md
+docs/classifier_model_direction.md
 docs/data_inventory.md
 docs/model_card.md
 docs/presentation-outline.md
@@ -36,12 +37,7 @@ evaluate_segmentation.py
 gradcam.py
 params.yaml
 README.md
-reports/api_regression.md
-reports/classifier_results.md
-reports/demo_verification.md
-reports/final_checks.md
-reports/project_closeout.md
-reports/requirements_and_verification.md
+reports/project_results.md
 requirements-api.lock.txt
 requirements-api.txt
 requirements-dvc.txt

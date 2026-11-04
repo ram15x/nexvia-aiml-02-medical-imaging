@@ -1,27 +1,31 @@
-# API reference
+# API guide
 
-This API serves a local educational prototype. It is not a clinical service. Run the API and UI using the commands in the root README.
+FastAPI serves the classifier, attribution, segmentation, review, and Orthanc workflows. Start the application using the root [README](../README.md).
 
-## Main routes
+## Routes
 
-| Method and route | Purpose | Input / output |
+| Method and route | Workflow | Input and output |
 |---|---|---|
-| `GET /health` | Readiness and configured model metadata | Reports classifier and segmentation checkpoint metadata, including the segmentation checkpoint path/hash and configured ROI, threshold, and flip-TTA setting. |
-| `POST /predict` | Classify a chest X-ray | Multipart image upload; returns 14 uncalibrated report-mined finding scores. |
-| `POST /explain` | Produce a coarse Grad-CAM overlay | Multipart chest X-ray plus a `label` form field; returns the overlay and class attribution information. This is not a detector or a clinical explanation. |
-| `POST /segment/spleen` | Segment an uploaded NIfTI spleen CT | Multipart NIfTI upload; returns a binary mask and preview data. |
-| `POST /reviews` | Record a demonstration review action | Review event is appended to the configured local JSONL audit file. It does not represent a clinical decision. |
-| `POST /orthanc/sync` | Process eligible stable Orthanc DX studies | Pulls eligible studies, classifies DX images, and stores results in the configured JSONL file. |
-| `POST /orthanc/series/{series_id}/segment/spleen` | Convert and segment a stable Orthanc CT series | Complete series need no extra parameter. For status `Unknown`, optional query parameter `expected_instances` must be an independently obtained integer from 2 to 512 matching the Orthanc instance count. Missing, inconsistent and incomplete statuses are rejected. The series membership and study stability are rechecked after retrieval. A matching count does not prove completeness. Returns summary, `result_id`, `mask_sha256`, `mask_url`, and completeness provenance; saves the NIfTI mask and JSONL locally. |
-| `GET /orthanc/series/{series_id}/segmentation-results` | List stored CT segmentation results | Returns metadata and mask retrieval URLs for results recorded for the series. |
-| `GET /orthanc/series/{series_id}/segmentation-results/{result_id}/mask` | Retrieve a saved CT mask | Streams the NIfTI-GZIP file and provides its SHA-256 in the `X-Content-SHA256` response header. The API verifies the stored digest before serving. |
+| `GET /health` | Service and model status | Returns readiness and active checkpoint/configuration metadata. |
+| `POST /predict` | Chest X-ray classification | PNG/JPEG upload; returns 14 report-mined finding scores. |
+| `POST /explain` | Classifier visualization | PNG/JPEG upload plus a `label`; returns a Grad-CAM overlay and class attribution information. |
+| `POST /segment/spleen` | 3D spleen segmentation | NIfTI upload; returns a binary mask and preview data. |
+| `POST /reviews` | Browser review workflow | Saves a demonstration review event to the configured local JSONL file. |
+| `POST /orthanc/sync` | DX synchronization | Processes eligible stable Orthanc DX studies and records classification results. |
+| `POST /orthanc/series/{series_id}/segment/spleen` | Orthanc CT segmentation | Converts an eligible CT series to the segmentation input format and returns a result summary, mask URL, and provenance metadata. |
+| `GET /orthanc/series/{series_id}/segmentation-results` | CT result list | Lists saved segmentation summaries and mask retrieval links for a series. |
+| `GET /orthanc/series/{series_id}/segmentation-results/{result_id}/mask` | CT mask retrieval | Streams the stored NIfTI-GZIP mask and its SHA-256 response header. |
 
-## Local CT result storage
+### Orthanc CT series handling
 
-`NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH` selects the JSONL metadata file and defaults to `demo/orthanc_segmentations.jsonl`. `NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR` selects the mask directory and defaults to `demo/orthanc_masks/`. Relative paths resolve from the project root. These are local demo outputs and are excluded from Git.
+A series marked complete can be processed directly. When Orthanc reports `Unknown`, `expected_instances` may be supplied as an independently obtained count between 2 and 512; the API compares it with the retrieved instance count and rechecks series membership and stability. The expected count is used as a completeness input before processing.
 
-Each saved result links a generated result ID to the Orthanc series and records the output mask SHA-256, segmentation checkpoint SHA-256, threshold, flip-TTA setting, series status, completeness basis, supplied count, summary values, and non-diagnostic disclaimer. `operator_supplied_count_match` records a user's supplied count; it is not independent proof that every slice is correct. The mask is stored as NIfTI-GZIP, not converted into a DICOM SEG or DICOM SR object and not written back into Orthanc. The GET endpoints provide retrieval from the API host's local storage; they are not a shared or durable production storage service.
+## Outputs and local storage
 
-## Verification boundary
+`NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH` selects the JSONL summary file and defaults to `demo/orthanc_segmentations.jsonl`. `NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR` selects the NIfTI-GZIP mask folder and defaults to `demo/orthanc_masks/`. Relative paths resolve from the project root.
 
-The CT list/retrieval flow was exercised using one generated synthetic 24-slice CT series with explicit completeness metadata. A separate public de-identified 81-slice CT series was reported as Unknown by Orthanc: the default request and a wrong expected count returned HTTP 422, while the independently reported matching count allowed processing, with the saved mask checksum verified on retrieval. This is one interoperability check without a reference mask, not an accuracy or broad scanner-compatibility test. Multi-user access control, retention, backup, DICOM SEG/SR interoperability, and clinical use are not verified. The data citation and check are in `reports/requirements_and_verification.md`.
+Each CT record links a result ID to its Orthanc series and includes the output mask digest, model checkpoint digest, inference settings, series metadata, and completeness basis. Masks are stored in NIfTI-GZIP format. Review and result records are local demonstration outputs; they are not a shared production audit service.
+
+## Response interpretation
+
+Chest outputs are uncalibrated sigmoid scores for 14 report-mined findings. Grad-CAM is a coarse visual attribution. The spleen route returns a binary segmentation mask; Dice measures mask overlap. These outputs support model demonstration and review of the pipeline, not clinical decisions.
