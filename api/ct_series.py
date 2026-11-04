@@ -155,7 +155,9 @@ def _series_volume(datasets: list) -> tuple[np.ndarray, np.ndarray]:
     return volume, affine
 
 
-def fetch_orthanc_ct_series_to_nifti(series_id: str, output_path: Path) -> dict:
+def fetch_orthanc_ct_series_to_nifti(
+    series_id: str, output_path: Path, expected_instances: int | None = None
+) -> dict:
     """Fetch one stable CT series and write a geometry-preserving NIfTI volume."""
     if not re.fullmatch(r"[A-Za-z0-9-]{8,80}", series_id):
         raise CTSeriesError("Invalid Orthanc series ID")
@@ -165,15 +167,24 @@ def fetch_orthanc_ct_series_to_nifti(series_id: str, output_path: Path) -> dict:
     info = response.json()
     if not isinstance(info, dict) or not isinstance(info.get("Instances"), list):
         raise CTSeriesError("Orthanc returned an invalid series record")
+    instances = info["Instances"]
+    if not 2 <= len(instances) <= MAX_SERIES_INSTANCES:
+        raise CTSeriesError("CT series must contain 2 to 512 single-frame instances")
+    if expected_instances is not None:
+        if isinstance(expected_instances, bool) or not isinstance(expected_instances, int) or not 2 <= expected_instances <= MAX_SERIES_INSTANCES:
+            raise CTSeriesError("Expected instance count must be an integer between 2 and 512")
+        if len(instances) != expected_instances:
+            raise CTSeriesError("Orthanc instance count does not match the supplied expected count")
     status = info.get("Status")
-    if status != "Complete":
+    if status == "Complete":
+        completeness_basis = "orthanc_complete"
+    elif status == "Unknown" and expected_instances is not None:
+        completeness_basis = "operator_supplied_count_match"
+    else:
         display_status = status if isinstance(status, str) and status else "missing"
         raise CTSeriesError(
             f"Orthanc series is not confirmed complete (status: {display_status})"
         )
-    instances = info["Instances"]
-    if not 2 <= len(instances) <= MAX_SERIES_INSTANCES:
-        raise CTSeriesError("CT series must contain 2 to 512 single-frame instances")
     study_id = info.get("ParentStudy")
     if not isinstance(study_id, str):
         raise CTSeriesError("Orthanc series has no parent study")
@@ -193,6 +204,19 @@ def fetch_orthanc_ct_series_to_nifti(series_id: str, output_path: Path) -> dict:
         if bytes_read > MAX_SERIES_BYTES:
             raise CTSeriesError("CT series exceeds the 128 MiB demo payload limit")
         datasets.append(dataset)
+    if completeness_basis == "operator_supplied_count_match":
+        latest_response = requests.get(f"{base}/series/{series_id}", auth=auth, timeout=(5, 20))
+        latest_response.raise_for_status()
+        latest = latest_response.json()
+        if (not isinstance(latest, dict) or not isinstance(latest.get("Instances"), list)
+                or latest.get("Status") not in {"Unknown", "Complete"}
+                or set(latest["Instances"]) != set(instances)):
+            raise CTSeriesError("Orthanc series changed during retrieval; retry after it is stable")
+        stable_response = requests.get(f"{base}/studies/{study_id}", auth=auth, timeout=(5, 20))
+        stable_response.raise_for_status()
+        latest_study = stable_response.json()
+        if not isinstance(latest_study, dict) or latest_study.get("IsStable") is not True:
+            raise CTSeriesError("Orthanc study changed during retrieval; retry after it is stable")
     volume, affine = _series_volume(datasets)
     try:
         import nibabel as nib
@@ -210,6 +234,9 @@ def fetch_orthanc_ct_series_to_nifti(series_id: str, output_path: Path) -> dict:
     return {
         "orthanc_series_id": series_id,
         "instance_count": len(datasets),
+        "orthanc_series_status": status,
+        "completeness_basis": completeness_basis,
+        "expected_instances": expected_instances,
         "input_shape": list(volume.shape),
         "affine": affine.tolist(),
         "voxel_count": int(volume.size),

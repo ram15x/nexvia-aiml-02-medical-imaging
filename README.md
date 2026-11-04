@@ -6,13 +6,13 @@ I built this educational prototype for two separate medical-imaging tasks: chest
 
 ## Current status
 
-The local release package is assembled for handoff. The public GitHub repository is linked below; confirm that it contains the latest DVC documentation and pointer files before relying on it. The complete packaged test suite most recently passed **58 tests with 2 warnings** in a disposable Python 3.12 CPU container. Test-only dependencies were installed inside that temporary container; the package was mounted read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. Synthetic Orthanc DX classification and a synthetic CT series with explicit completeness metadata passed isolated API checks. CT segmentation output is saved locally with a SHA-256 record and can be listed and retrieved through the API. Ordinary CT series may have Orthanc status Unknown and are rejected by the current route; these tests do not establish broad DICOM compatibility or clinical use. There is no hosted deployment. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
+The local release package is assembled for handoff. The complete packaged test suite most recently passed **69 tests** in a disposable Python 3.12 CPU container. Test-only dependencies were installed inside that temporary container; the package was mounted read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. Synthetic Orthanc DX and CT checks passed, as did an isolated interoperability check on one public de-identified 81-slice CT series. For an Orthanc series marked Unknown, an independently supplied expected slice count is required and must match; this count does not prove completeness. CT segmentation output is saved locally with a SHA-256 record and can be retrieved through the API. These checks do not establish broad DICOM compatibility or clinical use. There is no hosted deployment. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
 
 ## What the prototype does
 
 - **Chest X-ray:** a React page sends a PNG/JPEG to FastAPI. A DenseNet-121 model returns 14 uncalibrated finding scores. Grad-CAM can show a coarse attribution overlay. Review actions are recorded locally for demonstration; they are not clinical decisions.
 - **Spleen CT:** a NIfTI volume is sent to FastAPI and segmented by a MONAI 3D U-Net. The app returns a mask and tri-planar previews. This is a separate model path from chest X-ray classification.
-- **Orthanc:** a synthetic single-frame DX study was uploaded to Orthanc, picked up by the sync route, classified, and written to the local JSONL results log. A synthetic CT series with explicit expected instance count passed the Orthanc-to-segmentation HTTP route. Its NIfTI-GZIP mask is saved locally; result metadata and the mask can be retrieved through separate API routes. These synthetic checks do not establish broad CT compatibility. No DICOM SEG/SR object is written back to Orthanc.
+- **Orthanc:** a synthetic single-frame DX study was uploaded to Orthanc, picked up by the sync route, classified, and written to the local JSONL results log. A synthetic CT series and one public de-identified CT series passed the Orthanc-to-segmentation route. For the latter, Orthanc reported Unknown and an independently supplied count matched all 81 slices. Its NIfTI-GZIP mask and provenance are stored locally and retrievable through the API. These checks do not establish broad CT compatibility. No DICOM SEG/SR object is written back to Orthanc.
 
 The architecture is in [docs/architecture.md](docs/architecture.md), API routes and payloads in [docs/api.md](docs/api.md), and the available data and what is missing from this package in [docs/data_inventory.md](docs/data_inventory.md).
 
@@ -41,10 +41,10 @@ The packaged U-Net was trained on 29 labeled volumes. Its selected checkpoint re
 |---|---|---|
 | Public medical-imaging data; DVC | NIH ChestX-ray14 and MSD Task09 were used. Two retained demo examples are tracked by DVC, with a local backup. The included DVC lock records a historical 3-epoch subset screen. | The demo backup is local to this laptop. Full training images and patient-level manifests are not in the package; the historical stage has a machine-specific Python path and does not reproduce the shipped checkpoints. |
 | DenseNet/EfficientNet classification and MONAI 3D U-Net segmentation | Separate DenseNet-121 and MONAI 3D U-Net inference paths are implemented. | The two model paths are prototypes with the evaluation limits above. |
-| DICOM workflow and Orthanc | Synthetic DX flow and a constrained synthetic CT flow passed. CT masks and provenance summaries are persisted locally and can be retrieved through the API. | This is local NIfTI-GZIP storage, not DICOM SEG/SR write-back. Stable series marked Unknown are rejected, and real CT compatibility is unverified. |
+| DICOM workflow and Orthanc | Synthetic DX and CT flows and one public de-identified CT series passed. CT masks and provenance summaries are persisted locally and can be retrieved through the API. | Unknown-status series require an independently supplied matching count; a count alone does not prove completeness. This is local NIfTI-GZIP storage, not DICOM SEG/SR write-back. Broad real-CT compatibility is unverified. |
 | Grad-CAM | Coarse attribution overlay is implemented and smoke-checked. | It is not an object detector or clinical explanation. |
 | React review viewer, overlays, scores, Approve/Reject, audit log | Browser upload, scores/overlays, local review actions, and local JSONL audit output are implemented. | Demo-only review records; no radiologist workflow or clinical audit system. |
-| Docker | API and web containers passed recorded live HTTP checks. | Docker uses CPU-only PyTorch. Synthetic Orthanc CT segmentation passed only for an explicitly complete synthetic series; compatibility with ordinary CT series is limited by Orthanc status Unknown. |
+| Docker | API and web containers passed recorded live HTTP checks. | Docker uses CPU-only PyTorch. Orthanc CT interoperability was checked on one synthetic and one public de-identified series; other scanners and series are not established. |
 | Limits/bias documentation | Model card and data inventory describe report-mined labels, panel reuse, sample limits, and educational use. | No clinical validation or evidence of benefit to care. |
 | Working demo and technical documentation | Local UI/API, setup instructions, architecture, data notes, test results, and deck are included. | The app is not hosted or screen-recorded yet. After Project 2, I will include a short walkthrough of the local demo in my 10-minute presentation recording. |
 | Presentation and reflection | The 10-minute deck is included. | I will record and present it after Project 2, with a short local demo walkthrough; I still need to write my own reflection. |
@@ -83,7 +83,7 @@ python -m pip install -r requirements-windows-tested.txt
 python -m pytest -q
 ```
 
-The complete packaged suite passed **58 tests with 2 warnings** in a disposable Python 3.12 CPU container with the project mounted read-only. The warnings are invalid-escape warnings in `test_ct_series.py`. The pinned Windows/CUDA test environment was not verified by that run. See `reports/requirements_and_verification.md` for the exact command and details. The pinned Windows install uses a large CUDA PyTorch wheel; allow several gigabytes before choosing this route.
+The complete packaged suite passed **69 tests** in a disposable Python 3.12 CPU container with the project mounted read-only. The pinned Windows/CUDA test environment was not verified by that run. See `reports/requirements_and_verification.md` for the command and details. The pinned Windows install uses a large CUDA PyTorch wheel; allow several gigabytes before choosing this route.
 
 Start the API in one PowerShell window:
 
@@ -108,7 +108,7 @@ Open `http://127.0.0.1:15180`. The backend API is at `http://127.0.0.1:18080`. T
 - Neither classifier panel is an independent test set. Both were reused for development decisions.
 - Segmentation validation selected the checkpoint. The internal holdout was evaluated before and is not project-wide untouched.
 - The 15.5k classifier checkpoint's training-manifest link is **NOT VERIFIED**.
-- Synthetic Orthanc DX sync/classification and one synthetic Orthanc CT segmentation request were exercised. The CT mask is persisted as NIfTI-GZIP with a checksum and retrieval route. Ordinary CT series that Orthanc marks Unknown are rejected; broad DICOM compatibility remains unverified.
+- Synthetic Orthanc DX and CT checks and one public de-identified CT interoperability check were exercised. A series marked Unknown needs an independently supplied matching count; that does not prove completeness. The CT mask is persisted as NIfTI-GZIP with a checksum and retrieval route. Broad DICOM compatibility remains unverified.
 - The model does not provide calibrated clinical probabilities, clinical validation, or evidence of improved patient outcomes.
 - The prototype is for education only and must not guide diagnosis or treatment.
 

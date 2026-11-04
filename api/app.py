@@ -321,7 +321,7 @@ def segment_spleen(file: UploadFile = File(...)) -> dict[str, Any]:
 
 
 @app.post("/orthanc/series/{series_id}/segment/spleen")
-def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
+def segment_orthanc_ct_series(series_id: str, expected_instances: int | None = None) -> dict[str, Any]:
     """Fetch a stable single-frame CT series from Orthanc and run the spleen model."""
     valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-"
     if not 8 <= len(series_id) <= 80 or any(character not in valid_chars for character in series_id):
@@ -336,7 +336,10 @@ def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
                 from .ct_series import fetch_orthanc_ct_series_to_nifti
             except ImportError:
                 from ct_series import fetch_orthanc_ct_series_to_nifti
-            source = fetch_orthanc_ct_series_to_nifti(series_id, input_path)
+            if expected_instances is None:
+                source = fetch_orthanc_ct_series_to_nifti(series_id, input_path)
+            else:
+                source = fetch_orthanc_ct_series_to_nifti(series_id, input_path, expected_instances=expected_instances)
             result = _process_spleen_volume(input_path, scratch_path / "output")
         except requests.RequestException as exc:
             raise HTTPException(status_code=502, detail="Could not retrieve the CT series from Orthanc.") from exc
@@ -367,6 +370,9 @@ def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
         result.update({"result_id": record_id, "source": "orthanc_ct_series",
                        "orthanc_series_id": series_id, "conversion": source["conversion"],
                        "dicom_instance_count": source["instance_count"], "stored": True,
+                       "orthanc_series_status": source.get("orthanc_series_status"),
+                       "completeness_basis": source.get("completeness_basis"),
+                       "expected_instances": source.get("expected_instances"),
                        "mask_sha256": mask_path_sha256, "mask_url": mask_url})
         record = {
             "result_id": record_id,
@@ -374,6 +380,9 @@ def segment_orthanc_ct_series(series_id: str) -> dict[str, Any]:
             "source": "orthanc_ct_series",
             "orthanc_series_id": series_id,
             "dicom_instance_count": source["instance_count"],
+            "orthanc_series_status": source.get("orthanc_series_status"),
+            "completeness_basis": source.get("completeness_basis"),
+            "expected_instances": source.get("expected_instances"),
             "input_shape": source["input_shape"],
             "predicted_spleen_voxels": result["predicted_spleen_voxels"],
             "estimated_predicted_volume_ml": result["estimated_predicted_volume_ml"],
@@ -415,6 +424,7 @@ def list_orthanc_segmentation_results(series_id: str) -> dict[str, Any]:
             key: record.get(key)
             for key in (
                 "result_id", "timestamp_utc", "dicom_instance_count", "input_shape",
+                "orthanc_series_status", "completeness_basis", "expected_instances",
                 "predicted_spleen_voxels", "estimated_predicted_volume_ml",
                 "mask_sha256", "checkpoint_sha256", "threshold", "flip_tta", "disclaimer",
             )

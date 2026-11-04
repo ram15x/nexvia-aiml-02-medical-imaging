@@ -1,6 +1,6 @@
 # Nexvia AIML-02 demo and segmentation audit — 2026-11-03
 
-> **Historical snapshot:** This report records the first Nov 3 bring-up attempt. Its NOT VERIFIED outcomes describe that attempt only. Later local HTTP, browser, fresh-install, and Docker checks are recorded in `final_checks.md` and the current handoff verification report. Later synthetic Orthanc checks are recorded in `requirements_and_verification.md`; real-world DICOM compatibility remains unverified. Keep this report as the failed-attempt record, not as the current status.
+> **Historical snapshot:** This report records the first Nov 3 bring-up attempt. Its NOT VERIFIED outcomes describe that attempt only. Later local HTTP, browser, fresh-install, Docker, synthetic Orthanc and one public de-identified CT interoperability check are recorded in `final_checks.md` and `requirements_and_verification.md`. Broad real-world DICOM compatibility remains unverified. Keep this report as the failed-attempt record, not as the current status.
 
 ## Summary
 

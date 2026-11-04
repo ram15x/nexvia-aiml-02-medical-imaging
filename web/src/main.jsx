@@ -34,6 +34,7 @@ function App() {
   const [syncMessage, setSyncMessage] = useState('');
   const [ctFile, setCtFile] = useState(null);
   const [orthancSeriesId, setOrthancSeriesId] = useState('');
+  const [orthancExpectedCount, setOrthancExpectedCount] = useState('');
   const [ctResult, setCtResult] = useState(null);
   const [ctBusy, setCtBusy] = useState(false);
   const [ctError, setCtError] = useState('');
@@ -60,7 +61,9 @@ function App() {
     if (!seriesId) return;
     setCtBusy(true); setCtError(''); setCtResult(null);
     try {
-      const response = await fetch(`${API}/orthanc/series/${encodeURIComponent(seriesId)}/segment/spleen`, { method: 'POST' });
+      const count = orthancExpectedCount.trim();
+      const query = count ? `?expected_instances=${encodeURIComponent(count)}` : '';
+      const response = await fetch(`${API}/orthanc/series/${encodeURIComponent(seriesId)}/segment/spleen${query}`, { method: 'POST' });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || 'Orthanc CT series could not be processed.');
       setCtResult(data);
@@ -150,7 +153,7 @@ function App() {
   return <main className="shell">
     <header className="topbar"><div className="brand-mark">N</div><div><p className="eyebrow">NEXVIA · AIML-02</p><h1>Chest imaging review</h1></div><span className="demo-tag">LOCAL DEMO</span></header>
     <aside className="notice"><strong>Coursework prototype.</strong> Model scores are experimental and are not a diagnosis or a substitute for a clinician's review. Do not upload real patient data to this demo.</aside>
-    <section className="sync-panel"><div><p className="eyebrow">OPTIONAL LOCAL ORTHANC DEMO</p><strong>Check for new chest radiographs</strong><span>Reads Orthanc’s stable-study change log and processes at most 16 instances per click. Only single-frame CR/DX radiographs are sent to the chest X-ray classifier.</span></div><button className="secondary" onClick={syncOrthanc} disabled={syncBusy}>{syncBusy ? 'Checking…' : 'Sync new radiographs'}</button>{syncMessage && <p className="saved">{syncMessage}</p>}<form className="orthanc-ct-form" onSubmit={segmentOrthancCt}><label htmlFor="orthanc-series-id">Experimental spleen segmentation from one stable Orthanc CT series</label><input id="orthanc-series-id" value={orthancSeriesId} onChange={e => setOrthancSeriesId(e.target.value)} placeholder="Orthanc series ID" autoComplete="off" /><button className="secondary" disabled={!orthancSeriesId.trim() || ctBusy}>{ctBusy ? 'Running 3D model…' : 'Segment Orthanc CT series'}</button><small>Single-frame CT slices only; series geometry and size are checked. No patient names or demographics are shown. The Orthanc series reference is recorded; mask accuracy is unknown for this input.</small></form></section>
+    <section className="sync-panel"><div><p className="eyebrow">OPTIONAL LOCAL ORTHANC DEMO</p><strong>Check for new chest radiographs</strong><span>Reads Orthanc’s stable-study change log and processes at most 16 instances per click. Only single-frame CR/DX radiographs are sent to the chest X-ray classifier.</span></div><button className="secondary" onClick={syncOrthanc} disabled={syncBusy}>{syncBusy ? 'Checking…' : 'Sync new radiographs'}</button>{syncMessage && <p className="saved">{syncMessage}</p>}<form className="orthanc-ct-form" onSubmit={segmentOrthancCt}><label htmlFor="orthanc-series-id">Experimental spleen segmentation from one stable Orthanc CT series</label><input id="orthanc-series-id" value={orthancSeriesId} onChange={e => setOrthancSeriesId(e.target.value)} placeholder="Orthanc series ID" autoComplete="off" /><label htmlFor="orthanc-expected-count">Expected slice count from the data source (optional)</label><input id="orthanc-expected-count" type="number" min="2" max="512" step="1" value={orthancExpectedCount} onChange={e => setOrthancExpectedCount(e.target.value)} placeholder="Only if independently known" /><button className="secondary" disabled={!orthancSeriesId.trim() || ctBusy}>{ctBusy ? 'Running 3D model…' : 'Segment Orthanc CT series'}</button><small>For a series marked Unknown, provide the expected count only if the source independently supplies it. A matching count is not proof that every slice is correct or complete. Single-frame CT slices only; geometry and size are checked. No patient names or demographics are shown. The series reference and count basis are recorded; mask accuracy is unknown for this input.</small></form></section>
     <section className="workspace">
       <form className="card upload" onSubmit={analyze}>
         <div className="section-head"><div><p className="eyebrow">01 / IMAGE</p><h2>Select a chest image</h2></div><span className="format">PNG or JPEG</span></div>
@@ -199,7 +202,7 @@ function App() {
           <img src={`data:image/png;base64,${ctResult.preview_planes[ctPlane].png_base64}`} alt={`${ctPlane} CT slice with predicted spleen mask overlaid in red`} />
           <small>RAS orientation · mask-centered slice {ctResult.preview_planes[ctPlane].slice_index}</small>
         </div>
-        <div><strong>3D spleen model output</strong><p>Predicted mask: {ctResult.predicted_spleen_voxels.toLocaleString()} voxels · estimated volume {ctResult.estimated_predicted_volume_ml} mL. Output shape and affine match the input: {ctResult.output_geometry_matches_input ? 'yes' : 'no'}.</p>{ctResult.dicom_instance_count && <small>Orthanc source series · {ctResult.dicom_instance_count} DICOM slices · result recorded as {ctResult.result_id.slice(0, 8)}.</small>}<small>Inference: {ctResult.inference_augmentation}</small><p><button type="button" className="secondary mask-download" onClick={downloadSpleenMask}>Download binary NIfTI mask</button></p><p className="error">This input has no reference mask, so its accuracy is unknown. See the model card for the evaluation and its limits.</p><small>{ctResult.disclaimer}</small></div>
+        <div><strong>3D spleen model output</strong><p>Predicted mask: {ctResult.predicted_spleen_voxels.toLocaleString()} voxels · estimated volume {ctResult.estimated_predicted_volume_ml} mL. Output shape and affine match the input: {ctResult.output_geometry_matches_input ? 'yes' : 'no'}.</p>{ctResult.dicom_instance_count && <small>Orthanc source series · {ctResult.dicom_instance_count} DICOM slices · result recorded as {ctResult.result_id.slice(0, 8)}. {ctResult.completeness_basis === 'operator_supplied_count_match' ? 'Count supplied by operator; completeness is not independently proven.' : ''}</small>}<small>Inference: {ctResult.inference_augmentation}</small><p><button type="button" className="secondary mask-download" onClick={downloadSpleenMask}>Download binary NIfTI mask</button></p><p className="error">This input has no reference mask, so its accuracy is unknown. See the model card for the evaluation and its limits.</p><small>{ctResult.disclaimer}</small></div>
       </div>}
     </section>
     <footer><span>DenseNet-121 · NIH ChestX-ray14 label set</span><span>Scores are not calibrated probabilities · educational use only</span></footer>

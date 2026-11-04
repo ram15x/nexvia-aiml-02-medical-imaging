@@ -20,7 +20,7 @@ flowchart LR
   SU --> M[Mask and tri-planar previews]
   O[Orthanc DICOM] -->|stable DX sync| API
   API -->|DX scores| R[Local JSONL results]
-  O -. synthetic complete CT passed; Unknown completeness rejected .-> API
+  O -. stable CT; Unknown requires independently supplied matching count .-> API
   API -->|CT mask NIfTI-GZIP + metadata| SR[Local mask directory + JSONL]
 ```
 
@@ -38,7 +38,7 @@ The spleen path accepts 3D NIfTI. The packaged MONAI 3D U-Net uses a 96×96×96 
 | API | FastAPI routes for health, prediction, explanation, NIfTI segmentation, local review log, and optional Orthanc | HTTP checks are recorded in the verification reports. |
 | Web UI | React in `web/` | Browser uploads and API/web container checks are recorded. The UI is a local demo. |
 | Orthanc DX path | Stable-study change sync, single-frame DX inference, local JSONL result | Passed one generated synthetic DX study. This does not verify broad DICOM compatibility or clinical input. |
-| Orthanc CT path | Manual CT-series conversion to NIfTI, spleen inference, local mask storage and retrieval | Passed one isolated synthetic 24-slice CT series after Orthanc reported Complete and the study IsStable=true; HTTP 200, input shape 64x64x24, CPU inference. The NIfTI-GZIP mask is saved under the configured local mask directory; JSONL records the mask checksum, model checksum, inference settings, and summary. GET routes list a series' stored results and retrieve a mask after checksum verification. A stable series with status Unknown was rejected with HTTP 422. No real CT compatibility or DICOM SEG/SR write-back is established. |
+| Orthanc CT path | Manual CT-series conversion to NIfTI, spleen inference, local mask storage and retrieval | One synthetic complete CT and one public de-identified 81-slice CT were processed. The latter was Unknown in Orthanc and required a matching independently supplied count; missing or mismatched counts were rejected. JSONL records the status, count basis and checksums. The mask is retrievable locally after checksum verification. This single real-series check has no reference mask and does not establish broad CT compatibility or DICOM SEG/SR write-back. |
 | Docker | Compose API and web services, CPU-only PyTorch image | API and web live HTTP checks are recorded. Docker segmentation uses CPU configuration; the runtime device was not logged in those checks. |
 | DVC/data | dvc.yaml, dvc.lock, audit scripts | The lock records a historical 3-epoch NIH subset screen, not the deployed classifier or segmentation training. It references missing data/manifests and a machine-specific Windows Python path; no DVC remote is configured in the package. Reproduction is not verified and cannot be done from this package alone. |
 
