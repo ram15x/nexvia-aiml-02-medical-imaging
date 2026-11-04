@@ -6,7 +6,7 @@ I built this educational prototype for two separate medical-imaging tasks: chest
 
 ## Current status
 
-The local release package is assembled for handoff and synchronized to the public GitHub `main` branch. After the latest documentation update, all 64 package files were compared with the public branch and matched. The complete packaged test suite most recently passed **58 tests with 2 warnings** in a disposable Python 3.12 CPU container. Test-only dependencies were installed inside that temporary container; the package was mounted read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. Synthetic Orthanc DX classification and a synthetic CT series with explicit completeness metadata passed isolated API checks. CT segmentation output is saved locally with a SHA-256 record and can be listed and retrieved through the API. Ordinary CT series may have Orthanc status Unknown and are rejected by the current route; these tests do not establish broad DICOM compatibility or clinical use. There is no hosted deployment. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
+The local release package is assembled for handoff. The public GitHub repository is linked below; confirm that it contains the latest DVC documentation and pointer files before relying on it. The complete packaged test suite most recently passed **58 tests with 2 warnings** in a disposable Python 3.12 CPU container. Test-only dependencies were installed inside that temporary container; the package was mounted read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. Synthetic Orthanc DX classification and a synthetic CT series with explicit completeness metadata passed isolated API checks. CT segmentation output is saved locally with a SHA-256 record and can be listed and retrieved through the API. Ordinary CT series may have Orthanc status Unknown and are rejected by the current route; these tests do not establish broad DICOM compatibility or clinical use. There is no hosted deployment. The portal requires both assigned projects in one Google Drive folder and locks the link after submission; I have not submitted the combined internship deliverables.
 
 ## What the prototype does
 
@@ -39,7 +39,7 @@ The packaged U-Net was trained on 29 labeled volumes. Its selected checkpoint re
 
 | Assigned requirement | What is present | Remaining limit |
 |---|---|---|
-| Public medical-imaging data; DVC | NIH ChestX-ray14 and MSD Task09 were used. The included DVC lock records only a historical 3-epoch subset screen; it is not the deployed classifier training pipeline. | Full images and patient-level manifests are not in this package; no DVC remote is configured. The DVC stage also contains a machine-specific Windows Python path. Training is not reproducible from this package alone. |
+| Public medical-imaging data; DVC | NIH ChestX-ray14 and MSD Task09 were used. Two retained demo examples are tracked by DVC, with a local backup. The included DVC lock records a historical 3-epoch subset screen. | The demo backup is local to this laptop. Full training images and patient-level manifests are not in the package; the historical stage has a machine-specific Python path and does not reproduce the shipped checkpoints. |
 | DenseNet/EfficientNet classification and MONAI 3D U-Net segmentation | Separate DenseNet-121 and MONAI 3D U-Net inference paths are implemented. | The two model paths are prototypes with the evaluation limits above. |
 | DICOM workflow and Orthanc | Synthetic DX flow and a constrained synthetic CT flow passed. CT masks and provenance summaries are persisted locally and can be retrieved through the API. | This is local NIfTI-GZIP storage, not DICOM SEG/SR write-back. Stable series marked Unknown are rejected, and real CT compatibility is unverified. |
 | Grad-CAM | Coarse attribution overlay is implemented and smoke-checked. | It is not an object detector or clinical explanation. |
@@ -50,6 +50,10 @@ The packaged U-Net was trained on 29 labeled volumes. Its selected checkpoint re
 | Presentation and reflection | The 10-minute deck is included. | I will record and present it after Project 2, with a short local demo walkthrough; I still need to write my own reflection. |
 
 The full item-by-item check against the portal is [reports/requirements_and_verification.md](reports/requirements_and_verification.md).
+
+## Versioned demo data
+
+The two `.dvc` files in `demo/` record the retained chest and spleen examples. Their roughly 16 MB backup is in the private working project's `dvc-demo-store/`, outside this release. With DVC 3.67.1 installed, a local copy of this release next to that store can use `dvc remote add --local demo_local ../dvc-demo-store` and then `dvc pull -r demo_local demo/chest_xray_example.png.dvc demo/spleen_volume_example.nii.gz.dvc`. The examples and local backup are not published to GitHub. This versioning does not restore the missing original training dataset or reproduce model training. See [docs/data_inventory.md](docs/data_inventory.md).
 
 ## Run the local demo
 

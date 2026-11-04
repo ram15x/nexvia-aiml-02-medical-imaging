@@ -1,0 +1,6 @@
+outs:
+- md5: cd62c75e25b0969232ba67819e314332
+  size: 402332
+  isexec: true
+  hash: md5
+  path: chest_xray_example.png
