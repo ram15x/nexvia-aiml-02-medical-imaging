@@ -1,0 +1,6 @@
+outs:
+- md5: 89cef613ba5d7866592a94d3293eaf45
+  size: 15682065
+  isexec: true
+  hash: md5
+  path: spleen_volume_example.nii.gz
