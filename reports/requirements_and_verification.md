@@ -18,7 +18,7 @@ The portal specifies one master Google Drive folder for both assigned projects a
 | Docker | API/web checks passed previously | The API and web services returned successful live HTTP responses in recorded checks. Docker uses CPU-only PyTorch. The test suite below also ran in the local CPU Docker test image. |
 | Limits and bias | Documented | The model card and data inventory describe reused panels, report-mined labels, missing input data, limited cohorts, and non-diagnostic use. No clinical validation is claimed. |
 | Working demo | Local demo implemented; browser upload and live HTTP checks recorded | No hosted deployment URL or screen recording is included yet. Ram will include a short local app walkthrough in the 10-minute presentation after Project 2. Orthanc verification uses synthetic DX and one synthetic CT series with explicit completeness metadata; ordinary CT series reported as Unknown are rejected. |
-| GitHub, README, architecture/data/API docs | Present; latest sync pending verification | An earlier 64-file package matched the public branch. DVC pointer and documentation changes were made afterwards; check the branch for those changes before relying on the public copy. |
+| GitHub, README, architecture/data/API docs | Present | The release includes the README, architecture, data and API documentation, DVC pointers, and a checksum manifest. Compare the public branch against the manifest when updating the release. |
 | Test results | **58 passed, 2 warnings** in a disposable Python 3.12 CPU container | Latest full packaged suite passed. Test-only dependencies were installed inside the disposable container; the project mount was read-only. This does not verify the pinned Windows/Python 3.10/CUDA 12.8 environment. |
 | 10-minute presentation | Deck included; visual check performed | The 10-slide deck was opened in PowerPoint and reviewed in Slide Sorter; it has not been rendered to slide images. Ram will record and present it after Project 2 with a short local demo walkthrough. Slide 10 remains a prompt for Ram’s own reflection. |
 | Individual reflection and recording | Ram’s action remains | After Project 2, Ram will record and present the deck with a short walkthrough of the local demo. He must write his personal reflection in his own words. |
@@ -93,6 +93,12 @@ The DICOM generator was streamed inline to the API container and not saved as a 
 
 Exact route invocation from PowerShell:
 Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:28000/orthanc/series/0467c267-b4eb5cf0-8215cc60-210bdce6-f006ea65/segment/spleen' -TimeoutSec 360
+
+## Final rebuild and browser check
+
+The API and web images were built from the release Dockerfiles on November 4. The initial API attempt with `--network=none` failed because its package-install layer was not cached. An online rebuild then succeeded; the official CPU Torch wheel was 209,530,490 bytes. The frontend build ran `npm ci` and `npm run build` successfully using its cached npm layer. The API build was tested in a disposable container with the release mounted read-only and temporary test-only installations of `pytest==9.0.2`, `pandas==2.3.3`, and `scikit-learn==1.7.2`: **58 passed, 2 invalid-escape warnings in 13.06 seconds**. No checkpoint was changed and no dataset was downloaded.
+
+In Chrome, the rebuilt application accepted the retained chest example and showed 14 scores, a Grad-CAM overlay and a recorded demo review. It accepted the retained spleen volume and showed an axial overlay and mask download; the example had no reference mask, so this is a workflow check, not an accuracy measurement. The first request from `127.0.0.1` failed while the frontend was configured to call `localhost`. The frontend now uses the current loopback hostname when both the page and configured API are loopback addresses; chest prediction worked at both addresses after rebuilding. The CT screen also previously displayed historical Dice values from the old segmentation model beside the new model output; those values were removed from the screen. The model weights and evaluation results did not change. These frontend changes were made after the Python suite run; the frontend production build and browser checks were repeated afterwards.
 
 ## Latest full-suite result (Nov 4)
 

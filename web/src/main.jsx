@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style.css';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API = (() => {
+  const url = new URL(import.meta.env.VITE_API_URL || 'http://localhost:8000', window.location.origin);
+  const localHosts = new Set(['localhost', '127.0.0.1']);
+  if (localHosts.has(url.hostname) && localHosts.has(window.location.hostname)) {
+    url.hostname = window.location.hostname;
+  }
+  return url.href.replace(/\/$/, '');
+})();
 const FROZEN_EVALUATION = {
   checkpointSha256: '5634f21659d2cb8bf57bb90ff45797bd998beef15e1231e7f916f953f610db87',
   images: 500,
@@ -192,7 +199,7 @@ function App() {
           <img src={`data:image/png;base64,${ctResult.preview_planes[ctPlane].png_base64}`} alt={`${ctPlane} CT slice with predicted spleen mask overlaid in red`} />
           <small>RAS orientation · mask-centered slice {ctResult.preview_planes[ctPlane].slice_index}</small>
         </div>
-        <div><strong>3D spleen model output</strong><p>Predicted mask: {ctResult.predicted_spleen_voxels.toLocaleString()} voxels · estimated volume {ctResult.estimated_predicted_volume_ml} mL. Output shape and affine match the input: {ctResult.output_geometry_matches_input ? 'yes' : 'no'}.</p>{ctResult.dicom_instance_count && <small>Orthanc source series · {ctResult.dicom_instance_count} DICOM slices · result recorded as {ctResult.result_id.slice(0, 8)}.</small>}<small>Inference: {ctResult.inference_augmentation}</small><p><button type="button" className="secondary mask-download" onClick={downloadSpleenMask}>Download binary NIfTI mask</button></p><p className="error">On the same six internal cases, direct U-Net scored 0.3272 mean Dice; flip averaging scored 0.3412. This is a repeat on a small, previously accessed holdout, not fresh validation. This input has no reference mask, so its accuracy is unknown.</p><small>{ctResult.disclaimer}</small></div>
+        <div><strong>3D spleen model output</strong><p>Predicted mask: {ctResult.predicted_spleen_voxels.toLocaleString()} voxels · estimated volume {ctResult.estimated_predicted_volume_ml} mL. Output shape and affine match the input: {ctResult.output_geometry_matches_input ? 'yes' : 'no'}.</p>{ctResult.dicom_instance_count && <small>Orthanc source series · {ctResult.dicom_instance_count} DICOM slices · result recorded as {ctResult.result_id.slice(0, 8)}.</small>}<small>Inference: {ctResult.inference_augmentation}</small><p><button type="button" className="secondary mask-download" onClick={downloadSpleenMask}>Download binary NIfTI mask</button></p><p className="error">This input has no reference mask, so its accuracy is unknown. See the model card for the evaluation and its limits.</p><small>{ctResult.disclaimer}</small></div>
       </div>}
     </section>
     <footer><span>DenseNet-121 · NIH ChestX-ray14 label set</span><span>Scores are not calibrated probabilities · educational use only</span></footer>
