@@ -19,7 +19,7 @@ The panels were reused during development and are reported as development eviden
 
 ## Spleen CT segmentation
 
-The deployed MONAI 3D U-Net was trained on 29 labeled volumes and selected using six validation cases. Mean argmax Dice on those six cases was 0.8327. The six-case internal holdout result was 0.7883 and has prior project evaluation history. These figures summarize a small development cohort.
+The deployed MONAI 3D U-Net was trained on 29 labeled volumes and selected using six validation cases. Six reserved internal held-out cases gave mean per-case Dice 0.3272, with one case at 0.0963. These figures summarize a small development cohort.
 
 The API uses a 96³ sliding-window ROI, threshold 0.50, and disabled flip TTA. It returns a binary mask with tri-planar previews.
 

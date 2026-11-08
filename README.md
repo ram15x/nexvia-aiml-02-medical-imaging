@@ -2,6 +2,8 @@
 
 **Nexvia Technologies · AIML-02**
 
+**Live demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/) · [Hugging Face Space page](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review)
+
 An educational medical-imaging application with two independent workflows: chest X-ray finding classification and 3D spleen segmentation from CT. The system combines pretrained deep-learning models with a browser review interface, API services, visual overlays, and an Orthanc integration path.
 
 ## System at a glance
@@ -44,7 +46,7 @@ The API classifier is a DenseNet-121 weight average of the 8k and 10k checkpoint
 
 Both panels were used during development and model comparison. NIH labels are report-mined; the scores are uncalibrated and should be read as model-ranking results for these development cohorts, not as clinical probabilities.
 
-The MONAI U-Net was trained on 29 labeled volumes. The selected checkpoint achieved mean argmax Dice 0.8327 on six validation cases; those cases were used for checkpoint selection. The six-case internal holdout result was mean Dice 0.7883 and has prior project evaluation history. These small-cohort results describe development performance, not clinical performance. See [the model card](docs/model_card.md) for context and per-model boundaries.
+The MONAI 3D U-Net was trained on 29 labeled CT volumes, with six volumes used for validation and six reserved as an internal held-out set (seed-42, case-level split). On the six held-out cases the baseline checkpoint reached a mean per-case Dice of **0.3272**, with one case at 0.0963. Segmentation quality is weak and highly variable, and these results describe a small development cohort, not clinical performance. See [the model card](docs/model_card.md) for context and per-model boundaries.
 
 ## Data and versioning
 
