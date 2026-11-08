@@ -37,6 +37,29 @@ Hernia has no positives in this sample, so its AUROC is undefined and it is excl
 | Pleural Thickening | 24 | 0.7644 | 0.0727 | 6 | 86 | 18 | 889 |
 | Hernia | 0 | undefined | undefined | 0 | 0 | 0 | 999 |
 
+## Patient-level 95% intervals
+
+Percentile intervals from 1,000 bootstrap resamples of the 549 patients (all images from a patient are drawn together). Produced by `evaluate_bootstrap.py`.
+
+| Label | Positives | AUROC (95% CI) | AUPRC (95% CI) |
+|---|---:|---:|---:|
+| Atelectasis | 80 | 0.8462 (0.8083–0.8841) | 0.2968 (0.2095–0.4145) |
+| Cardiomegaly | 21 | 0.7945 (0.7022–0.8685) | 0.1617 (0.0253–0.3750) |
+| Effusion | 131 | 0.8467 (0.8134–0.8823) | 0.3675 (0.2956–0.4560) |
+| Infiltration | 122 | 0.7303 (0.6700–0.7761) | 0.2753 (0.1932–0.3681) |
+| Mass | 33 | 0.7726 (0.6744–0.8486) | 0.1053 (0.0413–0.2046) |
+| Nodule | 33 | 0.7652 (0.6733–0.8558) | 0.1257 (0.0606–0.2606) |
+| Pneumonia | 7 | 0.7415 (0.6081–0.8833) | 0.0238 (0.0063–0.0781) |
+| Pneumothorax | 98 | 0.7989 (0.7406–0.8492) | 0.2190 (0.1306–0.3405) |
+| Consolidation | 36 | 0.8081 (0.7569–0.8647) | 0.0926 (0.0584–0.1561) |
+| Edema | 11 | 0.8301 (0.6877–0.9330) | 0.1053 (0.0118–0.2872) |
+| Emphysema | 43 | 0.7738 (0.7074–0.8347) | 0.1046 (0.0645–0.1705) |
+| Fibrosis | 1 | 0.8848 (0.8401–0.9247) | 0.0086 (0.0063–0.0330) |
+| Pleural Thickening | 24 | 0.7644 (0.6777–0.8502) | 0.0727 (0.0404–0.1620) |
+| Hernia | 0 | undefined | undefined |
+
+Intervals for labels with fewer than 30 positives (Pneumonia, Edema, Fibrosis, Cardiomegaly, Hernia) are very wide. Fibrosis has one positive image, so its interval describes almost nothing.
+
 ## Reading the results
 
 - At threshold 0.5 the model predicts no positives for Pneumothorax or Pneumonia, so their confusion counts are zero for true positives. Their AUROC is still informative as a ranking measure, but the 0.5 threshold is not usable for them.
@@ -47,7 +70,7 @@ Hernia has no positives in this sample, so its AUROC is undefined and it is excl
 ## Scope and limits
 
 - The evaluation script's output labels this run as a complete split. That is an artifact of how it was invoked, since the sample size was passed as the official count. The correct scope is "999-image subset of the official test split."
-- No confidence intervals yet. Patient-level bootstrap intervals are the next step, and need per-image predictions, which this run did not save.
+- Patient-level intervals are included above. Per-image predictions were saved for audit in the local data folder, not in this repository.
 - Earlier reports on a 500-image test sample and a 1,779-image validation set used a different checkpoint (`5634f216…`). Their numbers do not describe the deployed model and should not be combined with these.
 
 Educational prototype. Not for diagnosis or clinical decisions.
