@@ -70,7 +70,7 @@ docker compose up --build
 - Web app: http://localhost:15180
 - API health: http://localhost:18080/health
 
-**Data formats.** The public datasets are not DICOM: NIH ChestX-ray14 images are PNG, and MSD Task09 volumes are NIfTI. DICOM enters the system only through the optional Orthanc connector (DX/CR synchronization and manual CT-series conversion). Those DICOM paths were exercised with synthetic test files, not a real DICOM dataset.
+**Data formats.** The public datasets are not DICOM: NIH ChestX-ray14 images are PNG, and MSD Task09 volumes are NIfTI. DICOM enters the system only through the optional Orthanc connector (DX/CR synchronization and manual CT-series conversion). The DX path was tested with a generated synthetic study. The CT path was tested with a generated synthetic series and one public de-identified 81-slice TCIA CT series, which needed an operator-supplied instance count because Orthanc reported its status as Unknown. These tests check interoperability only, not accuracy or broad DICOM compatibility.
 
 Optional Orthanc (DICOM test server):
 
