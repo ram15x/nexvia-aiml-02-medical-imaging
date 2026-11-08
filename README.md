@@ -1,12 +1,19 @@
 # Medical Imaging AI Review Platform
 
-**Nexvia Technologies · AIML-02**
+**Nexvia Technologies · AIML-02 capstone · Educational prototype**
 
-**Live demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/) · [Hugging Face Space page](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review)
+**Live demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/) · [Hugging Face Space](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review)
 
-An educational medical-imaging application with two independent workflows: chest X-ray finding classification and 3D spleen segmentation from CT. The system combines pretrained deep-learning models with a browser review interface, API services, visual overlays, and an Orthanc integration path.
+An educational pipeline with two independent models and a browser review interface:
 
-## System at a glance
+- **Chest X-ray findings:** a DenseNet-121 classifier produces 14 uncalibrated scores for NIH ChestX-ray14 labels, with a Grad-CAM overlay.
+- **Spleen CT segmentation:** a MONAI 3D U-Net returns a binary mask from a NIfTI volume or a stable single-series Orthanc CT.
+
+The two models are separate and are not combined.
+
+> Not for diagnosis or clinical decisions. Use only de-identified or public sample data.
+
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -18,94 +25,100 @@ flowchart LR
   UI -->|review action| API --> LOG[Local JSONL review log]
   CT[Spleen CT NIfTI] --> UI -->|POST /segment/spleen| API
   API --> UNET[MONAI 3D U-Net]
-  UNET --> MASK[3D mask and tri-planar previews]
-  ORT[Orthanc DICOM] -->|DX sync or CT series| API
-  API --> OUT[Scores or NIfTI-GZIP mask with metadata]
+  UNET --> MASK[3D mask and previews]
+  ORT[Orthanc] -->|DX sync| API
+  ORT -->|CT series| API
 ```
 
-The chest and CT pathways are separate models and do not form a joint multimodal network. See [the architecture guide](docs/architecture.md) and [the API reference](docs/api.md).
+Details: [architecture](docs/architecture.md) · [API routes](docs/api.md) · [data and DVC](docs/data_inventory.md) · [model card](docs/model_card.md).
 
-## Main capabilities
+## Features
 
-- **Chest X-ray classification:** DenseNet-121 produces 14 sigmoid scores for NIH ChestX-ray14 findings. The UI can display a coarse Grad-CAM overlay and save a local demonstration review action.
-- **Spleen CT segmentation:** MONAI 3D U-Net processes a NIfTI volume and returns a binary mask with tri-planar previews.
-- **DICOM workflow:** Orthanc routes support DX synchronization and CT-series ingestion into the segmentation workflow. CT masks are saved as NIfTI-GZIP with local metadata and retrieval routes.
-- **Web and API:** React provides image upload and review screens; FastAPI serves prediction, explanation, segmentation, review, and Orthanc routes.
-- **Deployment:** Docker Compose runs the API and web interface. The separate [hosted Gradio demo](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review) presents the two model paths in a compact interface.
+| Area | What it does |
+|---|---|
+| Chest X-ray classification | 14 sigmoid scores per image with Grad-CAM (coarse attribution only) |
+| Spleen segmentation | Binary mask, tri-planar previews, NIfTI-GZIP download |
+| Orthanc integration | Syncs single-frame CR/DX radiographs to the classifier; segments a stable CT series |
+| Review log | Records a reviewer action with the model name and checkpoint SHA-256 |
+| Hosting | Docker Compose for local runs; Hugging Face Space for the hosted demo |
 
-## Model results
+## Results
 
-The API classifier is a DenseNet-121 weight average of the 8k and 10k checkpoints with BatchNorm recalibration. The table compares it with the earlier 8k reference checkpoint (6c32). Metrics are macro AUROC and macro average precision (AP), averaged over labels with at least 30 positive patients in the stated panel.
+All figures below come from runs saved in this repository's documentation.
 
-| Development panel | Model | Macro AUROC | Macro AP | Labels |
-|---|---|---:|---:|---:|
-| 5,000 patients | 6c32 reference | 0.7755 | 0.1519 | 13 |
-| 5,000 patients | API classifier | 0.7953 | 0.1594 | 13 |
-| 2,138 patients | 6c32 reference | 0.7700 | 0.2093 | 9 |
-| 2,138 patients | API classifier | 0.7926 | 0.2258 | 9 |
+**Chest X-ray classifier, 999-image subset of the NIH official test split** (549 patients, fixed threshold 0.5, [full report](docs/evaluation_nih_test_sample.md)):
 
-Both panels were used during development and model comparison. NIH labels are report-mined; the scores are uncalibrated and should be read as model-ranking results for these development cohorts, not as clinical probabilities.
+| Metric | Value |
+|---|---:|
+| Macro AUROC (13 labels with defined AUROC) | 0.7967 |
+| Macro AUPRC | 0.1507 |
+| Micro F1 at 0.5 | 0.2565 |
 
-The MONAI 3D U-Net was trained on 29 labeled CT volumes, with six volumes used for validation and six reserved as an internal held-out set (seed-42, case-level split). On the six held-out cases the baseline checkpoint reached a mean per-case Dice of **0.3272**, with one case at 0.0963. Segmentation quality is weak and highly variable, and these results describe a small development cohort, not clinical performance. See [the model card](docs/model_card.md) for context and per-model boundaries.
+Patient-level 95% intervals for every label are in the report. Labels with few positives have very wide intervals.
 
-## Data and versioning
+**Spleen segmentation, MSD Task09:** mean per-case Dice **0.3272** on six reserved held-out cases (one case at 0.0963). Validation cases were used for checkpoint selection and are not reported as results. This is weak, and the model should not be used for clinical segmentation.
 
-The project uses NIH ChestX-ray14 for chest classification and Medical Segmentation Decathlon Task09 Spleen for CT segmentation. DVC pointer files record the retained demonstration examples and the project includes the trained inference checkpoints. Dataset files are managed separately from the application package and remain subject to their source terms. The DVC workflow and data roles are described in [the data guide](docs/data_inventory.md).
+## Run locally with Docker
 
-## Run the application locally
+Requires Docker Desktop with the Linux engine.
 
-Model checkpoints are provided in `artifacts/`. Copy `.env.example` to `.env` before starting the app.
-
-### Option A: Docker Compose
-
-Install Docker Desktop and start its Linux engine. From the project root:
-
-```powershell
-Copy-Item .env.example .env
+```bash
+cp .env.example .env
 docker compose up --build
 ```
 
-Open the web app at `http://localhost:15180` and API health at `http://localhost:18080/health`. Stop with `Ctrl+C` or run `docker compose down`. Docker uses CPU-only PyTorch; the native Windows configuration uses the CUDA 12.8 PyTorch wheels.
+- Web app: http://localhost:15180
+- API health: http://localhost:18080/health
 
-### Option B: Windows, Python, and Node.js
+Optional Orthanc (DICOM test server):
 
-Use Python 3.10 and Node.js 20 or later. From the project root:
+```bash
+docker compose --profile orthanc up -d
+```
 
-```powershell
-Copy-Item .env.example .env
-py -3.10 -m venv .venv
-& .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements-windows-tested.txt
+Orthanc listens on `127.0.0.1:18042` (HTTP) and `127.0.0.1:14242` (DICOM). Set `ORTHANC_PASSWORD` in `.env` first.
+
+## Run locally without Docker
+
+Python 3.10 or later, Node.js 20 or later.
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements-windows-tested.txt
+python -m pytest -q
+
+python -m uvicorn api.app:app --env-file .env --host 127.0.0.1 --port 18080
+cd web && npm ci && VITE_API_URL=http://127.0.0.1:18080 npm run dev -- --port 15180
+```
+
+Model checkpoints are in `artifacts/`.
+
+## Tests
+
+```bash
 python -m pytest -q
 ```
 
-Start the API in one PowerShell window:
+## Data
 
-```powershell
-& .\.venv\Scripts\Activate.ps1
-python -m uvicorn api.app:app --env-file .env --host 127.0.0.1 --port 18080
-```
+- **NIH ChestX-ray14:** public dataset, used for chest X-ray labels. Images are not in this repository.
+- **Medical Segmentation Decathlon Task09 (Spleen):** public dataset, used for CT segmentation.
 
-Start the web interface in a second window:
+Raw data is excluded from version control. DVC pointer files describe the retained examples. See [the data guide](docs/data_inventory.md).
 
-```powershell
-Set-Location .\web
-npm ci
-$env:VITE_API_URL = "http://127.0.0.1:18080"
-npm run dev -- --host 127.0.0.1 --port 15180
-```
+## Limitations
 
-Then open `http://127.0.0.1:15180`. The shipped checkpoints are already in `artifacts/`; settings for model paths and API behavior are documented in `.env.example`.
+- Labels are mined from radiology reports and are noisy.
+- Scores are uncalibrated and are not diagnostic probabilities.
+- Grad-CAM is a coarse visual aid and does not show how the model reasons.
+- The spleen model's held-out performance is weak.
+- The Orthanc connector handles one stable single-frame instance per series and is not a full PACS integration.
 
 ## Project documents
 
-- [System architecture](docs/architecture.md)
-- [API routes and outputs](docs/api.md)
-- [Data and DVC guide](docs/data_inventory.md)
-- [Model card and evaluation context](docs/model_card.md)
-- [Presentation guide](docs/presentation-outline.md)
-- [Hosted Gradio demo](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review)
-
-**Educational prototype only. It is not intended for diagnosis, treatment, or clinical decision-making. Do not upload identifiable patient data.**
-See [the project results summary](reports/project_results.md) for the deployed-model metrics and end-to-end output flow.
+- [Architecture](docs/architecture.md)
+- [API](docs/api.md)
+- [Data and DVC](docs/data_inventory.md)
+- [Model card](docs/model_card.md)
+- [Evaluation on the NIH test sample](docs/evaluation_nih_test_sample.md)
+- [Results summary](reports/project_results.md)
