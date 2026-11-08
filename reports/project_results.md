@@ -19,7 +19,7 @@ The panels were reused during development and are reported as development eviden
 
 ## Spleen CT segmentation
 
-The deployed MONAI 3D U-Net was trained on 29 labeled volumes and selected using six validation cases. Six reserved internal held-out cases gave mean per-case Dice 0.3272, with one case at 0.0963. These figures summarize a small development cohort.
+The deployed MONAI 3D U-Net was trained on 29 labeled volumes and selected using six validation cases. Its Dice results are unreconciled: an earlier baseline (threshold 0.80, 64³ patches) gave mean per-case Dice 0.3272 on six held-out cases (one at 0.0963), while the served checkpoint's saved summaries give 0.8327 on validation and 0.7883 on a repeated holdout with prior project use. Neither is an independent measurement of the served model.
 
 The API uses a 96³ sliding-window ROI, threshold 0.50, and disabled flip TTA. It returns a binary mask with tri-planar previews.
 

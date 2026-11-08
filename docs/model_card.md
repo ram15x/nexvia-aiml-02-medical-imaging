@@ -21,7 +21,7 @@ The platform contains two independent inference paths: a 2D NIH ChestX-ray14 cla
 - **Architecture:** MONAI 3D U-Net for binary spleen masks from Task09 Spleen CT volumes.
 - **API checkpoint:** `artifacts/best_spleen_unet_candidate_20261103.pt` (SHA-256 `46622de72ac91c7e17d36da19d1088e90e1ad836a0d6e00533b37b805b5cb7a4`).
 - **Training setup:** 29 training volumes; 6 validation volumes; 96³ sliding-window ROI; 134 completed epochs. The checkpoint was selected by mean Dice on the six validation cases.
-- **Development results:** Six reserved internal held-out cases gave a mean per-case Dice of 0.3272 (one case at 0.0963). Segmentation quality is weak. These results describe a small development cohort.
+- **Development results:** Unreconciled. An earlier baseline (threshold 0.80, 64³ patches) reported mean per-case Dice 0.3272 on six held-out cases (one at 0.0963). The served checkpoint's saved summaries report 0.8327 on six validation cases and 0.7883 on a repeated holdout with prior project use. The served model has no independent held-out measurement in this repository, so segmentation quality is not established.
 - **API inference settings:** Threshold 0.50 and flip test-time augmentation disabled.
 
 ## Intended use

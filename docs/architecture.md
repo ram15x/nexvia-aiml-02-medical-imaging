@@ -50,7 +50,7 @@ For Orthanc CT, complete-series status is used when available. If Orthanc report
 
 The classifier’s macro AUROC/AP on the 5,000-patient development panel was 0.7953/0.1594 across 13 labels with at least 30 positive patients. On the 2,138-patient common-clean panel it was 0.7926/0.2258 across 9 labels with that support. The earlier 8k reference scored 0.7755/0.1519 and 0.7700/0.2093, respectively. Panels were reused during development; labels are report-mined.
 
-The spleen checkpoint was selected using six validation cases. On six reserved internal held-out cases it reached mean per-case Dice 0.3272, with one case at 0.0963. These figures are development results for this prototype, not clinical validation.
+The served spleen checkpoint was selected using six validation cases. Two saved results conflict and are not reconciled: an earlier baseline (threshold 0.80, 64³ patches) reported mean per-case Dice 0.3272 on six held-out cases, with one case at 0.0963; the served checkpoint's saved summaries report 0.8327 on validation cases and 0.7883 on a repeated holdout with prior project use. Neither is an independent test of the served model. These are development results, not clinical validation.
 
 ## Run and configuration
 

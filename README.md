@@ -56,7 +56,7 @@ All figures below come from runs saved in this repository's documentation.
 
 Patient-level 95% intervals for every label are in the report. Labels with few positives have very wide intervals.
 
-**Spleen segmentation, MSD Task09:** mean per-case Dice **0.3272** on six reserved held-out cases (one case at 0.0963). Validation cases were used for checkpoint selection and are not reported as results. This is weak, and the model should not be used for clinical segmentation.
+**Spleen segmentation, MSD Task09:** the served checkpoint (`best_spleen_unet_candidate_20261103.pt`) has no independently verified held-out Dice in this repository. Two saved results conflict and are not reconciled: an earlier baseline (threshold 0.80, 64³ patches) reported mean per-case Dice 0.3272 on six held-out cases (one at 0.0963), while the served checkpoint's saved summaries report 0.8327 on validation cases and 0.7883 on a repeated holdout whose cases had prior project use. Treat segmentation quality as unestablished; the model should not be used for clinical segmentation.
 
 ## Run locally with Docker
 
