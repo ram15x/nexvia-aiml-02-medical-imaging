@@ -827,6 +827,8 @@ def record_review(event: ReviewEvent) -> dict[str, str]:
     record = {
         "event_id": str(uuid.uuid4()),
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "model_name": _model_metadata.get("model_name", "unknown"),
+        "model_checkpoint_sha256": _model_metadata.get("checkpoint_sha256"),
         **event.model_dump(),
         "disclaimer": "Demo review annotation only; not clinical sign-off.",
     }
