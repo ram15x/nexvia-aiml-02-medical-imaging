@@ -30,8 +30,6 @@ flowchart LR
   ORT -->|CT series| API
 ```
 
-Details: [architecture](docs/architecture.md) · [API routes](docs/api.md) · [data and DVC](docs/data_inventory.md) · [model card](docs/model_card.md).
-
 ## Features
 
 | Area | What it does |
@@ -44,19 +42,7 @@ Details: [architecture](docs/architecture.md) · [API routes](docs/api.md) · [d
 
 ## Results
 
-All figures below come from runs saved in this repository's documentation.
-
-**Chest X-ray classifier, 999-image subset of the NIH official test split** (549 patients, fixed threshold 0.5, [full report](docs/evaluation_nih_test_sample.md)):
-
-| Metric | Value |
-|---|---:|
-| Macro AUROC (13 labels with defined AUROC) | 0.7967 |
-| Macro AUPRC | 0.1507 |
-| Micro F1 at 0.5 | 0.2565 |
-
-Patient-level 95% intervals for every label are in the report. Labels with few positives have very wide intervals.
-
-**Spleen segmentation, MSD Task09:** the served checkpoint (`best_spleen_unet_candidate_20261103.pt`) has no independently verified held-out Dice in this repository. Two saved results conflict and are not reconciled: an earlier baseline (threshold 0.80, 64³ patches) reported mean per-case Dice 0.3272 on six held-out cases (one at 0.0963), while the served checkpoint's saved summaries report 0.8327 on validation cases and 0.7883 on a repeated holdout whose cases had prior project use. Treat segmentation quality as unestablished; the model should not be used for clinical segmentation.
+No results are reported here. Earlier evaluation documents were removed because their figures could not be re-verified; re-evaluation is pending.
 
 ## Run locally with Docker
 
@@ -106,7 +92,7 @@ python -m pytest -q
 - **NIH ChestX-ray14:** public dataset, used for chest X-ray labels. Images are not in this repository.
 - **Medical Segmentation Decathlon Task09 (Spleen):** public dataset, used for CT segmentation.
 
-Raw data is excluded from version control. DVC pointer files describe the retained examples. See [the data guide](docs/data_inventory.md).
+Raw data is excluded from version control. DVC pointer files describe the retained examples.
 
 ## Limitations
 
@@ -116,11 +102,3 @@ Raw data is excluded from version control. DVC pointer files describe the retain
 - The spleen model's held-out performance is weak.
 - The Orthanc connector handles one stable single-frame instance per series and is not a full PACS integration.
 
-## Project documents
-
-- [Architecture](docs/architecture.md)
-- [API](docs/api.md)
-- [Data and DVC](docs/data_inventory.md)
-- [Model card](docs/model_card.md)
-- [Evaluation on the NIH test sample](docs/evaluation_nih_test_sample.md)
-- [Results summary](reports/project_results.md)
