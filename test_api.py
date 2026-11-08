@@ -459,3 +459,27 @@ def test_orthanc_lists_only_instances_below_stable_study(monkeypatch):
 
     assert result == [{"study_id": study_id, "series_id": series_id,
                        "instance_id": instance_id}]
+
+
+def test_review_audit_record_includes_model_identity(monkeypatch, tmp_path):
+    import json
+    from fastapi.testclient import TestClient
+    import api.app as app_module
+
+    audit_path = tmp_path / "review_events.jsonl"
+    monkeypatch.setattr(app_module, "AUDIT_PATH", audit_path)
+    monkeypatch.setitem(app_module._model_metadata, "model_name", "Test DenseNet")
+    monkeypatch.setitem(app_module._model_metadata, "checkpoint_sha256", "abc123")
+
+    client = TestClient(app_module.app)
+    response = client.post(
+        "/reviews",
+        json={"case_ref": "case-001", "reviewer_action": "needs_review", "reviewed_findings": ["Mass"]},
+    )
+    assert response.status_code == 201
+    record = json.loads(audit_path.read_text(encoding="utf-8").strip().splitlines()[-1])
+    assert record["case_ref"] == "case-001"
+    assert record["reviewer_action"] == "needs_review"
+    assert record["timestamp_utc"]
+    assert record["model_name"] == "Test DenseNet"
+    assert record["model_checkpoint_sha256"] == "abc123"
