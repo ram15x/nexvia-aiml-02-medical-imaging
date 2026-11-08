@@ -72,7 +72,7 @@ Python 3.10 or later, Node.js 20 or later.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements-windows-tested.txt
+pip install -r requirements.txt
 python -m pytest -q
 
 python -m uvicorn api.app:app --env-file .env --host 127.0.0.1 --port 18080
