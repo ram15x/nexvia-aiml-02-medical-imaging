@@ -1,0 +1,19 @@
+# Render Blueprint for the hosted full-stack demo (API + React UI in one container).
+# Creating this service is a paid action: the standard plan is 1 CPU / 2 GB RAM at $25/month.
+# The free plan (512 MB RAM) is too small for PyTorch and the two models.
+services:
+  - type: web
+    name: nexvia-medical-imaging
+    runtime: docker
+    plan: standard
+    region: oregon
+    dockerfilePath: ./deploy/hf-space/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "7860"
+      - key: ORTHANC_AUTO_SYNC_SECONDS
+        value: "0"
+      - key: OPENROUTER_API_KEY
+        sync: false
