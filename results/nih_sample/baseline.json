@@ -1,0 +1,23 @@
+{
+  "description": "Frozen baseline for the served DenseNet-121 checkpoint on the 999-image NIH sample. Copied from results/nih_sample/per_label_intervals.json. Regenerate with: dvc pull && dvc repro evaluate_nih_sample",
+  "images": 999,
+  "patients": 549,
+  "macro_auroc": 0.7967051680455423,
+  "macro_auprc": 0.15069106826293815,
+  "micro_f1_at_0_5": 0.25645295587010825,
+  "per_label_auroc": {
+    "Atelectasis": 0.8462051142546246,
+    "Cardiomegaly": 0.7944785276073619,
+    "Effusion": 0.8466950434446124,
+    "Infiltration": 0.7303026337925491,
+    "Mass": 0.7726017943409249,
+    "Nodule": 0.7652299391429827,
+    "Pneumonia": 0.7415034562211982,
+    "Pneumothorax": 0.7989082425423,
+    "Consolidation": 0.8080939194646359,
+    "Edema": 0.8301435406698565,
+    "Emphysema": 0.7737909895884013,
+    "Fibrosis": 0.8847695390781563,
+    "Pleural_Thickening": 0.7644444444444445
+  }
+}
