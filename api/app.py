@@ -955,3 +955,12 @@ def record_review(event: ReviewEvent) -> dict[str, str]:
         stream.write(json.dumps(record, ensure_ascii=False) + "\n")
     return {"event_id": record["event_id"], "status": "recorded"}
 
+
+
+# Single-container deployment (hosted Space): serve the built React UI from the same origin.
+# Mounted last so every API route above keeps priority. Absent in local development.
+WEB_DIST = Path(os.environ.get("NEXVIA_WEB_DIST", Path(__file__).resolve().parent.parent / "web_dist"))
+if WEB_DIST.is_dir():
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/", StaticFiles(directory=WEB_DIST, html=True), name="web")
