@@ -54,3 +54,6 @@ PROJECT_STATUS.md
 HANDOFF_README.md
 
 dvc-demo-store/
+
+# Built UI copied into the hosted container (generated)
+web_dist/
