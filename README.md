@@ -2,7 +2,7 @@
 
 An educational prototype that scores chest X-rays and segments the spleen on CT, then puts the output in front of a reviewer who can approve or reject it. It was built for the Nexvia Technologies AI/ML internship (project AIML-02).
 
-**Public demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/) (CPU only, no Orthanc, rate-limited).
+**Public demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/). It is a lighter Gradio front end over the same model code, with the chest X-ray scores and the spleen segmentation only. Grad-CAM, SHAP, the review log, the Q&A panel and Orthanc are in the full app below.
 
 > Not for diagnosis or any clinical decision. Use public or de-identified images only.
 
@@ -115,7 +115,7 @@ python evaluate_segmentation.py --dataset-json <dataset.json> --dataset-root <fo
 
 - Secrets stay in `.env`, which git ignores. The Docker images run as a non-root user and exclude `.env`, data and training volumes.
 - Uploads have size and pixel limits, and checkpoints load with `weights_only=True`.
-- The API has no user accounts. For a public deployment the hosted image turns on request guards: Orthanc routes are disabled, POST requests are rate-limited per client, and the Q&A route (which spends API credit) has a stricter hourly cap. See `api/guards.py`.
+- The API has no user accounts. For a public deployment, `deploy/hf-space/Dockerfile` builds a single container (API plus UI) for any Docker host, with request guards switched on: Orthanc routes are disabled, POST requests are rate-limited per client, and the Q&A route (which spends API credit) has a stricter hourly cap. See `api/guards.py`. The public Space above uses a Gradio front end instead of that container, because its account cannot run Docker Spaces.
 - Dependencies are pinned in `requirements-api.lock.txt` and checked with `pip-audit`.
 
 ## Data

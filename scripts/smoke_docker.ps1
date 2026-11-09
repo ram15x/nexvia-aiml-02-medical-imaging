@@ -45,5 +45,38 @@ finally {
     if ($failures.Count -gt 0) { docker compose logs --tail 60 api }
     docker compose down
 }
+
+# Part 2: the single-container image used for hosted deployments (API plus UI on one port).
+$hostedPort = 17860
+try {
+    Write-Host "`nBuilding the hosted single-container image..."
+    docker build -f deploy/hf-space/Dockerfile -t nexvia-hosted-smoke .
+    Check "hosted image built" ($LASTEXITCODE -eq 0)
+    docker rm -f nexvia-hosted-smoke 2>$null | Out-Null
+    docker run -d --name nexvia-hosted-smoke -p "127.0.0.1:${hostedPort}:7860" nexvia-hosted-smoke | Out-Null
+    $up = $false
+    for ($i = 0; $i -lt 40 -and -not $up; $i++) {
+        Start-Sleep -Seconds 3
+        $code = curl.exe -s -o NUL -w "%{http_code}" "http://127.0.0.1:$hostedPort/health"
+        if ($code -eq "200") { $up = $true }
+    }
+    Check "hosted container answers /health" $up
+    if ($up) {
+        $h = curl.exe -s "http://127.0.0.1:$hostedPort/health" | ConvertFrom-Json
+        Check "hosted: Orthanc is reported as disabled" ($h.orthanc.enabled -eq $false)
+        $p = curl.exe -s -F "file=@$image;type=image/png" "http://127.0.0.1:$hostedPort/predict" | ConvertFrom-Json
+        Check "hosted: /predict returns 14 scores" ($p.findings.Count -eq 14)
+        $ui = curl.exe -s -o NUL -w "%{http_code}" "http://127.0.0.1:$hostedPort/"
+        Check "hosted: the UI is served on /" ($ui -eq "200") "(HTTP $ui)"
+        $orth = curl.exe -s -o NUL -w "%{http_code}" -X POST "http://127.0.0.1:$hostedPort/orthanc/sync"
+        Check "hosted: Orthanc routes answer 404" ($orth -eq "404") "(HTTP $orth)"
+        $huid = (docker exec nexvia-hosted-smoke id -u).Trim()
+        Check "hosted: container runs as a non-root user" ($huid -ne "0") "(uid $huid)"
+    }
+}
+finally {
+    if ($failures.Count -gt 0) { docker logs --tail 60 nexvia-hosted-smoke 2>$null }
+    docker rm -f nexvia-hosted-smoke 2>$null | Out-Null
+}
 if ($failures.Count -gt 0) { Write-Host "`n$($failures.Count) check(s) failed." -ForegroundColor Red; exit 1 }
 Write-Host "`nAll checks passed." -ForegroundColor Green
