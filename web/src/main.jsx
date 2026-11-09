@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './style.css';
 
 const API = (() => {
-  const url = new URL(import.meta.env.VITE_API_URL || 'http://localhost:8000', window.location.origin);
+  const url = new URL(import.meta.env.VITE_API_URL || 'http://localhost:18080', window.location.origin);
   const localHosts = new Set(['localhost', '127.0.0.1']);
   if (localHosts.has(url.hostname) && localHosts.has(window.location.hostname)) {
     url.hostname = window.location.hostname;
