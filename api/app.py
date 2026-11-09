@@ -133,10 +133,37 @@ def _segmentation_runtime_info() -> dict[str, Any]:
     return info
 
 
+ORTHANC_AUTO_SYNC_SECONDS = int(os.environ.get("ORTHANC_AUTO_SYNC_SECONDS", "0") or 0)
+
+
+def _auto_sync_loop(stop: threading.Event, interval: int) -> None:
+    """Pull newly stable Orthanc studies on a fixed interval until shutdown."""
+    while not stop.wait(interval):
+        try:
+            sync_orthanc_studies(limit=16)
+        except HTTPException as exc:
+            logger.info("Orthanc auto-sync skipped: %s", exc.detail)
+        except Exception:
+            logger.exception("Orthanc auto-sync failed")
+
+
 @asynccontextmanager
 async def _application_lifespan(_: FastAPI):
     log_segmentation_configuration()
-    yield
+    stop = threading.Event()
+    worker = None
+    if ORTHANC_AUTO_SYNC_SECONDS > 0:
+        worker = threading.Thread(
+            target=_auto_sync_loop, args=(stop, ORTHANC_AUTO_SYNC_SECONDS),
+            name="orthanc-auto-sync", daemon=True,
+        )
+        worker.start()
+    try:
+        yield
+    finally:
+        stop.set()
+        if worker is not None:
+            worker.join(timeout=5)
 
 
 app = FastAPI(
@@ -564,10 +591,24 @@ def _decode_uploaded_image(content: bytes, content_type: str) -> Image.Image:
 
 
 async def _read_uploaded_image(file: UploadFile) -> Image.Image:
-    if file.content_type not in {"image/png", "image/jpeg"}:
-        raise HTTPException(status_code=415, detail="Upload a PNG or JPEG image.")
+    is_dicom = file.content_type == "application/dicom" or (file.filename or "").lower().endswith(".dcm")
+    if not is_dicom and file.content_type not in {"image/png", "image/jpeg"}:
+        raise HTTPException(status_code=415, detail="Upload a PNG, JPEG, or single-frame DICOM (.dcm) image.")
     content = await file.read(MAX_UPLOAD_BYTES + 1)
-    return _decode_uploaded_image(content, file.content_type)
+    if not is_dicom:
+        return _decode_uploaded_image(content, file.content_type)
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="The uploaded file is too large for this demo.")
+    try:
+        from .orthanc import UnsupportedDicomModality, dicom_bytes_to_image
+    except ImportError:
+        from orthanc import UnsupportedDicomModality, dicom_bytes_to_image
+    try:
+        return dicom_bytes_to_image(content)
+    except UnsupportedDicomModality as exc:
+        raise HTTPException(status_code=422, detail="Only CR or DX chest radiographs are supported.") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 def _score_image(image: Image.Image) -> dict[str, Any]:

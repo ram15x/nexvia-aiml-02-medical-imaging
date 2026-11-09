@@ -110,9 +110,16 @@ def fetch_orthanc_image(instance_id: str) -> Image.Image:
             chunks.extend(chunk)
     finally:
         response.close()
+    return dicom_bytes_to_image(bytes(chunks))
+
+
+def dicom_bytes_to_image(content: bytes) -> Image.Image:
+    """Convert one single-frame CR/DX DICOM object to an RGB image for the classifier."""
     import pydicom
 
-    dataset = pydicom.dcmread(BytesIO(chunks))
+    if len(content) > MAX_DICOM_BYTES:
+        raise ValueError("DICOM instance exceeds the 64 MiB demo limit")
+    dataset = pydicom.dcmread(BytesIO(content))
     modality = str(getattr(dataset, "Modality", "")).strip().upper()
     if modality not in {"CR", "DX"}:
         raise UnsupportedDicomModality(modality or None)
@@ -142,6 +149,10 @@ def fetch_orthanc_image(instance_id: str) -> Image.Image:
     if center is not None and width is not None and float(width) > 1:
         low = float(center) - float(width) / 2
         high = float(center) + float(width) / 2
+    elif int(getattr(dataset, "BitsStored", 16)) <= 8:
+        # 8-bit radiographs without a stored window keep their full range, so the
+        # same image scores identically whether it arrives as PNG or DICOM.
+        low, high = 0.0, float(2 ** int(getattr(dataset, "BitsStored", 8)) - 1)
     else:
         low, high = np.percentile(pixels, [0.5, 99.5]).tolist()
         if high <= low:

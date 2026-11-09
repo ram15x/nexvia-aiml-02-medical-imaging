@@ -19,6 +19,7 @@ services:
       ORTHANC_URL: ${ORTHANC_URL:-http://orthanc:8042}
       ORTHANC_USERNAME: ${ORTHANC_USERNAME:-orthanc}
       ORTHANC_PASSWORD: ${ORTHANC_PASSWORD:-}
+      ORTHANC_AUTO_SYNC_SECONDS: ${ORTHANC_AUTO_SYNC_SECONDS:-60}
     volumes:
       - ./artifacts:/app/artifacts:ro
       - ./demo:/app/demo
