@@ -24,13 +24,14 @@ These are small samples. Read the numbers with that in mind.
 | Model | Data it was measured on | Result |
 |---|---|---|
 | Chest X-ray classifier | 999 NIH images from 549 patients | Macro AUROC 0.797, macro average precision 0.151, micro F1 0.256 at a 0.5 threshold |
-| Spleen segmentation | 6 held-out CT cases the model never trained or was selected on | Mean Dice 0.715 (per case 0.47 to 0.91) |
+| Spleen segmentation | 6 held-out CT cases the model never trained or was selected on | Mean Dice 0.877 as served (per case 0.81 to 0.94). Raw network output alone: 0.715 |
 
 What to keep in mind:
 
 - At the 0.5 threshold the classifier finds about half of the positives (micro recall 0.48) and most of its flags are wrong (micro precision 0.17). The scores are not calibrated probabilities.
 - Performance is lower for patients aged 60 and over (macro AUROC 0.709, against 0.822 for under-40s). The cause was not investigated.
-- The spleen figure comes from six cases, so it could move a lot with different cases. Two of the six were clearly over-segmented. Validation Dice jumped between 0.28 and 0.74 from one epoch to the next near the end of training.
+- The served spleen mask keeps only the largest connected 3D blob. That step was chosen on the 6 validation cases (Dice 0.736 to 0.880) and then measured on the 6 test cases (0.715 to 0.877). The test cases had already been scored once without it, so 0.877 is not a fresh blind estimate. It improved all 12 cases, but it can't fix a mask whose largest blob is the wrong organ.
+- The spleen figure comes from six cases, so it could move a lot with different cases. Without the clean-up, two of the six were clearly over-segmented. Validation Dice jumped between 0.28 and 0.74 from one epoch to the next near the end of training.
 - NIH labels are mined from radiology reports and are noisy.
 
 Per-label tables with patient-level confidence intervals are in [docs/results.md](docs/results.md). The spleen split, run summary and per-case results are in [results/spleen](results/spleen). More on limits and bias: [docs/limits_and_bias.md](docs/limits_and_bias.md).
