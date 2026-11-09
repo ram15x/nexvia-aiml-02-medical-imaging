@@ -29,6 +29,7 @@ from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
 from fastapi.responses import FileResponse, StreamingResponse
 from torch import nn
+from .guards import install_guards
 from .modeling import ARCHITECTURE_NAMES, build_classifier, gradcam_target, image_to_tensor
 from .qa import (MAX_QUESTION_CHARS, AUDIENCES, CaseStore, URGENT_ANSWER, answer, configured_model,
                  is_configured, is_urgent)
@@ -189,6 +190,7 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
+install_guards(app)
 
 
 def log_segmentation_configuration() -> None:
