@@ -4,9 +4,11 @@ Run with `python -m pytest -q` from the repository root, using the packages in `
 
 | Suite | Tests | What it covers |
 |---|---:|---|
-| API, classifier, CT conversion, data audit, segmentation split, DICOM upload, Orthanc auto-pull, real DICOM sample | 72 | Endpoint behaviour, preprocessing, DICOM decoding, geometry checks, sync lock and interval worker |
+| API, classifier, CT conversion, data audit, segmentation split, DICOM upload, Orthanc auto-pull | 72 | Endpoint behaviour, preprocessing, DICOM decoding, geometry checks, sync lock and interval worker |
+| SHAP attribution and guarded question answering (`test_shap_and_qa.py`) | 10 | KernelSHAP additivity and repeatability on the served checkpoint, overlay output, missing key (503), urgent-symptom bypass, prompt guardrails, key never returned, upstream failure (502), bounded result store |
+| Real DICOM sample (`test_real_dicom_sample.py`) | 3 | DICOM and PNG scores match on NIH images; skipped when the sample images are absent |
 
-Current result: 72 passed, 0 failed (last run on the commit that added this document).
+Current result on `e553b94` with the NIH sample images present: 85 passed, 0 failed. Without the images the real-sample suite is skipped, leaving 82 passed and 3 skipped.
 
 Tests that depend on data or checkpoints skip with a reason when those files are absent. The real-sample DICOM tests need the NIH sample images (`dvc pull`).
 
