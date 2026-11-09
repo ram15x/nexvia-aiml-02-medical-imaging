@@ -444,7 +444,7 @@ def main() -> None:
     start_epoch, resume_batch, resume_order = 1, 0, None
     running_loss, seen = 0.0, 0
     if args.resume_from is not None:
-        state = torch.load(args.resume_from, map_location="cpu", weights_only=False)
+        state = torch.load(args.resume_from, map_location="cpu", weights_only=True)
         if state.get("checkpoint_version") != 1:
             raise ValueError("Unsupported resume checkpoint version")
         if state.get("manifest_sha256") != manifest_sha256:

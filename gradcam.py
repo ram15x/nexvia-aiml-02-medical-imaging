@@ -34,7 +34,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
     architecture = checkpoint.get("architecture")
     if architecture not in {"densenet121", "efficientnet_b0", "swin_t", "densenet121_swin_t"} or checkpoint.get("labels") != list(NIH_LABELS):
         raise ValueError("Checkpoint architecture or label ordering does not match this tool")

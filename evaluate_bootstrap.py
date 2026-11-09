@@ -76,7 +76,7 @@ def main() -> None:
 
     seed_everything(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
     architecture = checkpoint.get("architecture")
     if architecture not in ARCHITECTURE_NAMES:
         raise ValueError("Checkpoint architecture is unsupported")

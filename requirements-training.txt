@@ -2,5 +2,5 @@
 # On Colab, prefer the supplied CUDA-enabled runtime packages.
 numpy>=1.26,<3
 pandas>=2.2,<3
-Pillow>=10,<13
+Pillow>=13.0.0,<14
 scikit-learn>=1.5,<2
