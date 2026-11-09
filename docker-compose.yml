@@ -20,6 +20,8 @@ services:
       ORTHANC_USERNAME: ${ORTHANC_USERNAME:-orthanc}
       ORTHANC_PASSWORD: ${ORTHANC_PASSWORD:-}
       ORTHANC_AUTO_SYNC_SECONDS: ${ORTHANC_AUTO_SYNC_SECONDS:-60}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openrouter/auto}
     volumes:
       - ./artifacts:/app/artifacts:ro
       - ./demo:/app/demo

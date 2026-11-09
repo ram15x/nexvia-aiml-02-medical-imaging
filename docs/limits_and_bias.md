@@ -31,4 +31,6 @@ The age result means the classifier should not be used on older patients without
 - **Public data only.** NIH ChestX-ray14 (PNG) and MSD Task09 (NIfTI). Real hospital DICOM was not available.
 - **Orthanc completion for CT.** When Orthanc reports a CT series as Unknown, completeness depends on an instance count that a person enters. The count is a check, not proof of completeness.
 - **No PACS integration.** Results are stored locally and are not written back to Orthanc as DICOM SEG or SR.
+- **SHAP is sampled and grid-based.** Values come from 300 sampled coalitions on an 8×8 grid with neutral grey replacement. They describe how this model's score changes when regions are removed. They are not anatomical findings, causes, or proof that the model looks at the right structure.
+- **Question answering is not clinical advice.** The language model sees only stored scores, metadata and SHAP regions. It can still misread or overstate them. The server adds a fixed footer and sends urgent-symptom wording to a fixed emergency message, but neither guarantee correctness. Answers are not checked by a clinician, and they are not logged with personal details.
 - **Review actions are demo records.** The "Approve (demo only)" button records an annotation. It is not clinical sign-off.

@@ -30,6 +30,9 @@ from pydantic import BaseModel, Field
 from fastapi.responses import FileResponse, StreamingResponse
 from torch import nn
 from .modeling import ARCHITECTURE_NAMES, build_classifier, gradcam_target, image_to_tensor
+from .qa import (MAX_QUESTION_CHARS, AUDIENCES, CaseStore, URGENT_ANSWER, answer, configured_model,
+                 is_configured, is_urgent)
+from .shap_explain import overlay_png, shap_attribution
 
 DISCLAIMER = (
     "Educational demonstration only. Model scores are not a diagnosis and must "
@@ -247,6 +250,7 @@ def health() -> dict[str, Any]:
         "model": _model_metadata or None,
         "load_error": _load_error,
         "segmentation": _segmentation_runtime_info(),
+        "question_answering": {"configured": is_configured(), "model": configured_model()},
         "disclaimer": DISCLAIMER,
     }
 
@@ -620,8 +624,9 @@ def _score_image(image: Image.Image) -> dict[str, Any]:
         raise HTTPException(status_code=503, detail=f"Could not load model: {type(exc).__name__}") from exc
     with _model_lock, torch.inference_mode():
         scores = torch.sigmoid(model(_image_tensor(image))).squeeze(0).tolist()
-    return {
-        "case_ref": str(uuid.uuid4()),
+    case_ref = str(uuid.uuid4())
+    response = {
+        "case_ref": case_ref,
         "model": _model_metadata.get("model_name", "Unknown classifier"),
         "model_metadata": _model_metadata,
         "score_semantics": "Uncalibrated sigmoid scores; not diagnostic probabilities.",
@@ -629,6 +634,79 @@ def _score_image(image: Image.Image) -> dict[str, Any]:
                      for label, score in zip(LABELS, scores)],
         "disclaimer": DISCLAIMER,
     }
+    CASES.put(case_ref, {key: response[key] for key in
+                         ("model", "model_metadata", "score_semantics", "findings")})
+    return response
+
+
+CASES = CaseStore()
+
+
+class QuestionRequest(BaseModel):
+    case_ref: str = Field(min_length=1, max_length=64)
+    question: str = Field(min_length=3, max_length=MAX_QUESTION_CHARS)
+    audience: str = Field(default="patient")
+
+
+@app.post("/explain/shap")
+async def explain_shap(file: UploadFile = File(...), label: str = Form(...),
+                       case_ref: str | None = Form(default=None)) -> dict[str, Any]:
+    """Return KernelSHAP cell values and an overlay for one finding (about 15 s on CPU)."""
+    if label not in LABELS:
+        raise HTTPException(status_code=422, detail="Select one of the 14 supported findings.")
+    image = await _read_uploaded_image(file)
+    try:
+        model = _load_model()
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail="No trained checkpoint is installed.") from exc
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=f"Could not load model: {type(exc).__name__}") from exc
+    with _model_lock:
+        try:
+            result = shap_attribution(model, image, LABELS.index(label))
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=f"Could not compute SHAP values: {type(exc).__name__}") from exc
+    image_array = result.pop("image")
+    result["label"] = label
+    result["overlay_png_base64"] = base64.b64encode(overlay_png(image_array, result["values"])).decode("ascii")
+    result["interpretation"] = (
+        "Red cells pushed this finding's score up; blue cells pushed it down, relative to a grey baseline. "
+        "This describes model behaviour on this image, not the cause of a condition."
+    )
+    result["disclaimer"] = DISCLAIMER
+    if case_ref and CASES.get(case_ref) is not None:
+        CASES.update(case_ref, attribution={
+            "label": label, "method": result["method"], "baseline": result["baseline"],
+            "prediction": result["prediction"], "top_cells": result["top_cells"],
+        })
+    return result
+
+
+@app.post("/qa")
+def ask_about_result(payload: QuestionRequest) -> dict[str, Any]:
+    """Answer a question about a stored result through OpenRouter, with server-side guardrails."""
+    audience = payload.audience if payload.audience in AUDIENCES else None
+    if audience is None:
+        raise HTTPException(status_code=422, detail="Audience must be patient, doctor or clinician.")
+    question = payload.question.strip()
+    if is_urgent(question):
+        return {"answer": URGENT_ANSWER, "urgent": True, "model": None, "disclaimer": DISCLAIMER}
+    record = CASES.get(payload.case_ref)
+    if record is None:
+        raise HTTPException(status_code=404, detail="That result is no longer available. Run the model again.")
+    key = (os.environ.get("OPENROUTER_API_KEY") or "").strip()
+    if not key:
+        raise HTTPException(status_code=503, detail="Question answering is not configured on this server.")
+    model_name = configured_model()
+    try:
+        text = answer(record, question, audience, key, model_name)
+    except requests.RequestException as exc:
+        logger.warning("OpenRouter request failed: %s", type(exc).__name__)
+        raise HTTPException(status_code=502, detail="The language model service could not answer. Try again later.") from exc
+    except (KeyError, IndexError, TypeError, ValueError) as exc:
+        logger.warning("OpenRouter response was not understood: %s", type(exc).__name__)
+        raise HTTPException(status_code=502, detail="The language model returned an unexpected response.") from exc
+    return {"answer": text, "urgent": False, "model": model_name, "disclaimer": DISCLAIMER}
 
 
 @app.post("/orthanc/{instance_id}/predict")

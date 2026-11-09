@@ -10,6 +10,9 @@ const API = (() => {
   }
   return url.href.replace(/\/$/, '');
 })();
+function errorMessage(data, fallback) {
+  return typeof data?.detail === 'string' ? data.detail : fallback;
+}
 const FROZEN_EVALUATION = {
   checkpointSha256: '5634f21659d2cb8bf57bb90ff45797bd998beef15e1231e7f916f953f610db87',
   images: 500,
@@ -39,6 +42,13 @@ function App() {
   const [ctBusy, setCtBusy] = useState(false);
   const [ctError, setCtError] = useState('');
   const [ctPlane, setCtPlane] = useState('axial');
+  const [shapBusy, setShapBusy] = useState(false);
+  const [shap, setShap] = useState(null);
+  const [qaAudience, setQaAudience] = useState('patient');
+  const [qaQuestion, setQaQuestion] = useState('');
+  const [qaBusy, setQaBusy] = useState(false);
+  const [qaAnswer, setQaAnswer] = useState(null);
+  const [qaError, setQaError] = useState('');
 
   async function segmentCt(event) {
     event.preventDefault();
@@ -86,6 +96,7 @@ function App() {
   function chooseFile(event) {
     const next = event.target.files?.[0];
     setResult(null); setReviewState(''); setError(''); setFile(next || null); setSelectedLabel('');
+    setShap(null); setQaAnswer(null); setQaError('');
     if (gradcamUrl) URL.revokeObjectURL(gradcamUrl);
     setGradcamUrl('');
     if (preview) URL.revokeObjectURL(preview);
@@ -101,7 +112,7 @@ function App() {
       const response = await fetch(`${API}/predict`, { method: 'POST', body });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || 'The model service did not accept this image.');
-      setResult(data);
+      setResult(data); setShap(null); setQaAnswer(null); setQaError('');
       setSelectedLabel([...data.findings].sort((a, b) => b.score - a.score)[0]?.label || '');
     } catch (err) { setError(err.message || 'Could not reach the local API.'); }
     finally { setBusy(false); }
@@ -122,6 +133,38 @@ function App() {
       setGradcamUrl(URL.createObjectURL(await response.blob()));
     } catch (err) { setError(err.message || 'Could not reach the local API.'); }
     finally { setGradcamBusy(false); }
+  }
+
+  async function runShap() {
+    if (!file || !selectedLabel) return;
+    setShapBusy(true); setError(''); setShap(null);
+    try {
+      const body = new FormData();
+      body.append('file', file); body.append('label', selectedLabel);
+      if (result?.case_ref) body.append('case_ref', result.case_ref);
+      const response = await fetch(`${API}/explain/shap`, { method: 'POST', body });
+      const data = await response.json();
+      if (!response.ok) throw new Error(errorMessage(data, 'SHAP values could not be computed.'));
+      setShap(data);
+    } catch (err) { setError(err.message || 'Could not reach the local API.'); }
+    finally { setShapBusy(false); }
+  }
+
+  async function askQuestion(event) {
+    event.preventDefault();
+    const question = qaQuestion.trim();
+    if (!result?.case_ref || question.length < 3) return;
+    setQaBusy(true); setQaError(''); setQaAnswer(null);
+    try {
+      const response = await fetch(`${API}/qa`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_ref: result.case_ref, question, audience: qaAudience }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(errorMessage(data, 'The question could not be answered.'));
+      setQaAnswer(data);
+    } catch (err) { setQaError(err.message || 'Could not reach the local API.'); }
+    finally { setQaBusy(false); }
   }
 
   async function saveReview(action) {
@@ -178,10 +221,29 @@ function App() {
             <div className="explain-controls"><select id="explain-label" value={selectedLabel} onChange={e => setSelectedLabel(e.target.value)}>{result.findings.map(item => <option key={item.label} value={item.label}>{item.label.replaceAll('_', ' ')}</option>)}</select><button className="secondary" disabled={gradcamBusy || !selectedLabel}>{gradcamBusy ? 'Creating…' : 'Show Grad-CAM'}</button></div>
             {gradcamUrl && <figure className="explanation"><img src={gradcamUrl} alt={`Grad-CAM overlay for ${selectedLabel}`} /><figcaption>Coarse feature attribution only. It does not establish why the model scored the image and is not a clinical explanation.</figcaption></figure>}
           </form>
+          <div className="shap-box">
+            <div className="explain-controls"><button type="button" className="secondary" onClick={runShap} disabled={shapBusy || !selectedLabel}>{shapBusy ? 'Computing SHAP (about 15 s)…' : 'Show SHAP explanation'}</button></div>
+            {shap && <figure className="explanation shap-figure"><img src={`data:image/png;base64,${shap.overlay_png_base64}`} alt={`SHAP overlay for ${shap.label.replaceAll('_', ' ')}`} /><figcaption>{shap.interpretation}</figcaption>
+              <table className="shap-table"><thead><tr><th>Most influential region</th><th>Contribution to this finding</th></tr></thead><tbody>{shap.top_cells.map(cell => <tr key={`${cell.row}-${cell.column}`}><td>{cell.region}</td><td><code>{cell.value > 0 ? '+' : ''}{cell.value.toFixed(4)}</code> {cell.direction}</td></tr>)}</tbody></table>
+              <small>Baseline {shap.baseline.toFixed(3)}, prediction {shap.prediction.toFixed(3)}, additivity check error {shap.additivity_error.toExponential(1)}. {shap.method}; {shap.nsamples} sampled coalitions, seed {shap.seed}. Red raises the score, blue lowers it.</small>
+            </figure>}
+          </div>
           <div className="review-box"><label htmlFor="review-note">Demo reviewer note <span>(no personal or patient details)</span></label><textarea id="review-note" maxLength="500" value={note} onChange={e => setNote(e.target.value)} placeholder="Optional annotation for this local demo…" />
             <div className="review-actions"><button type="button" className="secondary" onClick={() => saveReview('needs_review')}>Needs review</button><button type="button" className="secondary" onClick={() => saveReview('rejected')}>Reject output</button><button type="button" className="primary compact" onClick={() => saveReview('accepted_for_demo')}>Approve (demo only)</button></div>
             {reviewState && <p className="saved">{reviewState}</p>}
           </div>
+          <form className="qa-box" onSubmit={askQuestion}>
+            <p className="eyebrow">04 / ASK ABOUT THIS RESULT</p>
+            <p className="score-note">Answers use only this result's scores (and SHAP regions, if computed). The assistant cannot see the image, does not diagnose, and is not clinical advice. Do not type names, dates of birth or other personal details.</p>
+            <label htmlFor="qa-audience">I am asking as</label>
+            <select id="qa-audience" value={qaAudience} onChange={e => setQaAudience(e.target.value)}><option value="patient">Patient or family member</option><option value="doctor">Doctor</option><option value="clinician">Other clinician</option></select>
+            <label htmlFor="qa-question">Question</label>
+            <textarea id="qa-question" maxLength="500" value={qaQuestion} onChange={e => setQaQuestion(e.target.value)} placeholder="For example: what does a score this size mean?" />
+            <div className="qa-suggestions">{['What does this score mean?', 'Which finding has the highest score, and what does that mean?', 'What are the limits of this result?'].map(text => <button type="button" key={text} className="chip" onClick={() => setQaQuestion(text)}>{text}</button>)}</div>
+            <button className="secondary" disabled={qaBusy || qaQuestion.trim().length < 3}>{qaBusy ? 'Answering…' : 'Ask'}</button>
+            {qaError && <p className="error" role="alert">{qaError}</p>}
+            {qaAnswer && <div className="qa-answer">{qaAnswer.urgent && <strong>Possible urgent symptoms. </strong>}<p>{qaAnswer.answer}</p>{qaAnswer.model && <small>Model: {qaAnswer.model}</small>}</div>}
+          </form>
         </>}
       </section>
     </section>

@@ -7,6 +7,8 @@ Base URL in Docker: `http://localhost:18080`. All responses carry the disclaimer
 | `GET /health` | none | Checkpoint presence and load state for the classifier and the spleen model, with SHA-256 and settings. |
 | `POST /predict` | multipart `file`: PNG, JPEG, or single-frame CR/DX DICOM (`.dcm`, or content type `application/dicom`). Max 12 MiB. | 14 findings with uncalibrated scores, model metadata and checkpoint hash. |
 | `POST /explain` | multipart `file` (as above) and form `label` (one of the 14 labels) | PNG Grad-CAM overlay for that label. |
+| `POST /explain/shap` | multipart `file` and form `label`; optional form `case_ref` from `/predict` | JSON with 8×8 KernelSHAP values for that finding (300 sampled coalitions, seed 0, about 15–20 s on CPU), a baseline and prediction with an additivity check, the five most influential grid regions, and a base64 PNG overlay (red raises, blue lowers the score). The computation holds the model lock. |
+| `POST /qa` | JSON: `case_ref` (from `/predict`), `question` (3–500 characters), `audience` in {`patient`, `doctor`, `clinician`} | Answer from OpenRouter, with a fixed safety footer. Urgent-symptom wording is answered with an emergency message and never sent to the model. Returns 503 if `OPENROUTER_API_KEY` is unset, 404 for an unknown or evicted `case_ref`, 502 if the upstream call fails. The model receives only the stored scores, metadata and any SHAP regions, never the image or identifiers. |
 | `POST /segment/spleen` | multipart `file`: non-empty 3D NIfTI, at most 45 million voxels, with usable affine | Mask summary (voxel count, estimated volume), geometry check, and tri-planar preview images. |
 | `POST /orthanc/series/{series_id}/segment/spleen` | Orthanc CT series ID, optional `expected_instances` | Converts the stable series to NIfTI and segments it. Stores a result record and mask. |
 | `GET /orthanc/series/{series_id}/segmentation-results` | series ID | Recorded CT segmentation results for that series. |
@@ -22,4 +24,4 @@ Set `ORTHANC_AUTO_SYNC_SECONDS` to a positive number to run `POST /orthanc/sync`
 
 ## Configuration
 
-Environment variables are listed in `.env.example`. Key ones: `NEXVIA_CHECKPOINT`, `NEXVIA_SEGMENTATION_CHECKPOINT`, `NEXVIA_SEGMENTATION_THRESHOLD`, `NEXVIA_SEGMENTATION_TTA`, `ORTHANC_URL`, `ORTHANC_USERNAME`, `ORTHANC_PASSWORD`, `ORTHANC_AUTO_SYNC_SECONDS`.
+Environment variables are listed in `.env.example`. `OPENROUTER_API_KEY` enables the question-answering endpoint. Set it only in `.env` on the machine that runs the API and never commit it. `OPENROUTER_MODEL` (default `openrouter/auto`) selects the OpenRouter model. `GET /health` reports `question_answering.configured` and the model name, never the key. Key ones: `NEXVIA_CHECKPOINT`, `NEXVIA_SEGMENTATION_CHECKPOINT`, `NEXVIA_SEGMENTATION_THRESHOLD`, `NEXVIA_SEGMENTATION_TTA`, `ORTHANC_URL`, `ORTHANC_USERNAME`, `ORTHANC_PASSWORD`, `ORTHANC_AUTO_SYNC_SECONDS`.

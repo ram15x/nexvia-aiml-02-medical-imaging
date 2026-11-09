@@ -80,3 +80,14 @@ textarea { width: 100%; min-height: 68px; resize: vertical; padding: 10px; borde
 .ct-result .error { color: #9b4a28; }
 footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 18px; color: #8795a7; font-size: 10px; }
 @media (max-width: 800px) { .workspace,.ct-result { grid-template-columns: 1fr; } .orthanc-ct-form { grid-template-columns: 1fr; } .orthanc-ct-form small { grid-column: auto; } .shell { padding: 22px 16px; } .dropzone { min-height: 230px; } footer { flex-direction: column; } }
+
+.shap-box, .qa-box { margin-top: 16px; display: grid; gap: 10px; }
+.shap-figure img { max-width: 100%; height: auto; }
+.shap-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.shap-table th, .shap-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid rgba(127, 127, 127, 0.25); }
+.qa-box textarea { width: 100%; min-height: 80px; box-sizing: border-box; font: inherit; padding: 10px; border-radius: 8px; border: 1px solid rgba(127, 127, 127, 0.4); background: transparent; color: inherit; }
+.qa-box select { font: inherit; padding: 6px 8px; max-width: 320px; }
+.qa-suggestions { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(127, 127, 127, 0.4); background: transparent; color: inherit; cursor: pointer; }
+.qa-answer { border-left: 3px solid currentColor; padding: 8px 12px; }
+.qa-answer p { white-space: pre-wrap; margin: 6px 0; }

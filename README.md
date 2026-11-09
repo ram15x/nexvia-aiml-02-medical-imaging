@@ -32,6 +32,8 @@ Full description: [docs/architecture.md](docs/architecture.md).
 |---|---|
 | Chest X-ray classification | 14 sigmoid scores per image, PNG, JPEG or single-frame CR/DX DICOM |
 | Grad-CAM | Coarse overlay for a selected label. Not a segmentation mask. |
+| SHAP | KernelSHAP on an 8×8 grid for a selected label: signed overlay and the five most influential regions. About 15–20 s on CPU. Sampled, with a fixed seed and an additivity check. |
+| Question answering | Optional OpenRouter-backed Q&A about one stored result, for patients or clinicians. Uses only the scores and SHAP regions, adds a safety footer, and answers urgent-symptom wording with an emergency message. Needs `OPENROUTER_API_KEY`. |
 | Spleen segmentation | Binary mask, tri-planar previews, NIfTI-GZIP download |
 | Orthanc | Pulls stable CR/DX studies automatically (`ORTHANC_AUTO_SYNC_SECONDS`) or on demand; segments a stable CT series |
 | Review | "Approve (demo only)", "Reject output", "Needs review". Each action is logged with the model checkpoint hash. |
