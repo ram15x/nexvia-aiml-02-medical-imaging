@@ -22,9 +22,11 @@ The age result means the classifier should not be used on older patients without
 
 ## Segmentation (spleen)
 
-- **Served checkpoint:** `best_spleen_unet_candidate_20261103.pt`. Its own metadata records a validation mean Dice of 0.833 on the six validation cases it was selected on. That is an optimistic, in-selection figure.
-- **Held-out performance is not measured here.** The six holdout cases are not identified in this repository, so no independent Dice for the served model exists in this project. A separate, earlier baseline reported Dice 0.327 on six holdout cases. That figure belongs to the baseline, not the served checkpoint.
-- **Segmentation quality is unestablished.** Do not treat the spleen masks as accurate, and do not use them to estimate organ volume clinically.
+- **Served checkpoint:** `best_spleen_unet_20261109.pt`, a MONAI 3D U-Net trained for 60 epochs on 29 MSD Task09 cases. The case split (29 train, 6 validation, 6 test, seed 42) is recorded in `results/spleen/case_split.json`. The checkpoint is the epoch with the best validation Dice (epoch 51, 0.736). The test cases were not used for training or for choosing the checkpoint.
+- **Held-out result:** mean Dice **0.715** on the 6 test cases, from a single run with the default 0.5 threshold and no test-time augmentation (`results/spleen/test_result.json`). Per case it ranges from 0.47 to 0.91. Two cases (spleen_26 and spleen_29) were over-segmented, with predicted volumes about 2.8 and 2.3 times the reference, and scored 0.47 and 0.57. The served API gives the same answer: 0.717 on the same cases, measured in the original image space.
+- **How much to trust it:** six test cases is a very small sample, so the figure could move a lot with different cases. Validation Dice swung between 0.28 and 0.74 from one epoch to the next near the end of training. The data is one public dataset of portal-venous CT; it has not been tested on other scanners or on abnormal anatomy.
+- **Not suitable for clinical use.** Do not use these masks to estimate organ volume or to support any care decision.
+- **Replaced checkpoint:** the earlier served file (`best_spleen_unet_candidate_20261103.pt`, recorded validation Dice 0.833) was selected on its own validation cases and its train/test split was not recorded, so no held-out figure exists for it. It was removed from the served set; it remains in git history.
 
 ## Data and deployment
 

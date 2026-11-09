@@ -1,0 +1,55 @@
+{
+  "dataset": "MSD Task09 Spleen",
+  "split": "frozen internal held-out cases from the labeled training cases",
+  "test_cases": 6,
+  "checkpoint": "artifacts/best_spleen_unet_20261109.pt",
+  "checkpoint_best_epoch": 51,
+  "checkpoint_validation_case_mean_dice": 0.7362091033947927,
+  "foreground_probability_threshold": 0.5,
+  "inference_augmentation": "none",
+  "test_case_mean_dice": 0.7149403043084402,
+  "metric": "per-case binary spleen Dice",
+  "empty_mask_policy": "both prediction and reference empty gives Dice 1.0",
+  "test_split_used_for_training_or_selection": false,
+  "official_unlabeled_test_cases_evaluated": false,
+  "per_case": [
+    {
+      "case_id": "spleen_26.nii.gz",
+      "dice": 0.4694449525315522,
+      "predicted_voxels": 124488,
+      "reference_voxels": 44993
+    },
+    {
+      "case_id": "spleen_27.nii.gz",
+      "dice": 0.7277131210492113,
+      "predicted_voxels": 33675,
+      "reference_voxels": 34033
+    },
+    {
+      "case_id": "spleen_29.nii.gz",
+      "dice": 0.5676385119897073,
+      "predicted_voxels": 94536,
+      "reference_voxels": 40705
+    },
+    {
+      "case_id": "spleen_12.nii.gz",
+      "dice": 0.7845694780387459,
+      "predicted_voxels": 74811,
+      "reference_voxels": 102137
+    },
+    {
+      "case_id": "spleen_19.nii.gz",
+      "dice": 0.9080513808216685,
+      "predicted_voxels": 63546,
+      "reference_voxels": 68332
+    },
+    {
+      "case_id": "spleen_9.nii.gz",
+      "dice": 0.832224381419757,
+      "predicted_voxels": 51728,
+      "reference_voxels": 59939
+    }
+  ],
+  "clinical_use": "not suitable for diagnosis or care decisions",
+  "how_it_was_run": "python evaluate_segmentation.py --dataset-json <MSD Task09 dataset.json> --dataset-root <MSD Task09 folder> --split results/spleen/case_split.json --checkpoint artifacts/best_spleen_unet_20261109.pt --output results/spleen/test_result.json (CPU, one run, default threshold 0.5, no test-time augmentation)"
+}

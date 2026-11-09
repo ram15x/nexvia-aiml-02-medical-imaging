@@ -1,0 +1,24 @@
+{
+  "device": "cuda",
+  "train_cases": 29,
+  "validation_cases": 6,
+  "test_cases": 6,
+  "test_split_used": false,
+  "limit_train_cases": null,
+  "epochs_requested": 60,
+  "batch_size": 1,
+  "learning_rate": 0.001,
+  "patch_size": [
+    96,
+    96,
+    96
+  ],
+  "foreground_only_dice": false,
+  "augmentation_mode": "baseline",
+  "architecture": "monai_unet_3d",
+  "checkpoint": "best_spleen_unet.pt",
+  "case_split_file": "case_split.json",
+  "metric": "per-case binary spleen Dice; both-empty prediction/reference is defined as 1.0",
+  "preprocessing": "RAS orientation, 1.5x1.5x2.0 mm spacing, CT clip [-57,164] scaled to [0,1]",
+  "warning": "Small-sample educational prototype; not for clinical use."
+}

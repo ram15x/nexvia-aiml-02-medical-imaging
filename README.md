@@ -46,7 +46,7 @@ Full description: [docs/architecture.md](docs/architecture.md).
 
 Classifier results on the 999-image NIH sample (549 patients): macro AUROC 0.797, macro average precision 0.151, micro F1 at 0.5 0.256. Per-label and subgroup tables, with patient-level intervals, are in [docs/results.md](docs/results.md). They are generated from the pipeline outputs.
 
-Spleen: the served checkpoint's own metadata records a validation mean Dice of 0.833. Its held-out performance is not measured in this repository. See [docs/limits_and_bias.md](docs/limits_and_bias.md).
+Spleen: mean Dice 0.715 on 6 held-out MSD cases the model never trained on or was selected with (range 0.47 to 0.91). Six cases is a very small sample, and two cases were clearly over-segmented. Details and limits: [docs/limits_and_bias.md](docs/limits_and_bias.md).
 
 ## Documentation
 

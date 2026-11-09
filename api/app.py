@@ -73,7 +73,7 @@ def _environment_bool(variable: str, default: bool = False) -> bool:
 CHECKPOINT = _project_path("NEXVIA_CHECKPOINT", "artifacts/best_densenet121.pt")
 SEGMENTATION_CHECKPOINT = _project_path(
     "NEXVIA_SEGMENTATION_CHECKPOINT",
-    "artifacts/best_spleen_unet_candidate_20261103.pt",
+    "artifacts/best_spleen_unet_20261109.pt",
 )
 SEGMENTATION_THRESHOLD = float(os.environ.get("NEXVIA_SEGMENTATION_THRESHOLD", "0.50"))
 if not 0.0 < SEGMENTATION_THRESHOLD < 1.0:
