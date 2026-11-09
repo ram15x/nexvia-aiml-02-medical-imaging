@@ -15,7 +15,7 @@ services:
       NEXVIA_ORTHANC_SYNC_STATE_PATH: ${NEXVIA_ORTHANC_SYNC_STATE_PATH:-demo/orthanc_sync_state.json}
       NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH: ${NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH:-demo/orthanc_segmentations.jsonl}
       NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR: ${NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR:-demo/orthanc_masks}
-      NEXVIA_CORS_ORIGINS: ${NEXVIA_CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+      NEXVIA_CORS_ORIGINS: ${NEXVIA_CORS_ORIGINS:-http://localhost:15180,http://127.0.0.1:15180}
       ORTHANC_URL: ${ORTHANC_URL:-http://orthanc:8042}
       ORTHANC_USERNAME: ${ORTHANC_USERNAME:-orthanc}
       ORTHANC_PASSWORD: ${ORTHANC_PASSWORD:-}
@@ -37,7 +37,7 @@ services:
       context: .
       dockerfile: web/Dockerfile
       args:
-        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:18080}
     ports:
       - "127.0.0.1:${NEXVIA_WEB_PORT:-5173}:80"
     depends_on:

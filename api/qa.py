@@ -146,6 +146,9 @@ def ask_openrouter(messages: list[dict[str, str]], api_key: str, model: str) -> 
         json={"model": model, "messages": messages, "temperature": 0.2, "max_tokens": 450},
         timeout=TIMEOUT_SECONDS,
     )
+    if response.status_code >= 400:
+        # Log the upstream status and a short, key-free error excerpt to diagnose failures.
+        print(f"OpenRouter HTTP {response.status_code}: {response.text[:300]}", flush=True)
     response.raise_for_status()
     body = response.json()
     return body["choices"][0]["message"]["content"].strip()

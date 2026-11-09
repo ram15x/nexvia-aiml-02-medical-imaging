@@ -3,7 +3,7 @@ WORKDIR /app
 COPY web/package.json web/package-lock.json ./
 RUN npm ci
 COPY web ./
-ARG VITE_API_URL=http://localhost:8000
+ARG VITE_API_URL=http://localhost:18080
 ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
