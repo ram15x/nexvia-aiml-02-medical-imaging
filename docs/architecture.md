@@ -7,12 +7,17 @@ flowchart LR
   UI[React review UI] -->|PNG, JPEG, DICOM .dcm| API[FastAPI service]
   API --> DN[DenseNet-121 classifier, 14 scores]
   UI -->|POST /explain| API --> GC[Grad-CAM overlay]
+  UI -->|POST /explain/shap| API --> SHAP[KernelSHAP 8x8 grid]
+  UI -->|POST /qa, structured results only| API --> QA[Guarded Q&A]
+  QA -->|HTTPS, server-side key| OR[OpenRouter]
   UI -->|POST /reviews| LOG[(demo/review_events.jsonl)]
   UI -->|NIfTI volume| API --> UNET[MONAI 3D U-Net spleen mask]
   ORT[Orthanc DICOM server] -->|stable CR/DX studies, auto or manual sync| API
   ORT -->|stable CT series, manual Series ID| API
   API --> OLOG[(demo/orthanc_predictions.jsonl)]
 ```
+
+Rendered image: ![Architecture](architecture.png)
 
 ## Components
 
