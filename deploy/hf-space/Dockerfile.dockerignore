@@ -1,0 +1,20 @@
+# BuildKit uses this file instead of the root .dockerignore when building deploy/hf-space/Dockerfile.
+# The hosted image ships the two small model checkpoints from artifacts/, so *.pt is NOT excluded here.
+.git
+.venv
+__pycache__
+.pytest_cache
+data
+datasets
+reports
+*.nii
+*.nii.gz
+*.dcm
+.dvc
+web/node_modules
+web/dist
+.env
+.env.*
+!.env.example
+*.log
+demo

@@ -21,6 +21,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     NEXVIA_ORTHANC_SEGMENTATION_RESULTS_PATH=/app/demo/orthanc_segmentations.jsonl \
     NEXVIA_ORTHANC_SEGMENTATION_MASK_DIR=/app/demo/orthanc_masks \
     ORTHANC_AUTO_SYNC_SECONDS=0 \
+    NEXVIA_DISABLE_ORTHANC=true \
+    NEXVIA_RATE_LIMIT_PER_MINUTE=30 \
+    NEXVIA_QA_LIMIT_PER_HOUR=20 \
+    NEXVIA_TRUST_PROXY=true \
     NEXVIA_WEB_DIST=/app/web_dist
 
 WORKDIR /app
@@ -33,6 +37,10 @@ COPY api ./api
 COPY segment_spleen.py train_segmentation.py ./
 COPY artifacts ./artifacts
 COPY --from=web /app/dist ./web_dist
-RUN mkdir -p /app/demo && chmod -R 777 /app/demo
+# Hugging Face Spaces runs containers as UID 1000. Keep only the demo state folder writable.
+RUN useradd --create-home --uid 1000 app \
+    && mkdir -p /app/demo \
+    && chown -R app:app /app/demo
+USER app
 EXPOSE 7860
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "7860"]

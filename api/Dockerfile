@@ -14,5 +14,11 @@ RUN python -m pip install --no-cache-dir --upgrade pip==26.2.2 \
 
 COPY api ./api
 COPY segment_spleen.py train_segmentation.py ./
+# Run as an unprivileged user. UID 1000 matches the default user on most Linux hosts, so the
+# bind-mounted ./demo folder stays writable.
+RUN useradd --create-home --uid 1000 app \
+    && mkdir -p /app/demo \
+    && chown -R app:app /app/demo
+USER app
 EXPOSE 8000
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
