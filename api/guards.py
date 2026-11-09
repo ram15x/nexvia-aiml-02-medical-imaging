@@ -26,6 +26,11 @@ def _flag(name: str) -> bool:
     return (os.environ.get(name) or "").strip().lower() in {"1", "true", "yes", "on"}
 
 
+def orthanc_enabled() -> bool:
+    """False when the deployment has no Orthanc server and its routes are switched off."""
+    return not _flag("NEXVIA_DISABLE_ORTHANC")
+
+
 def _limit(name: str) -> int:
     raw = (os.environ.get(name) or "0").strip()
     try:

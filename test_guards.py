@@ -81,3 +81,12 @@ def test_proxy_header_is_used_only_when_trusted(monkeypatch):
     untrusted = _app(monkeypatch, NEXVIA_RATE_LIMIT_PER_MINUTE="1")
     assert untrusted.post("/predict", headers={"x-forwarded-for": "1.1.1.1"}).status_code == 200
     assert untrusted.post("/predict", headers={"x-forwarded-for": "2.2.2.2"}).status_code == 429
+
+
+def test_orthanc_enabled_flag_follows_environment(monkeypatch):
+    from api.guards import orthanc_enabled
+
+    monkeypatch.delenv("NEXVIA_DISABLE_ORTHANC", raising=False)
+    assert orthanc_enabled() is True
+    monkeypatch.setenv("NEXVIA_DISABLE_ORTHANC", "true")
+    assert orthanc_enabled() is False

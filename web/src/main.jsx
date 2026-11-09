@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style.css';
 
@@ -14,15 +14,20 @@ function errorMessage(data, fallback) {
   return typeof data?.detail === 'string' ? data.detail : fallback;
 }
 const FROZEN_EVALUATION = {
-  checkpointSha256: '5634f21659d2cb8bf57bb90ff45797bd998beef15e1231e7f916f953f610db87',
-  images: 500,
-  patients: 58,
-  macroAUROC: 0.7116412172524108,
-  macroAuprc: 0.17552140259240692,
-  microF1: 0.27929568913175473,
+  checkpointSha256: '082bc9dc5ff0399a6eeb07ae4dd9146ab258c39829e2c19a5c3eccc2c1cd8cc8',
+  images: 999,
+  patients: 549,
+  macroAUROC: 0.7967051680455423,
+  macroAuprc: 0.15069106826293815,
+  microF1: 0.25645295587010825,
 };
 
 function App() {
+  // Hosted demos run without an Orthanc server; the API says so in /health and the panel is hidden.
+  const [orthancEnabled, setOrthancEnabled] = useState(true);
+  useEffect(() => {
+    fetch(`${API}/health`).then(r => r.json()).then(h => setOrthancEnabled(h?.orthanc?.enabled !== false)).catch(() => {});
+  }, []);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState('');
   const [result, setResult] = useState(null);
@@ -194,9 +199,9 @@ function App() {
   }
 
   return <main className="shell">
-    <header className="topbar"><div className="brand-mark">N</div><div><p className="eyebrow">NEXVIA · AIML-02</p><h1>Chest imaging review</h1></div><span className="demo-tag">LOCAL DEMO</span></header>
+    <header className="topbar"><div className="brand-mark">N</div><div><p className="eyebrow">NEXVIA · AIML-02</p><h1>Chest imaging review</h1></div><span className="demo-tag">{orthancEnabled ? 'LOCAL DEMO' : 'PUBLIC DEMO'}</span></header>
     <aside className="notice"><strong>Coursework prototype.</strong> Model scores are experimental and are not a diagnosis or a substitute for a clinician's review. Do not upload real patient data to this demo.</aside>
-    <section className="sync-panel"><div><p className="eyebrow">OPTIONAL LOCAL ORTHANC DEMO</p><strong>Check for new chest radiographs</strong><span>Reads Orthanc’s stable-study change log and processes at most 16 instances per click. Only single-frame CR/DX radiographs are sent to the chest X-ray classifier.</span></div><button className="secondary" onClick={syncOrthanc} disabled={syncBusy}>{syncBusy ? 'Checking…' : 'Sync new radiographs'}</button>{syncMessage && <p className="saved">{syncMessage}</p>}<form className="orthanc-ct-form" onSubmit={segmentOrthancCt}><label htmlFor="orthanc-series-id">Experimental spleen segmentation from one stable Orthanc CT series</label><input id="orthanc-series-id" value={orthancSeriesId} onChange={e => setOrthancSeriesId(e.target.value)} placeholder="Orthanc series ID" autoComplete="off" /><label htmlFor="orthanc-expected-count">Expected slice count from the data source (optional)</label><input id="orthanc-expected-count" type="number" min="2" max="512" step="1" value={orthancExpectedCount} onChange={e => setOrthancExpectedCount(e.target.value)} placeholder="Only if independently known" /><button className="secondary" disabled={!orthancSeriesId.trim() || ctBusy}>{ctBusy ? 'Running 3D model…' : 'Segment Orthanc CT series'}</button><small>For a series marked Unknown, provide the expected count only if the source independently supplies it. A matching count is not proof that every slice is correct or complete. Single-frame CT slices only; geometry and size are checked. No patient names or demographics are shown. The series reference and count basis are recorded; mask accuracy is unknown for this input.</small></form></section>
+    {orthancEnabled && <section className="sync-panel"><div><p className="eyebrow">OPTIONAL LOCAL ORTHANC DEMO</p><strong>Check for new chest radiographs</strong><span>Reads Orthanc’s stable-study change log and processes at most 16 instances per click. Only single-frame CR/DX radiographs are sent to the chest X-ray classifier.</span></div><button className="secondary" onClick={syncOrthanc} disabled={syncBusy}>{syncBusy ? 'Checking…' : 'Sync new radiographs'}</button>{syncMessage && <p className="saved">{syncMessage}</p>}<form className="orthanc-ct-form" onSubmit={segmentOrthancCt}><label htmlFor="orthanc-series-id">Experimental spleen segmentation from one stable Orthanc CT series</label><input id="orthanc-series-id" value={orthancSeriesId} onChange={e => setOrthancSeriesId(e.target.value)} placeholder="Orthanc series ID" autoComplete="off" /><label htmlFor="orthanc-expected-count">Expected slice count from the data source (optional)</label><input id="orthanc-expected-count" type="number" min="2" max="512" step="1" value={orthancExpectedCount} onChange={e => setOrthancExpectedCount(e.target.value)} placeholder="Only if independently known" /><button className="secondary" disabled={!orthancSeriesId.trim() || ctBusy}>{ctBusy ? 'Running 3D model…' : 'Segment Orthanc CT series'}</button><small>For a series marked Unknown, provide the expected count only if the source independently supplies it. A matching count is not proof that every slice is correct or complete. Single-frame CT slices only; geometry and size are checked. No patient names or demographics are shown. The series reference and count basis are recorded; mask accuracy is unknown for this input.</small></form></section>}
     <section className="workspace">
       <form className="card upload" onSubmit={analyze}>
         <div className="section-head"><div><p className="eyebrow">01 / IMAGE</p><h2>Select a chest image</h2></div><span className="format">PNG or JPEG</span></div>

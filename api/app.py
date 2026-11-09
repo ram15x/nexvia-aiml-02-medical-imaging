@@ -29,7 +29,7 @@ from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
 from fastapi.responses import FileResponse, StreamingResponse
 from torch import nn
-from .guards import install_guards
+from .guards import install_guards, orthanc_enabled
 from .modeling import ARCHITECTURE_NAMES, build_classifier, gradcam_target, image_to_tensor
 from .qa import (MAX_QUESTION_CHARS, AUDIENCES, CaseStore, URGENT_ANSWER, answer, configured_model,
                  is_configured, is_urgent)
@@ -253,6 +253,7 @@ def health() -> dict[str, Any]:
         "load_error": _load_error,
         "segmentation": _segmentation_runtime_info(),
         "question_answering": {"configured": is_configured(), "model": configured_model()},
+        "orthanc": {"enabled": orthanc_enabled()},
         "disclaimer": DISCLAIMER,
     }
 
