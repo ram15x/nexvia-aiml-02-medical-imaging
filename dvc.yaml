@@ -1,28 +1,47 @@
+# Reproducible evaluation of the served chest X-ray classifier on the 999-image NIH sample.
+# Run with: dvc pull && dvc repro
+# Inputs are tracked: the sample images through DVC, the manifest and checkpoint through git.
 stages:
-  classifier_subset_screen:
-    cmd: >-
-      set "TORCH_HOME=data/NexviaProjectData/nih/torch-cache" &&
-      .\data\NexviaProjectData\aiml02-venv310\Scripts\python.exe train_classifier.py
-      --manifest data/NexviaProjectData/nih/metadata/colab_t4_subset/trainval_manifest.csv
-      --image-root data/NexviaProjectData/nih/images
-      --output reports/dvc_classifier_subset_seed42
-      --architecture ${classifier_subset.architecture}
-      --epochs ${classifier_subset.epochs}
-      --batch-size ${classifier_subset.batch_size}
-      --workers ${classifier_subset.workers}
-      --lr ${classifier_subset.learning_rate}
-      --seed ${classifier_subset.seed}
-      --checkpoint-every-steps ${classifier_subset.checkpoint_every_steps}
+  build_eval_manifest:
+    cmd: python tools/build_eval_manifest.py data/nih_test_sample_1000/manifest.csv results/nih_sample/eval_manifest.csv
     deps:
-      - train_classifier.py
-      - api/modeling.py
-      - requirements-training.txt
-      - data/NexviaProjectData/nih/metadata/colab_t4_subset/trainval_manifest.csv
-      - data/NexviaProjectData/nih/images
-    params:
-      - classifier_subset
+      - tools/build_eval_manifest.py
+      - data/nih_test_sample_1000/manifest.csv
     outs:
-      - reports/dvc_classifier_subset_seed42/best_densenet121.pt
+      - results/nih_sample/eval_manifest.csv
+
+  evaluate_nih_sample:
+    cmd: >-
+      python evaluate_bootstrap.py
+      --manifest results/nih_sample/eval_manifest.csv
+      --image-root data/nih_test_sample_1000/images
+      --checkpoint artifacts/best_densenet121.pt
+      --output-dir results/nih_sample
+      --n-boot 1000
+    deps:
+      - evaluate_bootstrap.py
+      - train_classifier.py
+      - data_audit.py
+      - api/modeling.py
+      - artifacts/best_densenet121.pt
+      - results/nih_sample/eval_manifest.csv
+      - data/nih_test_sample_1000/images
+    outs:
+      - results/nih_sample/per_image_predictions.csv
     metrics:
-      - reports/dvc_classifier_subset_seed42/training_history.json
-      - reports/dvc_classifier_subset_seed42/run_summary.json
+      - results/nih_sample/per_label_intervals.json:
+          cache: false
+
+  subgroup_bias:
+    cmd: >-
+      python tools/subgroup_bias.py
+      --manifest results/nih_sample/eval_manifest.csv
+      --predictions results/nih_sample/per_image_predictions.csv
+      --output results/nih_sample/subgroup_metrics.csv
+    deps:
+      - tools/subgroup_bias.py
+      - results/nih_sample/eval_manifest.csv
+      - results/nih_sample/per_image_predictions.csv
+    outs:
+      - results/nih_sample/subgroup_metrics.csv
+

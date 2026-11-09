@@ -41,7 +41,13 @@ reports/pipeline_pilot_500_2026-10-30/
 reports/msd_validation_spleen10_visual_20261029/
 reports/larger_data_candidate_gradcam_smoke_2026-10-29.png
 deliverables/*_v20.pptx
-data/
+data/*
+!data/nih_test_sample_1000/
+data/nih_test_sample_1000/*
+!data/nih_test_sample_1000/manifest.csv
+!data/nih_test_sample_1000/PROTOCOL.md
+!data/nih_test_sample_1000/selected_1000.txt
+!data/nih_test_sample_1000/images.dvc
 notebooks/
 reports/
 PROJECT_STATUS.md

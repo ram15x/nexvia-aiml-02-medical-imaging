@@ -2,14 +2,12 @@
 
 **Nexvia Technologies · AIML-02 capstone · Educational prototype**
 
-**Live demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/) · [Hugging Face Space](https://huggingface.co/spaces/Ram15x/medical-imaging-ai-review)
+**Hosted demo:** [ram15x-medical-imaging-ai-review.hf.space](https://ram15x-medical-imaging-ai-review.hf.space/). The hosted copy may not match this commit; the local Docker run is the reference.
 
-An educational pipeline with two independent models and a browser review interface:
+Two separate models share one review interface:
 
-- **Chest X-ray findings:** a DenseNet-121 classifier produces 14 uncalibrated scores for NIH ChestX-ray14 labels, with a Grad-CAM overlay.
-- **Spleen CT segmentation:** a MONAI 3D U-Net returns a binary mask from a NIfTI volume or a stable single-series Orthanc CT.
-
-The two models are separate and are not combined.
+- **Chest X-ray findings:** DenseNet-121 gives 14 uncalibrated scores for NIH ChestX-ray14 labels, with a Grad-CAM overlay.
+- **Spleen CT segmentation:** a MONAI 3D U-Net returns a binary mask from a NIfTI volume or a stable Orthanc CT series.
 
 > Not for diagnosis or clinical decisions. Use only de-identified or public sample data.
 
@@ -17,32 +15,42 @@ The two models are separate and are not combined.
 
 ```mermaid
 flowchart LR
-  CX[Chest X-ray PNG/JPEG] --> UI[React review interface]
-  UI -->|POST /predict| API[FastAPI]
-  API --> DN[DenseNet-121 classifier]
-  DN --> SCORES[14 finding scores]
+  UI[React review UI] -->|PNG, JPEG, DICOM .dcm| API[FastAPI]
+  API --> DN[DenseNet-121, 14 scores]
   UI -->|POST /explain| API --> GC[Grad-CAM overlay]
-  UI -->|review action| API --> LOG[Local JSONL review log]
-  CT[Spleen CT NIfTI] --> UI -->|POST /segment/spleen| API
-  API --> UNET[MONAI 3D U-Net]
-  UNET --> MASK[3D mask and previews]
-  ORT[Orthanc] -->|DX sync| API
-  ORT -->|CT series| API
+  UI -->|POST /reviews| LOG[(review log)]
+  UI -->|NIfTI volume| API --> UNET[MONAI 3D U-Net]
+  ORT[Orthanc] -->|stable CR/DX, auto or manual| API
+  ORT -->|stable CT series| API
 ```
+
+Full description: [docs/architecture.md](docs/architecture.md).
 
 ## Features
 
 | Area | What it does |
 |---|---|
-| Chest X-ray classification | 14 sigmoid scores per image with Grad-CAM (coarse attribution only) |
+| Chest X-ray classification | 14 sigmoid scores per image, PNG, JPEG or single-frame CR/DX DICOM |
+| Grad-CAM | Coarse overlay for a selected label. Not a segmentation mask. |
 | Spleen segmentation | Binary mask, tri-planar previews, NIfTI-GZIP download |
-| Orthanc integration | Syncs single-frame CR/DX radiographs to the classifier; segments a stable CT series |
-| Review log | Records a reviewer action with the model name and checkpoint SHA-256 |
-| Hosting | Docker Compose for local runs; Hugging Face Space for the hosted demo |
+| Orthanc | Pulls stable CR/DX studies automatically (`ORTHANC_AUTO_SYNC_SECONDS`) or on demand; segments a stable CT series |
+| Review | "Approve (demo only)", "Reject output", "Needs review". Each action is logged with the model checkpoint hash. |
 
 ## Results
 
-No results are reported here. Earlier evaluation documents were removed because their figures could not be re-verified; re-evaluation is pending.
+Classifier results on the 999-image NIH sample (549 patients): macro AUROC 0.797, macro average precision 0.151, micro F1 at 0.5 0.256. Per-label and subgroup tables, with patient-level intervals, are in [docs/results.md](docs/results.md). They are generated from the pipeline outputs.
+
+Spleen: the served checkpoint's own metadata records a validation mean Dice of 0.833. Its held-out performance is not measured in this repository. See [docs/limits_and_bias.md](docs/limits_and_bias.md).
+
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [API](docs/api.md)
+- [DICOM](docs/dicom.md)
+- [Data and DVC](docs/data_and_dvc.md)
+- [Results](docs/results.md)
+- [Limits and bias](docs/limits_and_bias.md)
+- [Test results](docs/test_results.md)
 
 ## Run locally with Docker
 
@@ -56,15 +64,13 @@ docker compose up --build
 - Web app: http://localhost:15180
 - API health: http://localhost:18080/health
 
-**Data formats.** The public datasets are not DICOM: NIH ChestX-ray14 images are PNG, and MSD Task09 volumes are NIfTI. DICOM enters the system only through the optional Orthanc connector (DX/CR synchronization and manual CT-series conversion). The DX path was tested with a generated synthetic study. The CT path was tested with a generated synthetic series and one public de-identified 81-slice TCIA CT series, which needed an operator-supplied instance count because Orthanc reported its status as Unknown. These tests check interoperability only, not accuracy or broad DICOM compatibility.
-
-Optional Orthanc (DICOM test server):
+Optional Orthanc DICOM test server:
 
 ```bash
 docker compose --profile orthanc up -d
 ```
 
-Orthanc listens on `127.0.0.1:18042` (HTTP) and `127.0.0.1:14242` (DICOM). Set `ORTHANC_PASSWORD` in `.env` first.
+Orthanc listens on `127.0.0.1:18042` (HTTP) and `127.0.0.1:14242` (DICOM). Set `ORTHANC_PASSWORD` in `.env` first. The API polls Orthanc every `ORTHANC_AUTO_SYNC_SECONDS` seconds (60 by default; `0` disables it).
 
 ## Run locally without Docker
 
@@ -79,26 +85,27 @@ python -m uvicorn api.app:app --env-file .env --host 127.0.0.1 --port 18080
 cd web && npm ci && VITE_API_URL=http://127.0.0.1:18080 npm run dev -- --port 15180
 ```
 
-Model checkpoints are in `artifacts/`.
+Checkpoints are in `artifacts/`.
 
-## Tests
+## Reproduce the classifier evaluation
 
 ```bash
-python -m pytest -q
+dvc pull      # 999 NIH sample images, from the DVC remote
+dvc repro     # manifest, bootstrap evaluation, subgroup table
+python tools/make_results_doc.py   # regenerate docs/results.md from those outputs
 ```
 
 ## Data
 
-- **NIH ChestX-ray14:** public dataset, used for chest X-ray labels. Images are not in this repository.
-- **Medical Segmentation Decathlon Task09 (Spleen):** public dataset, used for CT segmentation.
-
-Raw data is excluded from version control. DVC pointer files describe the retained examples.
+- **NIH ChestX-ray14:** public dataset. The 999-image official-test sample is tracked by DVC; the manifest and protocol are in git.
+- **Medical Segmentation Decathlon Task09 (Spleen):** public dataset, not included in this repository.
+- **DICOM:** the public datasets are PNG (NIH) and NIfTI (MSD). DICOM is handled by upload and by the Orthanc connector. Tests use DICOM files generated from NIH images, and one public CT series reported in an earlier run. See [docs/dicom.md](docs/dicom.md).
 
 ## Limitations
 
 - Labels are mined from radiology reports and are noisy.
-- Scores are uncalibrated and are not diagnostic probabilities.
-- Grad-CAM is a coarse visual aid and does not show how the model reasons.
-- The spleen model's held-out performance is weak.
-- The Orthanc connector handles one stable single-frame instance per series and is not a full PACS integration.
-
+- Scores are uncalibrated and are not diagnostic probabilities. At threshold 0.5 most positives are missed.
+- Performance is lower for patients aged 60 and over in the NIH sample (see [docs/limits_and_bias.md](docs/limits_and_bias.md)).
+- The spleen model's held-out performance is not measured here.
+- Orthanc CT completion relies on an instance count that a person enters when Orthanc reports the series as Unknown.
+- Orthanc is not a full PACS integration, and no DICOM SEG or SR is written back.

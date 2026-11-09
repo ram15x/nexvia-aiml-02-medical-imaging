@@ -1,0 +1,277 @@
+{
+  "images": 999,
+  "patients": 549,
+  "bootstrap_resamples": 1000,
+  "bootstrap_unit": "patient",
+  "macro": {
+    "images": 999,
+    "threshold": 0.5,
+    "macro_auroc_defined_labels": 0.7967051680455423,
+    "macro_auprc_defined_labels": 0.15069106826293815,
+    "micro_precision_at_0_5": 0.17480136208853575,
+    "micro_recall_at_0_5": 0.48125,
+    "micro_f1_at_0_5": 0.25645295587010825
+  },
+  "per_label": {
+    "Atelectasis": {
+      "positive_count": 80,
+      "auroc": 0.8462051142546246,
+      "auprc": 0.29676588653233066,
+      "confusion_at_0_5": {
+        "true_positive": 60,
+        "false_positive": 235,
+        "false_negative": 20,
+        "true_negative": 684
+      },
+      "auroc_95ci": [
+        0.8083,
+        0.8841
+      ],
+      "auprc_95ci": [
+        0.2095,
+        0.4145
+      ]
+    },
+    "Cardiomegaly": {
+      "positive_count": 21,
+      "auroc": 0.7944785276073619,
+      "auprc": 0.1616644142352238,
+      "confusion_at_0_5": {
+        "true_positive": 5,
+        "false_positive": 17,
+        "false_negative": 16,
+        "true_negative": 961
+      },
+      "auroc_95ci": [
+        0.7022,
+        0.8685
+      ],
+      "auprc_95ci": [
+        0.0253,
+        0.375
+      ]
+    },
+    "Effusion": {
+      "positive_count": 131,
+      "auroc": 0.8466950434446124,
+      "auprc": 0.36753867534528256,
+      "confusion_at_0_5": {
+        "true_positive": 105,
+        "false_positive": 221,
+        "false_negative": 26,
+        "true_negative": 647
+      },
+      "auroc_95ci": [
+        0.8134,
+        0.8823
+      ],
+      "auprc_95ci": [
+        0.2956,
+        0.456
+      ]
+    },
+    "Infiltration": {
+      "positive_count": 122,
+      "auroc": 0.7303026337925491,
+      "auprc": 0.2753447044938011,
+      "confusion_at_0_5": {
+        "true_positive": 80,
+        "false_positive": 340,
+        "false_negative": 42,
+        "true_negative": 537
+      },
+      "auroc_95ci": [
+        0.67,
+        0.7761
+      ],
+      "auprc_95ci": [
+        0.1932,
+        0.3681
+      ]
+    },
+    "Mass": {
+      "positive_count": 33,
+      "auroc": 0.7726017943409249,
+      "auprc": 0.10526890324847094,
+      "confusion_at_0_5": {
+        "true_positive": 15,
+        "false_positive": 106,
+        "false_negative": 18,
+        "true_negative": 860
+      },
+      "auroc_95ci": [
+        0.6744,
+        0.8486
+      ],
+      "auprc_95ci": [
+        0.0413,
+        0.2046
+      ]
+    },
+    "Nodule": {
+      "positive_count": 33,
+      "auroc": 0.7652299391429827,
+      "auprc": 0.12569211249709772,
+      "confusion_at_0_5": {
+        "true_positive": 16,
+        "false_positive": 122,
+        "false_negative": 17,
+        "true_negative": 844
+      },
+      "auroc_95ci": [
+        0.6733,
+        0.8558
+      ],
+      "auprc_95ci": [
+        0.0606,
+        0.2606
+      ]
+    },
+    "Pneumonia": {
+      "positive_count": 7,
+      "auroc": 0.7415034562211982,
+      "auprc": 0.023807076147332448,
+      "confusion_at_0_5": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 7,
+        "true_negative": 992
+      },
+      "auroc_95ci": [
+        0.6081,
+        0.8833
+      ],
+      "auprc_95ci": [
+        0.0063,
+        0.0781
+      ]
+    },
+    "Pneumothorax": {
+      "positive_count": 98,
+      "auroc": 0.7989082425423,
+      "auprc": 0.2190172033565307,
+      "confusion_at_0_5": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 98,
+        "true_negative": 901
+      },
+      "auroc_95ci": [
+        0.7406,
+        0.8492
+      ],
+      "auprc_95ci": [
+        0.1306,
+        0.3405
+      ]
+    },
+    "Consolidation": {
+      "positive_count": 36,
+      "auroc": 0.8080939194646359,
+      "auprc": 0.09259374527261159,
+      "confusion_at_0_5": {
+        "true_positive": 8,
+        "false_positive": 74,
+        "false_negative": 28,
+        "true_negative": 889
+      },
+      "auroc_95ci": [
+        0.7569,
+        0.8647
+      ],
+      "auprc_95ci": [
+        0.0584,
+        0.1561
+      ]
+    },
+    "Edema": {
+      "positive_count": 11,
+      "auroc": 0.8301435406698565,
+      "auprc": 0.10531064381600888,
+      "confusion_at_0_5": {
+        "true_positive": 7,
+        "false_positive": 216,
+        "false_negative": 4,
+        "true_negative": 772
+      },
+      "auroc_95ci": [
+        0.6877,
+        0.933
+      ],
+      "auprc_95ci": [
+        0.0118,
+        0.2872
+      ]
+    },
+    "Emphysema": {
+      "positive_count": 43,
+      "auroc": 0.7737909895884013,
+      "auprc": 0.10463253790056568,
+      "confusion_at_0_5": {
+        "true_positive": 6,
+        "false_positive": 35,
+        "false_negative": 37,
+        "true_negative": 921
+      },
+      "auroc_95ci": [
+        0.7074,
+        0.8347
+      ],
+      "auprc_95ci": [
+        0.0645,
+        0.1705
+      ]
+    },
+    "Fibrosis": {
+      "positive_count": 1,
+      "auroc": 0.8847695390781563,
+      "auprc": 0.008620689655172414,
+      "confusion_at_0_5": {
+        "true_positive": 0,
+        "false_positive": 2,
+        "false_negative": 1,
+        "true_negative": 996
+      },
+      "auroc_95ci": [
+        0.8401,
+        0.9247
+      ],
+      "auprc_95ci": [
+        0.0063,
+        0.033
+      ]
+    },
+    "Pleural_Thickening": {
+      "positive_count": 24,
+      "auroc": 0.7644444444444445,
+      "auprc": 0.07272729491776753,
+      "confusion_at_0_5": {
+        "true_positive": 6,
+        "false_positive": 86,
+        "false_negative": 18,
+        "true_negative": 889
+      },
+      "auroc_95ci": [
+        0.6777,
+        0.8502
+      ],
+      "auprc_95ci": [
+        0.0404,
+        0.162
+      ]
+    },
+    "Hernia": {
+      "positive_count": 0,
+      "auroc": null,
+      "auprc": null,
+      "confusion_at_0_5": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 999
+      },
+      "auroc_95ci": null,
+      "auprc_95ci": null
+    }
+  }
+}

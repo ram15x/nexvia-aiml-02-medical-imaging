@@ -55,3 +55,89 @@ stages:
       hash: md5
       md5: 44263f0287dbce1642a3cd66e7195205
       size: 14313
+  build_eval_manifest:
+    cmd: python tools/build_eval_manifest.py 
+      data/nih_test_sample_1000/manifest.csv 
+      results/nih_sample/eval_manifest.csv
+    deps:
+    - path: data/nih_test_sample_1000/manifest.csv
+      hash: md5
+      md5: 4ab15922c01cc2748ecc40d86bfdbe89
+      size: 80443
+    - path: tools/build_eval_manifest.py
+      hash: md5
+      md5: 61740d9d50d44557677018845497b80d
+      size: 1658
+    outs:
+    - path: results/nih_sample/eval_manifest.csv
+      hash: md5
+      md5: 18fdbb37569c0851ec78a32660b6d9bc
+      size: 50201
+  evaluate_nih_sample:
+    cmd: python evaluate_bootstrap.py --manifest 
+      results/nih_sample/eval_manifest.csv --image-root 
+      data/nih_test_sample_1000/images --checkpoint 
+      artifacts/best_densenet121.pt --output-dir results/nih_sample --n-boot 
+      1000
+    deps:
+    - path: api/modeling.py
+      hash: md5
+      md5: d9e22d3f646e3081d2d1ffba0b8e5bb0
+      size: 12289
+    - path: artifacts/best_densenet121.pt
+      hash: md5
+      md5: b492e8a836864eeb227b04d3a15fd4b3
+      size: 28496134
+    - path: data/nih_test_sample_1000/images
+      hash: md5
+      md5: b37effe3c39160299d58dbd31870e825.dir
+      size: 409223753
+      nfiles: 999
+    - path: data_audit.py
+      hash: md5
+      md5: ec334853acb4d951e24614e918739747
+      size: 8585
+    - path: evaluate_bootstrap.py
+      hash: md5
+      md5: ac9311e7246dfd3f47dfb9dba7493465
+      size: 5135
+    - path: results/nih_sample/eval_manifest.csv
+      hash: md5
+      md5: 18fdbb37569c0851ec78a32660b6d9bc
+      size: 50201
+    - path: train_classifier.py
+      hash: md5
+      md5: b6244808b7abfa5b670fd3e5338fd881
+      size: 31748
+    outs:
+    - path: results/nih_sample/per_image_predictions.csv
+      hash: md5
+      md5: 0f40c4fb418965177f4d7058b334f32d
+      size: 179823
+    - path: results/nih_sample/per_label_intervals.json
+      hash: md5
+      md5: af3dee4baa26e809bdd8fa705a96487f
+      size: 5945
+  subgroup_bias:
+    cmd: python tools/subgroup_bias.py --manifest 
+      results/nih_sample/eval_manifest.csv --predictions 
+      results/nih_sample/per_image_predictions.csv --output 
+      results/nih_sample/subgroup_metrics.csv
+    deps:
+    - path: results/nih_sample/eval_manifest.csv
+      hash: md5
+      md5: 18fdbb37569c0851ec78a32660b6d9bc
+      size: 50201
+    - path: results/nih_sample/per_image_predictions.csv
+      hash: md5
+      md5: 0f40c4fb418965177f4d7058b334f32d
+      size: 179823
+    - path: tools/subgroup_bias.py
+      hash: md5
+      md5: d4f4a851a1319f0b8da404ff35f87e7b
+      size: 5231
+    outs:
+    - path: results/nih_sample/subgroup_metrics.csv
+      hash: md5
+      md5: 34a19024b47b30d2c68093ff55c4597a
+      size: 485

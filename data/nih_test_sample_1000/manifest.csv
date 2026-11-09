@@ -1,0 +1,1000 @@
+image_index,patient_id,follow_up,patient_age,patient_sex,view_position,finding_labels,source_archive,split
+00028173_004.png,28173,4,16,F,AP,Infiltration,images_012.tar.gz,official_test
+00028173_005.png,28173,5,16,F,AP,Infiltration,images_012.tar.gz,official_test
+00028173_009.png,28173,9,16,F,PA,Atelectasis|Emphysema,images_012.tar.gz,official_test
+00028173_011.png,28173,11,16,F,PA,Emphysema,images_012.tar.gz,official_test
+00028173_016.png,28173,15,16,F,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00028174_000.png,28174,0,57,M,PA,No Finding,images_012.tar.gz,official_test
+00028180_005.png,28180,8,66,M,PA,Emphysema,images_012.tar.gz,official_test
+00028180_007.png,28180,5,66,M,PA,Emphysema|Pleural_Thickening|Pneumothorax,images_012.tar.gz,official_test
+00028181_000.png,28181,0,55,M,PA,No Finding,images_012.tar.gz,official_test
+00028184_000.png,28184,0,21,F,PA,No Finding,images_012.tar.gz,official_test
+00028185_001.png,28185,1,62,M,AP,No Finding,images_012.tar.gz,official_test
+00028198_002.png,28198,2,23,F,PA,No Finding,images_012.tar.gz,official_test
+00028199_000.png,28199,0,54,M,PA,No Finding,images_012.tar.gz,official_test
+00028202_000.png,28202,0,47,M,PA,No Finding,images_012.tar.gz,official_test
+00028208_001.png,28208,3,64,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028208_004.png,28208,4,64,M,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00028208_005.png,28208,5,64,M,PA,Infiltration|Pneumonia,images_012.tar.gz,official_test
+00028208_011.png,28208,11,64,M,AP,Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00028208_014.png,28208,15,64,M,AP,Infiltration,images_012.tar.gz,official_test
+00028208_024.png,28208,23,64,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00028208_033.png,28208,33,64,M,PA,Emphysema,images_012.tar.gz,official_test
+00028208_034.png,28208,34,64,M,PA,No Finding,images_012.tar.gz,official_test
+00028208_037.png,28208,37,64,M,PA,No Finding,images_012.tar.gz,official_test
+00028208_040.png,28208,40,64,M,PA,Atelectasis,images_012.tar.gz,official_test
+00028220_000.png,28220,0,27,F,PA,No Finding,images_012.tar.gz,official_test
+00028224_000.png,28224,0,25,M,PA,No Finding,images_012.tar.gz,official_test
+00028225_000.png,28225,0,32,F,PA,No Finding,images_012.tar.gz,official_test
+00028226_000.png,28226,0,85,F,PA,No Finding,images_012.tar.gz,official_test
+00028229_000.png,28229,0,36,F,PA,No Finding,images_012.tar.gz,official_test
+00028232_001.png,28232,1,59,M,AP,No Finding,images_012.tar.gz,official_test
+00028234_000.png,28234,0,36,M,PA,No Finding,images_012.tar.gz,official_test
+00028234_001.png,28234,1,37,M,PA,No Finding,images_012.tar.gz,official_test
+00028237_000.png,28237,0,39,F,PA,No Finding,images_012.tar.gz,official_test
+00028245_000.png,28245,0,41,M,PA,No Finding,images_012.tar.gz,official_test
+00028246_000.png,28246,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00028252_000.png,28252,0,29,F,PA,No Finding,images_012.tar.gz,official_test
+00028260_000.png,28260,0,34,F,PA,No Finding,images_012.tar.gz,official_test
+00028260_001.png,28260,1,34,F,PA,No Finding,images_012.tar.gz,official_test
+00028263_000.png,28263,0,3,F,AP,No Finding,images_012.tar.gz,official_test
+00028264_000.png,28264,0,46,M,PA,No Finding,images_012.tar.gz,official_test
+00028277_000.png,28277,0,34,M,PA,No Finding,images_012.tar.gz,official_test
+00028285_005.png,28285,5,19,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028285_007.png,28285,7,19,M,AP,Atelectasis,images_012.tar.gz,official_test
+00028285_011.png,28285,11,19,M,AP,No Finding,images_012.tar.gz,official_test
+00028285_012.png,28285,12,19,M,AP,No Finding,images_012.tar.gz,official_test
+00028285_013.png,28285,13,19,M,AP,Infiltration|Nodule,images_012.tar.gz,official_test
+00028287_000.png,28287,0,31,F,PA,No Finding,images_012.tar.gz,official_test
+00028295_001.png,28295,1,29,M,PA,No Finding,images_012.tar.gz,official_test
+00028310_000.png,28310,0,62,M,PA,No Finding,images_012.tar.gz,official_test
+00028312_001.png,28312,1,58,F,AP,No Finding,images_012.tar.gz,official_test
+00028317_000.png,28317,0,52,M,PA,No Finding,images_012.tar.gz,official_test
+00028317_005.png,28317,5,53,M,AP,Emphysema|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00028317_006.png,28317,6,53,M,AP,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00028317_008.png,28317,8,53,M,AP,Atelectasis|Emphysema|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00028317_011.png,28317,11,53,M,PA,No Finding,images_012.tar.gz,official_test
+00028330_000.png,28330,0,33,F,AP,Nodule,images_012.tar.gz,official_test
+00028330_002.png,28330,2,33,F,PA,Infiltration,images_012.tar.gz,official_test
+00028330_003.png,28330,3,34,F,AP,Pneumothorax|Mass,images_012.tar.gz,official_test
+00028330_005.png,28330,5,34,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00028330_008.png,28330,8,34,F,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00028333_000.png,28333,0,42,M,PA,No Finding,images_012.tar.gz,official_test
+00028337_000.png,28337,0,8,M,PA,No Finding,images_012.tar.gz,official_test
+00028342_000.png,28342,0,54,F,PA,No Finding,images_012.tar.gz,official_test
+00028348_001.png,28348,1,52,M,AP,No Finding,images_012.tar.gz,official_test
+00028351_000.png,28351,0,48,M,PA,No Finding,images_012.tar.gz,official_test
+00028355_000.png,28355,0,38,F,AP,No Finding,images_012.tar.gz,official_test
+00028361_000.png,28361,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00028364_000.png,28364,0,64,M,PA,No Finding,images_012.tar.gz,official_test
+00028366_000.png,28366,0,47,M,PA,No Finding,images_012.tar.gz,official_test
+00028366_001.png,28366,1,47,M,PA,No Finding,images_012.tar.gz,official_test
+00028375_000.png,28375,0,33,F,PA,No Finding,images_012.tar.gz,official_test
+00028376_000.png,28376,0,25,F,PA,No Finding,images_012.tar.gz,official_test
+00028377_000.png,28377,0,47,M,AP,No Finding,images_012.tar.gz,official_test
+00028383_001.png,28383,1,60,F,PA,Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00028383_003.png,28383,3,60,F,PA,Effusion|Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00028384_000.png,28384,0,61,F,PA,No Finding,images_012.tar.gz,official_test
+00028390_000.png,28390,0,54,F,PA,No Finding,images_012.tar.gz,official_test
+00028399_000.png,28399,0,65,F,PA,No Finding,images_012.tar.gz,official_test
+00028407_001.png,28407,1,72,M,PA,No Finding,images_012.tar.gz,official_test
+00028407_003.png,28407,3,73,M,PA,No Finding,images_012.tar.gz,official_test
+00028411_000.png,28411,0,29,F,PA,No Finding,images_012.tar.gz,official_test
+00028413_000.png,28413,0,69,M,PA,No Finding,images_012.tar.gz,official_test
+00028415_000.png,28415,0,13,M,PA,No Finding,images_012.tar.gz,official_test
+00028415_001.png,28415,1,14,M,PA,No Finding,images_012.tar.gz,official_test
+00028420_000.png,28420,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00028423_000.png,28423,0,74,M,PA,No Finding,images_012.tar.gz,official_test
+00028425_003.png,28425,3,37,M,PA,No Finding,images_012.tar.gz,official_test
+00028428_000.png,28428,0,20,F,AP,No Finding,images_012.tar.gz,official_test
+00028433_002.png,28433,2,54,M,AP,Mass|Nodule,images_012.tar.gz,official_test
+00028433_003.png,28433,3,54,M,PA,Mass,images_012.tar.gz,official_test
+00028433_005.png,28433,5,54,M,PA,Atelectasis|Consolidation|Mass,images_012.tar.gz,official_test
+00028433_008.png,28433,8,54,M,AP,No Finding,images_012.tar.gz,official_test
+00028433_013.png,28433,13,54,M,AP,Atelectasis|Mass,images_012.tar.gz,official_test
+00028433_016.png,28433,16,54,M,AP,No Finding,images_012.tar.gz,official_test
+00028438_000.png,28438,0,30,M,AP,No Finding,images_012.tar.gz,official_test
+00028450_000.png,28450,0,4,F,PA,No Finding,images_012.tar.gz,official_test
+00028454_000.png,28454,0,56,F,AP,Pleural_Thickening,images_012.tar.gz,official_test
+00028454_002.png,28454,2,56,F,AP,No Finding,images_012.tar.gz,official_test
+00028454_004.png,28454,4,57,F,PA,Atelectasis|Effusion,images_012.tar.gz,official_test
+00028454_009.png,28454,9,58,F,AP,No Finding,images_012.tar.gz,official_test
+00028456_000.png,28456,0,42,M,PA,No Finding,images_012.tar.gz,official_test
+00028457_003.png,28457,3,36,F,AP,No Finding,images_012.tar.gz,official_test
+00028457_004.png,28457,4,36,F,AP,No Finding,images_012.tar.gz,official_test
+00028457_006.png,28457,6,36,F,AP,No Finding,images_012.tar.gz,official_test
+00028457_010.png,28457,10,36,F,AP,Pneumonia,images_012.tar.gz,official_test
+00028457_012.png,28457,12,37,F,PA,Infiltration,images_012.tar.gz,official_test
+00028478_002.png,28478,2,52,F,AP,No Finding,images_012.tar.gz,official_test
+00028489_000.png,28489,0,5,F,PA,No Finding,images_012.tar.gz,official_test
+00028492_000.png,28492,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00028496_000.png,28496,0,54,M,PA,No Finding,images_012.tar.gz,official_test
+00028497_000.png,28497,0,30,F,PA,No Finding,images_012.tar.gz,official_test
+00028499_000.png,28499,0,19,F,PA,No Finding,images_012.tar.gz,official_test
+00028499_003.png,28499,3,20,F,AP,Effusion,images_012.tar.gz,official_test
+00028499_013.png,28499,13,20,F,AP,No Finding,images_012.tar.gz,official_test
+00028499_014.png,28499,14,20,F,AP,Effusion,images_012.tar.gz,official_test
+00028499_018.png,28499,18,21,F,AP,Consolidation|Mass,images_012.tar.gz,official_test
+00028500_000.png,28500,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00028507_000.png,28507,0,38,F,PA,No Finding,images_012.tar.gz,official_test
+00028509_001.png,28509,1,64,M,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00028509_003.png,28509,3,64,M,AP,Consolidation,images_012.tar.gz,official_test
+00028509_007.png,28509,7,64,M,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00028509_008.png,28509,8,64,M,AP,Cardiomegaly,images_012.tar.gz,official_test
+00028509_009.png,28509,9,64,M,AP,Effusion,images_012.tar.gz,official_test
+00028509_010.png,28509,10,64,M,AP,Effusion,images_012.tar.gz,official_test
+00028509_011.png,28509,11,64,M,AP,Effusion,images_012.tar.gz,official_test
+00028509_014.png,28509,14,64,M,AP,Effusion,images_012.tar.gz,official_test
+00028509_022.png,28509,22,64,M,AP,Effusion,images_012.tar.gz,official_test
+00028509_025.png,28509,27,64,M,AP,No Finding,images_012.tar.gz,official_test
+00028509_026.png,28509,24,64,M,AP,Cardiomegaly|Effusion,images_012.tar.gz,official_test
+00028509_028.png,28509,28,64,M,AP,Effusion,images_012.tar.gz,official_test
+00028509_032.png,28509,32,64,M,AP,No Finding,images_012.tar.gz,official_test
+00028509_034.png,28509,34,64,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028509_037.png,28509,37,64,M,AP,Consolidation|Infiltration|Nodule,images_012.tar.gz,official_test
+00028509_039.png,28509,39,64,M,PA,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00028513_002.png,28513,2,77,M,PA,No Finding,images_012.tar.gz,official_test
+00028513_004.png,28513,4,77,M,PA,No Finding,images_012.tar.gz,official_test
+00028518_005.png,28518,5,48,F,AP,Atelectasis,images_012.tar.gz,official_test
+00028518_006.png,28518,6,48,F,PA,No Finding,images_012.tar.gz,official_test
+00028518_007.png,28518,7,48,F,AP,Mass,images_012.tar.gz,official_test
+00028518_010.png,28518,10,48,F,AP,No Finding,images_012.tar.gz,official_test
+00028518_011.png,28518,11,48,F,AP,No Finding,images_012.tar.gz,official_test
+00028518_023.png,28518,21,48,F,AP,No Finding,images_012.tar.gz,official_test
+00028518_027.png,28518,27,48,F,PA,No Finding,images_012.tar.gz,official_test
+00028518_029.png,28518,29,48,F,PA,Atelectasis|Consolidation|Effusion|Infiltration|Nodule,images_012.tar.gz,official_test
+00028521_000.png,28521,0,29,M,PA,No Finding,images_012.tar.gz,official_test
+00028522_000.png,28522,0,53,F,PA,No Finding,images_012.tar.gz,official_test
+00028526_001.png,28526,1,34,M,PA,Infiltration,images_012.tar.gz,official_test
+00028526_014.png,28526,14,34,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028526_015.png,28526,15,34,M,AP,Cardiomegaly|Edema|Effusion,images_012.tar.gz,official_test
+00028526_019.png,28526,19,34,M,AP,No Finding,images_012.tar.gz,official_test
+00028526_021.png,28526,21,34,M,AP,No Finding,images_012.tar.gz,official_test
+00028529_000.png,28529,0,37,F,PA,No Finding,images_012.tar.gz,official_test
+00028531_000.png,28531,0,44,F,PA,No Finding,images_012.tar.gz,official_test
+00028532_000.png,28532,0,61,M,PA,No Finding,images_012.tar.gz,official_test
+00028538_000.png,28538,0,54,M,PA,No Finding,images_012.tar.gz,official_test
+00028549_006.png,28549,5,33,F,AP,Atelectasis|Consolidation,images_012.tar.gz,official_test
+00028549_007.png,28549,7,33,F,AP,No Finding,images_012.tar.gz,official_test
+00028551_000.png,28551,0,39,F,PA,No Finding,images_012.tar.gz,official_test
+00028553_000.png,28553,0,52,M,PA,No Finding,images_012.tar.gz,official_test
+00028556_001.png,28556,1,33,F,PA,No Finding,images_012.tar.gz,official_test
+00028560_000.png,28560,0,18,F,PA,No Finding,images_012.tar.gz,official_test
+00028566_000.png,28566,0,57,F,PA,No Finding,images_012.tar.gz,official_test
+00028572_006.png,28572,10,54,M,PA,Atelectasis|Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00028572_011.png,28572,11,54,M,PA,Atelectasis|Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00028572_014.png,28572,12,54,M,PA,Atelectasis|Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00028585_000.png,28585,0,20,F,PA,No Finding,images_012.tar.gz,official_test
+00028605_000.png,28605,0,43,F,AP,No Finding,images_012.tar.gz,official_test
+00028605_001.png,28605,1,44,F,AP,No Finding,images_012.tar.gz,official_test
+00028608_000.png,28608,0,15,M,AP,No Finding,images_012.tar.gz,official_test
+00028613_000.png,28613,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00028614_000.png,28614,0,28,M,PA,No Finding,images_012.tar.gz,official_test
+00028620_000.png,28620,0,57,M,PA,Nodule|Atelectasis,images_012.tar.gz,official_test
+00028625_000.png,28625,0,64,F,PA,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00028628_001.png,28628,1,19,M,AP,Effusion|Pneumonia|Pneumothorax,images_012.tar.gz,official_test
+00028628_002.png,28628,2,19,M,AP,No Finding,images_012.tar.gz,official_test
+00028628_003.png,28628,4,19,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028628_010.png,28628,11,19,M,PA,Effusion,images_012.tar.gz,official_test
+00028628_011.png,28628,12,19,M,PA,Pleural_Thickening,images_012.tar.gz,official_test
+00028628_013.png,28628,10,19,M,AP,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00028628_021.png,28628,21,19,M,PA,No Finding,images_012.tar.gz,official_test
+00028629_000.png,28629,0,27,M,PA,No Finding,images_012.tar.gz,official_test
+00028635_000.png,28635,0,41,F,PA,No Finding,images_012.tar.gz,official_test
+00028639_000.png,28639,0,26,F,PA,No Finding,images_012.tar.gz,official_test
+00028639_001.png,28639,1,27,F,PA,No Finding,images_012.tar.gz,official_test
+00028640_000.png,28640,1,48,F,PA,No Finding,images_012.tar.gz,official_test
+00028640_002.png,28640,2,48,F,AP,Atelectasis,images_012.tar.gz,official_test
+00028640_008.png,28640,8,48,F,PA,Cardiomegaly|Consolidation|Effusion|Infiltration,images_012.tar.gz,official_test
+00028645_000.png,28645,0,59,M,AP,No Finding,images_012.tar.gz,official_test
+00028647_000.png,28647,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00028650_000.png,28650,0,45,F,PA,No Finding,images_012.tar.gz,official_test
+00028650_001.png,28650,1,45,F,PA,No Finding,images_012.tar.gz,official_test
+00028658_000.png,28658,0,38,M,PA,No Finding,images_012.tar.gz,official_test
+00028660_001.png,28660,1,25,M,AP,No Finding,images_012.tar.gz,official_test
+00028664_001.png,28664,1,43,F,AP,No Finding,images_012.tar.gz,official_test
+00028666_001.png,28666,1,49,F,AP,No Finding,images_012.tar.gz,official_test
+00028677_000.png,28677,0,49,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00028677_005.png,28677,5,49,M,PA,No Finding,images_012.tar.gz,official_test
+00028687_000.png,28687,0,35,M,PA,No Finding,images_012.tar.gz,official_test
+00028692_000.png,28692,0,25,M,PA,No Finding,images_012.tar.gz,official_test
+00028693_000.png,28693,0,46,F,PA,No Finding,images_012.tar.gz,official_test
+00028698_002.png,28698,2,45,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028704_001.png,28704,1,30,F,PA,No Finding,images_012.tar.gz,official_test
+00028707_000.png,28707,0,73,M,AP,No Finding,images_012.tar.gz,official_test
+00028722_000.png,28722,0,34,M,AP,No Finding,images_012.tar.gz,official_test
+00028732_000.png,28732,0,34,F,PA,No Finding,images_012.tar.gz,official_test
+00028736_000.png,28736,0,49,M,PA,No Finding,images_012.tar.gz,official_test
+00028743_000.png,28743,0,49,F,PA,No Finding,images_012.tar.gz,official_test
+00028748_000.png,28748,0,52,F,PA,No Finding,images_012.tar.gz,official_test
+00028774_000.png,28774,0,68,F,AP,Nodule,images_012.tar.gz,official_test
+00028774_001.png,28774,2,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_002.png,28774,1,68,F,AP,Consolidation|Edema|Effusion,images_012.tar.gz,official_test
+00028774_005.png,28774,5,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_007.png,28774,7,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_008.png,28774,8,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_010.png,28774,9,68,F,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00028774_011.png,28774,10,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_014.png,28774,14,68,F,AP,Effusion|Infiltration|Nodule,images_012.tar.gz,official_test
+00028774_018.png,28774,18,68,F,AP,Effusion|Infiltration|Nodule,images_012.tar.gz,official_test
+00028774_019.png,28774,19,68,F,AP,Atelectasis|Effusion,images_012.tar.gz,official_test
+00028774_030.png,28774,30,68,F,AP,Consolidation|Infiltration,images_012.tar.gz,official_test
+00028774_035.png,28774,35,68,F,AP,Infiltration,images_012.tar.gz,official_test
+00028774_037.png,28774,37,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_038.png,28774,39,68,F,AP,Infiltration|Mass,images_012.tar.gz,official_test
+00028774_039.png,28774,38,68,F,AP,Infiltration|Mass,images_012.tar.gz,official_test
+00028774_040.png,28774,40,68,F,AP,No Finding,images_012.tar.gz,official_test
+00028774_046.png,28774,46,68,F,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028783_000.png,28783,0,56,M,PA,No Finding,images_012.tar.gz,official_test
+00028790_000.png,28790,0,22,F,PA,No Finding,images_012.tar.gz,official_test
+00028807_000.png,28807,0,53,M,PA,No Finding,images_012.tar.gz,official_test
+00028820_000.png,28820,0,50,M,PA,No Finding,images_012.tar.gz,official_test
+00028824_000.png,28824,0,61,F,PA,No Finding,images_012.tar.gz,official_test
+00028825_001.png,28825,1,21,F,PA,No Finding,images_012.tar.gz,official_test
+00028827_001.png,28827,1,26,M,PA,No Finding,images_012.tar.gz,official_test
+00028832_000.png,28832,0,27,M,PA,No Finding,images_012.tar.gz,official_test
+00028834_000.png,28834,0,4,M,AP,No Finding,images_012.tar.gz,official_test
+00028835_000.png,28835,0,64,M,PA,No Finding,images_012.tar.gz,official_test
+00028838_000.png,28838,0,58,M,PA,No Finding,images_012.tar.gz,official_test
+00028840_000.png,28840,0,55,M,PA,No Finding,images_012.tar.gz,official_test
+00028843_001.png,28843,1,30,F,AP,No Finding,images_012.tar.gz,official_test
+00028844_000.png,28844,0,65,M,PA,Atelectasis|Effusion,images_012.tar.gz,official_test
+00028844_001.png,28844,1,65,M,AP,Consolidation,images_012.tar.gz,official_test
+00028844_005.png,28844,5,65,M,AP,No Finding,images_012.tar.gz,official_test
+00028844_010.png,28844,10,65,M,AP,Effusion,images_012.tar.gz,official_test
+00028844_015.png,28844,14,65,M,AP,Effusion,images_012.tar.gz,official_test
+00028844_016.png,28844,15,65,M,AP,No Finding,images_012.tar.gz,official_test
+00028844_019.png,28844,19,65,M,AP,Mass,images_012.tar.gz,official_test
+00028844_020.png,28844,20,65,M,AP,Cardiomegaly,images_012.tar.gz,official_test
+00028844_022.png,28844,23,65,M,AP,Effusion|Mass,images_012.tar.gz,official_test
+00028844_023.png,28844,22,65,M,AP,Effusion|Mass,images_012.tar.gz,official_test
+00028844_026.png,28844,26,66,M,AP,Effusion|Mass,images_012.tar.gz,official_test
+00028844_027.png,28844,27,66,M,AP,Atelectasis|Consolidation|Effusion|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00028844_031.png,28844,31,66,M,AP,Atelectasis|Effusion,images_012.tar.gz,official_test
+00028850_000.png,28850,0,67,M,PA,No Finding,images_012.tar.gz,official_test
+00028851_001.png,28851,1,57,F,AP,No Finding,images_012.tar.gz,official_test
+00028852_000.png,28852,0,62,M,PA,No Finding,images_012.tar.gz,official_test
+00028856_000.png,28856,0,55,F,AP,Atelectasis,images_012.tar.gz,official_test
+00028856_002.png,28856,2,55,F,PA,Atelectasis|Pneumothorax,images_012.tar.gz,official_test
+00028856_006.png,28856,6,55,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00028860_000.png,28860,0,47,M,PA,No Finding,images_012.tar.gz,official_test
+00028861_000.png,28861,0,24,F,PA,Mass,images_012.tar.gz,official_test
+00028861_001.png,28861,1,24,F,AP,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00028861_005.png,28861,5,24,F,PA,No Finding,images_012.tar.gz,official_test
+00028861_006.png,28861,6,24,F,PA,Pleural_Thickening|Pneumothorax,images_012.tar.gz,official_test
+00028861_010.png,28861,11,24,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00028861_012.png,28861,13,24,F,PA,No Finding,images_012.tar.gz,official_test
+00028861_015.png,28861,15,24,F,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00028872_000.png,28872,0,58,F,PA,No Finding,images_012.tar.gz,official_test
+00028873_000.png,28873,0,14,M,PA,No Finding,images_012.tar.gz,official_test
+00028873_007.png,28873,7,14,M,PA,Cardiomegaly,images_012.tar.gz,official_test
+00028873_009.png,28873,9,14,M,PA,Cardiomegaly|Infiltration|Nodule,images_012.tar.gz,official_test
+00028873_010.png,28873,10,14,M,PA,Cardiomegaly|Effusion,images_012.tar.gz,official_test
+00028873_015.png,28873,15,15,M,PA,No Finding,images_012.tar.gz,official_test
+00028873_016.png,28873,16,15,M,AP,No Finding,images_012.tar.gz,official_test
+00028876_000.png,28876,1,40,M,PA,Atelectasis|Emphysema|Mass,images_012.tar.gz,official_test
+00028876_003.png,28876,4,40,M,PA,No Finding,images_012.tar.gz,official_test
+00028876_005.png,28876,0,40,M,AP,Emphysema,images_012.tar.gz,official_test
+00028876_006.png,28876,6,40,M,PA,No Finding,images_012.tar.gz,official_test
+00028876_010.png,28876,10,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_012.png,28876,12,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_014.png,28876,14,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_020.png,28876,20,40,M,PA,Nodule,images_012.tar.gz,official_test
+00028876_021.png,28876,21,40,M,PA,Nodule|Pneumothorax,images_012.tar.gz,official_test
+00028876_022.png,28876,22,40,M,AP,Mass|Nodule|Pneumothorax,images_012.tar.gz,official_test
+00028876_024.png,28876,24,40,M,PA,Mass|Pneumothorax,images_012.tar.gz,official_test
+00028876_025.png,28876,25,40,M,PA,No Finding,images_012.tar.gz,official_test
+00028876_026.png,28876,26,40,M,PA,Mass|Pneumothorax,images_012.tar.gz,official_test
+00028876_028.png,28876,28,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_029.png,28876,30,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_031.png,28876,31,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_034.png,28876,34,40,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_036.png,28876,36,41,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00028876_038.png,28876,39,41,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_041.png,28876,41,41,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_042.png,28876,42,41,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_044.png,28876,44,41,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00028876_046.png,28876,46,41,M,PA,Effusion|Infiltration,images_012.tar.gz,official_test
+00028876_048.png,28876,48,41,M,PA,No Finding,images_012.tar.gz,official_test
+00028876_049.png,28876,49,41,M,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00028876_054.png,28876,54,41,M,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00028876_055.png,28876,55,41,M,PA,No Finding,images_012.tar.gz,official_test
+00028876_059.png,28876,59,41,M,PA,Mass,images_012.tar.gz,official_test
+00028876_060.png,28876,60,41,M,PA,Mass|Nodule,images_012.tar.gz,official_test
+00028880_001.png,28880,1,37,M,PA,No Finding,images_012.tar.gz,official_test
+00028885_001.png,28885,1,38,F,PA,No Finding,images_012.tar.gz,official_test
+00028900_000.png,28900,0,45,M,PA,No Finding,images_012.tar.gz,official_test
+00028906_000.png,28906,0,24,M,PA,No Finding,images_012.tar.gz,official_test
+00028909_002.png,28909,2,47,M,AP,No Finding,images_012.tar.gz,official_test
+00028917_000.png,28917,0,43,M,PA,No Finding,images_012.tar.gz,official_test
+00028918_000.png,28918,0,20,M,AP,No Finding,images_012.tar.gz,official_test
+00028918_003.png,28918,3,20,M,AP,No Finding,images_012.tar.gz,official_test
+00028918_007.png,28918,7,20,M,AP,No Finding,images_012.tar.gz,official_test
+00028921_001.png,28921,1,20,F,PA,No Finding,images_012.tar.gz,official_test
+00028924_001.png,28924,2,72,F,PA,Atelectasis,images_012.tar.gz,official_test
+00028924_003.png,28924,4,72,F,PA,Atelectasis|Pleural_Thickening,images_012.tar.gz,official_test
+00028924_004.png,28924,5,72,F,PA,Atelectasis,images_012.tar.gz,official_test
+00028924_005.png,28924,1,72,F,AP,Pneumonia,images_012.tar.gz,official_test
+00028924_006.png,28924,6,72,F,AP,Effusion,images_012.tar.gz,official_test
+00028924_007.png,28924,7,72,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00028924_012.png,28924,11,72,F,PA,Pleural_Thickening,images_012.tar.gz,official_test
+00028925_000.png,28925,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00028927_000.png,28927,0,63,M,PA,No Finding,images_012.tar.gz,official_test
+00028928_000.png,28928,0,73,F,PA,No Finding,images_012.tar.gz,official_test
+00028935_000.png,28935,0,42,F,PA,No Finding,images_012.tar.gz,official_test
+00028935_001.png,28935,1,42,F,PA,No Finding,images_012.tar.gz,official_test
+00028942_000.png,28942,0,55,F,AP,No Finding,images_012.tar.gz,official_test
+00028949_000.png,28949,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00028952_000.png,28952,0,70,F,PA,No Finding,images_012.tar.gz,official_test
+00028953_001.png,28953,1,10,F,PA,No Finding,images_012.tar.gz,official_test
+00028959_000.png,28959,0,65,F,PA,No Finding,images_012.tar.gz,official_test
+00028962_000.png,28962,0,56,F,PA,No Finding,images_012.tar.gz,official_test
+00028964_001.png,28964,1,43,M,AP,No Finding,images_012.tar.gz,official_test
+00028971_001.png,28971,1,51,M,PA,No Finding,images_012.tar.gz,official_test
+00028971_002.png,28971,2,52,M,AP,Edema|Effusion|Infiltration,images_012.tar.gz,official_test
+00028972_000.png,28972,0,33,F,PA,No Finding,images_012.tar.gz,official_test
+00028974_000.png,28974,0,76,M,AP,Atelectasis|Effusion,images_012.tar.gz,official_test
+00028974_003.png,28974,3,76,M,AP,No Finding,images_012.tar.gz,official_test
+00028974_004.png,28974,4,76,M,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00028974_005.png,28974,5,76,M,AP,Atelectasis|Effusion,images_012.tar.gz,official_test
+00028974_006.png,28974,6,76,M,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00028974_007.png,28974,7,76,M,AP,Consolidation,images_012.tar.gz,official_test
+00028974_008.png,28974,8,76,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028974_010.png,28974,10,76,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00028974_019.png,28974,19,76,M,PA,No Finding,images_012.tar.gz,official_test
+00028974_024.png,28974,24,76,M,PA,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00028977_001.png,28977,1,57,F,AP,No Finding,images_012.tar.gz,official_test
+00028978_000.png,28978,0,32,M,PA,No Finding,images_012.tar.gz,official_test
+00028983_000.png,28983,0,84,M,PA,No Finding,images_012.tar.gz,official_test
+00028984_000.png,28984,0,6,M,PA,No Finding,images_012.tar.gz,official_test
+00028986_000.png,28986,0,74,M,PA,No Finding,images_012.tar.gz,official_test
+00028993_000.png,28993,0,56,M,PA,No Finding,images_012.tar.gz,official_test
+00029010_000.png,29010,0,34,F,PA,No Finding,images_012.tar.gz,official_test
+00029028_000.png,29028,0,58,F,PA,No Finding,images_012.tar.gz,official_test
+00029037_000.png,29037,0,62,M,AP,No Finding,images_012.tar.gz,official_test
+00029038_000.png,29038,1,75,F,PA,No Finding,images_012.tar.gz,official_test
+00029039_001.png,29039,1,61,M,AP,No Finding,images_012.tar.gz,official_test
+00029039_007.png,29039,7,61,M,AP,Infiltration,images_012.tar.gz,official_test
+00029039_009.png,29039,9,61,M,AP,Infiltration,images_012.tar.gz,official_test
+00029039_011.png,29039,11,61,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00029039_018.png,29039,18,61,M,AP,Effusion|Pleural_Thickening|Pneumothorax,images_012.tar.gz,official_test
+00029039_019.png,29039,19,61,M,AP,Emphysema|Infiltration,images_012.tar.gz,official_test
+00029039_022.png,29039,22,61,M,AP,No Finding,images_012.tar.gz,official_test
+00029042_000.png,29042,0,61,M,PA,No Finding,images_012.tar.gz,official_test
+00029045_000.png,29045,0,68,M,PA,No Finding,images_012.tar.gz,official_test
+00029047_000.png,29047,0,31,F,PA,No Finding,images_012.tar.gz,official_test
+00029053_000.png,29053,0,74,M,AP,No Finding,images_012.tar.gz,official_test
+00029056_001.png,29056,1,19,M,AP,No Finding,images_012.tar.gz,official_test
+00029056_002.png,29056,2,19,M,AP,No Finding,images_012.tar.gz,official_test
+00029060_000.png,29060,0,48,M,PA,No Finding,images_012.tar.gz,official_test
+00029067_000.png,29067,0,19,M,PA,No Finding,images_012.tar.gz,official_test
+00029071_000.png,29071,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00029073_000.png,29073,0,52,F,PA,No Finding,images_012.tar.gz,official_test
+00029075_003.png,29075,6,23,F,PA,No Finding,images_012.tar.gz,official_test
+00029075_006.png,29075,1,23,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00029075_010.png,29075,11,23,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00029075_015.png,29075,15,23,F,AP,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00029075_018.png,29075,18,24,F,PA,Pleural_Thickening,images_012.tar.gz,official_test
+00029077_000.png,29077,0,26,F,AP,No Finding,images_012.tar.gz,official_test
+00029078_000.png,29078,0,46,F,PA,No Finding,images_012.tar.gz,official_test
+00029084_000.png,29084,0,40,M,PA,No Finding,images_012.tar.gz,official_test
+00029087_000.png,29087,0,52,F,PA,No Finding,images_012.tar.gz,official_test
+00029088_000.png,29088,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00029088_002.png,29088,2,47,F,PA,Atelectasis|Mass,images_012.tar.gz,official_test
+00029088_006.png,29088,6,47,F,AP,Effusion,images_012.tar.gz,official_test
+00029088_009.png,29088,9,47,F,AP,Consolidation,images_012.tar.gz,official_test
+00029088_013.png,29088,14,47,F,AP,Effusion,images_012.tar.gz,official_test
+00029088_023.png,29088,23,47,F,AP,Atelectasis|Consolidation|Infiltration,images_012.tar.gz,official_test
+00029092_000.png,29092,0,25,M,PA,No Finding,images_012.tar.gz,official_test
+00029093_000.png,29093,0,3,M,AP,No Finding,images_012.tar.gz,official_test
+00029101_000.png,29101,0,53,M,PA,No Finding,images_012.tar.gz,official_test
+00029102_000.png,29102,0,24,F,PA,No Finding,images_012.tar.gz,official_test
+00029102_003.png,29102,3,25,F,PA,No Finding,images_012.tar.gz,official_test
+00029105_002.png,29105,3,55,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00029105_004.png,29105,4,55,F,PA,Infiltration,images_012.tar.gz,official_test
+00029105_006.png,29105,6,55,F,PA,Emphysema|Infiltration,images_012.tar.gz,official_test
+00029105_010.png,29105,10,55,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00029105_018.png,29105,18,55,F,PA,Infiltration,images_012.tar.gz,official_test
+00029105_019.png,29105,19,55,F,PA,No Finding,images_012.tar.gz,official_test
+00029105_020.png,29105,20,55,F,PA,No Finding,images_012.tar.gz,official_test
+00029105_021.png,29105,21,55,F,AP,No Finding,images_012.tar.gz,official_test
+00029105_022.png,29105,22,55,F,AP,No Finding,images_012.tar.gz,official_test
+00029105_026.png,29105,26,55,F,PA,No Finding,images_012.tar.gz,official_test
+00029112_000.png,29112,0,64,M,PA,No Finding,images_012.tar.gz,official_test
+00029116_000.png,29116,0,37,M,PA,No Finding,images_012.tar.gz,official_test
+00029123_000.png,29123,0,29,M,PA,No Finding,images_012.tar.gz,official_test
+00029125_000.png,29125,0,43,F,PA,No Finding,images_012.tar.gz,official_test
+00029125_001.png,29125,1,43,F,PA,No Finding,images_012.tar.gz,official_test
+00029127_000.png,29127,0,34,M,PA,No Finding,images_012.tar.gz,official_test
+00029133_000.png,29133,0,73,M,PA,No Finding,images_012.tar.gz,official_test
+00029139_000.png,29139,0,37,M,PA,No Finding,images_012.tar.gz,official_test
+00029148_000.png,29148,0,75,M,PA,No Finding,images_012.tar.gz,official_test
+00029157_000.png,29157,0,12,M,PA,No Finding,images_012.tar.gz,official_test
+00029159_000.png,29159,0,51,F,PA,No Finding,images_012.tar.gz,official_test
+00029159_001.png,29159,1,51,F,PA,No Finding,images_012.tar.gz,official_test
+00029159_003.png,29159,3,51,F,PA,Nodule,images_012.tar.gz,official_test
+00029159_010.png,29159,10,52,F,AP,Edema|Effusion|Infiltration|Pneumonia,images_012.tar.gz,official_test
+00029159_014.png,29159,14,52,F,AP,Cardiomegaly|Consolidation|Effusion,images_012.tar.gz,official_test
+00029159_021.png,29159,21,52,F,AP,Nodule,images_012.tar.gz,official_test
+00029159_028.png,29159,28,52,F,PA,Consolidation|Effusion,images_012.tar.gz,official_test
+00029177_001.png,29177,1,48,M,PA,No Finding,images_012.tar.gz,official_test
+00029179_001.png,29179,1,51,M,PA,No Finding,images_012.tar.gz,official_test
+00029182_000.png,29182,0,35,M,PA,No Finding,images_012.tar.gz,official_test
+00029188_000.png,29188,0,88,F,PA,No Finding,images_012.tar.gz,official_test
+00029189_000.png,29189,0,55,M,PA,No Finding,images_012.tar.gz,official_test
+00029189_001.png,29189,1,56,M,PA,No Finding,images_012.tar.gz,official_test
+00029199_001.png,29199,1,56,F,PA,No Finding,images_012.tar.gz,official_test
+00029200_001.png,29200,1,58,M,PA,No Finding,images_012.tar.gz,official_test
+00029200_003.png,29200,3,59,M,AP,Consolidation,images_012.tar.gz,official_test
+00029200_005.png,29200,5,59,M,AP,No Finding,images_012.tar.gz,official_test
+00029210_000.png,29210,0,6,F,PA,No Finding,images_012.tar.gz,official_test
+00029214_002.png,29214,2,61,F,AP,No Finding,images_012.tar.gz,official_test
+00029217_006.png,29217,6,61,F,AP,No Finding,images_012.tar.gz,official_test
+00029218_000.png,29218,0,65,F,PA,No Finding,images_012.tar.gz,official_test
+00029219_000.png,29219,0,25,F,PA,No Finding,images_012.tar.gz,official_test
+00029226_000.png,29226,0,59,M,PA,No Finding,images_012.tar.gz,official_test
+00029231_000.png,29231,0,64,F,PA,No Finding,images_012.tar.gz,official_test
+00029237_001.png,29237,1,55,M,PA,No Finding,images_012.tar.gz,official_test
+00029238_000.png,29238,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00029240_000.png,29240,0,60,F,PA,No Finding,images_012.tar.gz,official_test
+00029259_000.png,29259,0,34,F,AP,No Finding,images_012.tar.gz,official_test
+00029259_001.png,29259,1,34,F,AP,No Finding,images_012.tar.gz,official_test
+00029259_002.png,29259,2,34,F,AP,Infiltration,images_012.tar.gz,official_test
+00029259_003.png,29259,3,34,F,PA,Infiltration|Nodule,images_012.tar.gz,official_test
+00029259_006.png,29259,9,34,F,PA,No Finding,images_012.tar.gz,official_test
+00029259_007.png,29259,7,34,F,PA,No Finding,images_012.tar.gz,official_test
+00029259_019.png,29259,16,35,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00029259_021.png,29259,21,35,F,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00029259_027.png,29259,26,35,F,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00029270_000.png,29270,0,49,M,PA,No Finding,images_012.tar.gz,official_test
+00029272_000.png,29272,0,52,M,PA,No Finding,images_012.tar.gz,official_test
+00029277_000.png,29277,0,65,F,AP,No Finding,images_012.tar.gz,official_test
+00029280_000.png,29280,0,48,M,AP,No Finding,images_012.tar.gz,official_test
+00029281_000.png,29281,0,20,M,PA,No Finding,images_012.tar.gz,official_test
+00029289_000.png,29289,0,43,F,PA,No Finding,images_012.tar.gz,official_test
+00029293_000.png,29293,0,60,F,PA,No Finding,images_012.tar.gz,official_test
+00029294_001.png,29294,1,51,F,AP,No Finding,images_012.tar.gz,official_test
+00029299_000.png,29299,0,57,M,PA,No Finding,images_012.tar.gz,official_test
+00029304_000.png,29304,0,35,F,PA,No Finding,images_012.tar.gz,official_test
+00029304_001.png,29304,1,35,F,AP,No Finding,images_012.tar.gz,official_test
+00029318_001.png,29318,1,31,F,PA,No Finding,images_012.tar.gz,official_test
+00029321_000.png,29321,0,72,F,AP,No Finding,images_012.tar.gz,official_test
+00029322_001.png,29322,1,75,M,PA,No Finding,images_012.tar.gz,official_test
+00029325_000.png,29325,0,25,M,PA,No Finding,images_012.tar.gz,official_test
+00029336_001.png,29336,1,60,F,PA,No Finding,images_012.tar.gz,official_test
+00029340_001.png,29340,1,59,M,PA,No Finding,images_012.tar.gz,official_test
+00029341_000.png,29341,0,45,M,PA,No Finding,images_012.tar.gz,official_test
+00029344_000.png,29344,0,72,F,PA,No Finding,images_012.tar.gz,official_test
+00029359_000.png,29359,0,27,F,PA,No Finding,images_012.tar.gz,official_test
+00029361_000.png,29361,0,43,M,PA,No Finding,images_012.tar.gz,official_test
+00029362_000.png,29362,0,66,M,AP,No Finding,images_012.tar.gz,official_test
+00029362_001.png,29362,1,66,M,PA,No Finding,images_012.tar.gz,official_test
+00029362_002.png,29362,2,66,M,PA,No Finding,images_012.tar.gz,official_test
+00029365_000.png,29365,0,68,F,PA,No Finding,images_012.tar.gz,official_test
+00029366_000.png,29366,0,59,M,PA,No Finding,images_012.tar.gz,official_test
+00029367_000.png,29367,0,69,F,PA,No Finding,images_012.tar.gz,official_test
+00029377_002.png,29377,2,65,M,AP,No Finding,images_012.tar.gz,official_test
+00029378_000.png,29378,0,58,F,PA,No Finding,images_012.tar.gz,official_test
+00029386_000.png,29386,0,32,F,PA,No Finding,images_012.tar.gz,official_test
+00029391_001.png,29391,1,92,F,PA,No Finding,images_012.tar.gz,official_test
+00029400_001.png,29400,1,50,M,PA,No Finding,images_012.tar.gz,official_test
+00029402_000.png,29402,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00029404_000.png,29404,0,14,M,AP,Cardiomegaly,images_012.tar.gz,official_test
+00029404_002.png,29404,2,14,M,AP,No Finding,images_012.tar.gz,official_test
+00029404_005.png,29404,5,14,M,AP,No Finding,images_012.tar.gz,official_test
+00029416_000.png,29416,0,26,M,PA,No Finding,images_012.tar.gz,official_test
+00029420_000.png,29420,0,20,M,PA,No Finding,images_012.tar.gz,official_test
+00029424_000.png,29424,0,27,M,PA,No Finding,images_012.tar.gz,official_test
+00029431_002.png,29431,2,65,M,AP,No Finding,images_012.tar.gz,official_test
+00029432_000.png,29432,0,35,F,PA,No Finding,images_012.tar.gz,official_test
+00029441_000.png,29441,0,23,M,PA,No Finding,images_012.tar.gz,official_test
+00029442_000.png,29442,0,13,F,PA,No Finding,images_012.tar.gz,official_test
+00029460_002.png,29460,2,52,M,AP,Edema,images_012.tar.gz,official_test
+00029460_003.png,29460,4,52,M,AP,Infiltration,images_012.tar.gz,official_test
+00029460_004.png,29460,3,52,M,AP,Infiltration,images_012.tar.gz,official_test
+00029461_000.png,29461,0,35,F,PA,No Finding,images_012.tar.gz,official_test
+00029462_000.png,29462,0,20,F,PA,No Finding,images_012.tar.gz,official_test
+00029464_003.png,29464,3,60,F,AP,Atelectasis,images_012.tar.gz,official_test
+00029464_005.png,29464,5,60,F,AP,Atelectasis|Effusion|Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00029464_006.png,29464,6,60,F,AP,Atelectasis,images_012.tar.gz,official_test
+00029464_008.png,29464,8,60,F,AP,Cardiomegaly|Effusion,images_012.tar.gz,official_test
+00029464_009.png,29464,9,60,F,AP,Atelectasis|Edema,images_012.tar.gz,official_test
+00029464_010.png,29464,10,60,F,AP,Effusion,images_012.tar.gz,official_test
+00029464_011.png,29464,11,60,F,AP,Infiltration,images_012.tar.gz,official_test
+00029469_001.png,29469,1,59,M,PA,Atelectasis|Effusion,images_012.tar.gz,official_test
+00029469_002.png,29469,2,59,M,AP,Atelectasis|Consolidation|Effusion,images_012.tar.gz,official_test
+00029469_007.png,29469,10,59,M,AP,Consolidation|Mass,images_012.tar.gz,official_test
+00029469_011.png,29469,12,59,M,AP,Edema|Effusion|Infiltration,images_012.tar.gz,official_test
+00029469_014.png,29469,14,59,M,AP,Consolidation,images_012.tar.gz,official_test
+00029469_015.png,29469,15,59,M,AP,Infiltration,images_012.tar.gz,official_test
+00029473_000.png,29473,0,50,F,PA,No Finding,images_012.tar.gz,official_test
+00029476_004.png,29476,4,12,M,PA,No Finding,images_012.tar.gz,official_test
+00029480_000.png,29480,0,45,M,PA,No Finding,images_012.tar.gz,official_test
+00029481_008.png,29481,8,51,F,PA,Nodule,images_012.tar.gz,official_test
+00029481_012.png,29481,12,51,F,PA,Effusion|Infiltration|Nodule|Pleural_Thickening|Pneumothorax,images_012.tar.gz,official_test
+00029482_000.png,29482,0,68,M,PA,No Finding,images_012.tar.gz,official_test
+00029487_000.png,29487,0,39,M,PA,No Finding,images_012.tar.gz,official_test
+00029487_001.png,29487,1,39,M,PA,No Finding,images_012.tar.gz,official_test
+00029489_000.png,29489,0,29,M,PA,No Finding,images_012.tar.gz,official_test
+00029490_000.png,29490,0,26,M,PA,No Finding,images_012.tar.gz,official_test
+00029490_001.png,29490,1,26,M,PA,No Finding,images_012.tar.gz,official_test
+00029498_000.png,29498,0,51,F,PA,No Finding,images_012.tar.gz,official_test
+00029502_004.png,29502,4,54,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00029505_000.png,29505,0,23,F,PA,No Finding,images_012.tar.gz,official_test
+00029513_000.png,29513,0,56,M,AP,No Finding,images_012.tar.gz,official_test
+00029513_002.png,29513,2,56,M,AP,No Finding,images_012.tar.gz,official_test
+00029513_003.png,29513,3,56,M,AP,No Finding,images_012.tar.gz,official_test
+00029513_006.png,29513,6,57,M,AP,No Finding,images_012.tar.gz,official_test
+00029531_000.png,29531,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00029532_007.png,29532,8,57,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00029532_009.png,29532,11,57,M,PA,No Finding,images_012.tar.gz,official_test
+00029532_011.png,29532,5,57,M,AP,No Finding,images_012.tar.gz,official_test
+00029532_015.png,29532,16,57,M,PA,No Finding,images_012.tar.gz,official_test
+00029532_018.png,29532,18,57,M,PA,No Finding,images_012.tar.gz,official_test
+00029532_021.png,29532,21,57,M,PA,No Finding,images_012.tar.gz,official_test
+00029536_000.png,29536,0,43,M,PA,No Finding,images_012.tar.gz,official_test
+00029538_000.png,29538,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00029544_001.png,29544,1,26,F,PA,No Finding,images_012.tar.gz,official_test
+00029545_000.png,29545,0,60,M,PA,No Finding,images_012.tar.gz,official_test
+00029548_001.png,29548,1,22,M,AP,No Finding,images_012.tar.gz,official_test
+00029548_005.png,29548,5,22,M,PA,No Finding,images_012.tar.gz,official_test
+00029548_008.png,29548,8,22,M,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00029548_013.png,29548,13,22,M,PA,Pleural_Thickening,images_012.tar.gz,official_test
+00029548_015.png,29548,15,22,M,PA,Atelectasis|Effusion|Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00029551_001.png,29551,1,56,F,AP,No Finding,images_012.tar.gz,official_test
+00029551_003.png,29551,3,56,F,PA,Effusion,images_012.tar.gz,official_test
+00029551_005.png,29551,5,56,F,PA,Effusion,images_012.tar.gz,official_test
+00029560_000.png,29560,0,21,M,PA,No Finding,images_012.tar.gz,official_test
+00029564_000.png,29564,0,36,F,PA,No Finding,images_012.tar.gz,official_test
+00029565_000.png,29565,0,22,F,PA,No Finding,images_012.tar.gz,official_test
+00029570_004.png,29570,4,39,M,PA,Emphysema|Pleural_Thickening,images_012.tar.gz,official_test
+00029570_005.png,29570,5,39,M,PA,Effusion|Emphysema|Mass,images_012.tar.gz,official_test
+00029570_006.png,29570,6,39,M,AP,No Finding,images_012.tar.gz,official_test
+00029570_010.png,29570,10,39,M,PA,No Finding,images_012.tar.gz,official_test
+00029576_000.png,29576,0,41,F,PA,No Finding,images_012.tar.gz,official_test
+00029578_000.png,29578,0,80,F,PA,No Finding,images_012.tar.gz,official_test
+00029579_002.png,29579,2,24,F,PA,Atelectasis|Emphysema,images_012.tar.gz,official_test
+00029579_007.png,29579,6,24,F,PA,No Finding,images_012.tar.gz,official_test
+00029579_011.png,29579,13,24,F,PA,No Finding,images_012.tar.gz,official_test
+00029579_012.png,29579,14,24,F,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00029585_000.png,29585,0,28,M,AP,No Finding,images_012.tar.gz,official_test
+00029588_000.png,29588,0,46,M,PA,Infiltration|Mass,images_012.tar.gz,official_test
+00029588_001.png,29588,1,46,M,PA,Consolidation|Pleural_Thickening,images_012.tar.gz,official_test
+00029588_002.png,29588,2,46,M,AP,Infiltration,images_012.tar.gz,official_test
+00029593_000.png,29593,0,38,F,PA,No Finding,images_012.tar.gz,official_test
+00029594_001.png,29594,1,71,M,AP,No Finding,images_012.tar.gz,official_test
+00029595_000.png,29595,0,48,M,PA,No Finding,images_012.tar.gz,official_test
+00029596_001.png,29596,2,34,F,PA,Effusion,images_012.tar.gz,official_test
+00029596_002.png,29596,1,34,F,AP,Effusion,images_012.tar.gz,official_test
+00029596_005.png,29596,5,34,F,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00029596_009.png,29596,10,34,F,AP,Effusion,images_012.tar.gz,official_test
+00029596_020.png,29596,20,34,F,PA,Effusion,images_012.tar.gz,official_test
+00029601_000.png,29601,0,43,F,PA,No Finding,images_012.tar.gz,official_test
+00029607_000.png,29607,0,25,M,AP,No Finding,images_012.tar.gz,official_test
+00029608_000.png,29608,0,57,M,PA,No Finding,images_012.tar.gz,official_test
+00029610_002.png,29610,2,40,M,PA,No Finding,images_012.tar.gz,official_test
+00029611_000.png,29611,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00029612_000.png,29612,0,60,F,PA,No Finding,images_012.tar.gz,official_test
+00029617_000.png,29617,0,58,F,PA,No Finding,images_012.tar.gz,official_test
+00029617_004.png,29617,4,58,F,PA,No Finding,images_012.tar.gz,official_test
+00029617_006.png,29617,6,58,F,PA,Effusion|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00029617_008.png,29617,8,58,F,PA,Effusion|Nodule,images_012.tar.gz,official_test
+00029624_000.png,29624,0,35,M,PA,No Finding,images_012.tar.gz,official_test
+00029629_000.png,29629,0,32,F,AP,No Finding,images_012.tar.gz,official_test
+00029631_003.png,29631,3,44,M,PA,Atelectasis|Emphysema,images_012.tar.gz,official_test
+00029631_010.png,29631,10,44,M,PA,Emphysema,images_012.tar.gz,official_test
+00029631_013.png,29631,13,44,M,PA,Effusion|Infiltration,images_012.tar.gz,official_test
+00029657_000.png,29657,0,51,M,PA,No Finding,images_012.tar.gz,official_test
+00029663_001.png,29663,1,66,F,PA,No Finding,images_012.tar.gz,official_test
+00029663_010.png,29663,10,67,F,AP,No Finding,images_012.tar.gz,official_test
+00029669_004.png,29669,4,49,M,AP,No Finding,images_012.tar.gz,official_test
+00029673_000.png,29673,0,51,F,PA,No Finding,images_012.tar.gz,official_test
+00029675_000.png,29675,0,59,M,PA,No Finding,images_012.tar.gz,official_test
+00029684_000.png,29684,0,23,F,PA,No Finding,images_012.tar.gz,official_test
+00029690_000.png,29690,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00029694_000.png,29694,0,21,M,PA,No Finding,images_012.tar.gz,official_test
+00029695_000.png,29695,0,61,M,PA,No Finding,images_012.tar.gz,official_test
+00029700_000.png,29700,0,53,M,PA,No Finding,images_012.tar.gz,official_test
+00029700_001.png,29700,1,53,M,AP,No Finding,images_012.tar.gz,official_test
+00029707_000.png,29707,0,75,F,PA,No Finding,images_012.tar.gz,official_test
+00029709_000.png,29709,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00029719_000.png,29719,0,41,F,PA,No Finding,images_012.tar.gz,official_test
+00029726_000.png,29726,0,50,M,PA,No Finding,images_012.tar.gz,official_test
+00029734_000.png,29734,0,52,F,PA,No Finding,images_012.tar.gz,official_test
+00029737_000.png,29737,0,61,M,PA,No Finding,images_012.tar.gz,official_test
+00029741_000.png,29741,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00029753_000.png,29753,0,50,F,PA,No Finding,images_012.tar.gz,official_test
+00029775_000.png,29775,0,29,M,PA,No Finding,images_012.tar.gz,official_test
+00029776_000.png,29776,0,54,M,PA,No Finding,images_012.tar.gz,official_test
+00029782_000.png,29782,0,45,M,PA,No Finding,images_012.tar.gz,official_test
+00029783_000.png,29783,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00029797_000.png,29797,0,15,M,PA,No Finding,images_012.tar.gz,official_test
+00029808_001.png,29808,1,32,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00029808_006.png,29808,2,32,M,AP,Cardiomegaly,images_012.tar.gz,official_test
+00029808_007.png,29808,5,32,M,AP,Consolidation|Effusion|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00029809_000.png,29809,0,62,M,PA,Infiltration|Nodule,images_012.tar.gz,official_test
+00029809_002.png,29809,2,63,M,AP,No Finding,images_012.tar.gz,official_test
+00029809_003.png,29809,3,63,M,AP,No Finding,images_012.tar.gz,official_test
+00029809_009.png,29809,9,63,M,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00029809_010.png,29809,10,63,M,AP,Effusion,images_012.tar.gz,official_test
+00029809_015.png,29809,15,63,M,AP,No Finding,images_012.tar.gz,official_test
+00029813_000.png,29813,0,66,M,PA,No Finding,images_012.tar.gz,official_test
+00029813_002.png,29813,2,66,M,AP,Emphysema|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00029813_005.png,29813,6,66,M,PA,Atelectasis|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00029813_008.png,29813,3,66,M,AP,Emphysema|Infiltration,images_012.tar.gz,official_test
+00029813_010.png,29813,8,66,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00029813_011.png,29813,10,66,M,AP,Atelectasis|Emphysema,images_012.tar.gz,official_test
+00029813_013.png,29813,13,66,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00029813_014.png,29813,14,66,M,AP,No Finding,images_012.tar.gz,official_test
+00029813_015.png,29813,15,66,M,PA,No Finding,images_012.tar.gz,official_test
+00029813_018.png,29813,18,66,M,PA,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00029813_020.png,29813,20,66,M,PA,Effusion,images_012.tar.gz,official_test
+00029813_026.png,29813,26,66,M,PA,Effusion,images_012.tar.gz,official_test
+00029813_028.png,29813,28,66,M,AP,No Finding,images_012.tar.gz,official_test
+00029813_031.png,29813,31,66,M,PA,Effusion|Emphysema,images_012.tar.gz,official_test
+00029813_038.png,29813,38,66,M,AP,Effusion|Emphysema,images_012.tar.gz,official_test
+00029813_039.png,29813,39,66,M,PA,Emphysema|Pleural_Thickening,images_012.tar.gz,official_test
+00029813_040.png,29813,40,66,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00029817_000.png,29817,0,67,F,PA,No Finding,images_012.tar.gz,official_test
+00029817_008.png,29817,8,67,F,AP,Infiltration,images_012.tar.gz,official_test
+00029817_015.png,29817,15,67,F,AP,Effusion,images_012.tar.gz,official_test
+00029817_018.png,29817,18,67,F,AP,Infiltration,images_012.tar.gz,official_test
+00029817_023.png,29817,23,67,F,AP,No Finding,images_012.tar.gz,official_test
+00029817_025.png,29817,25,67,F,AP,Atelectasis,images_012.tar.gz,official_test
+00029818_000.png,29818,0,11,M,AP,No Finding,images_012.tar.gz,official_test
+00029819_002.png,29819,2,20,M,AP,No Finding,images_012.tar.gz,official_test
+00029820_001.png,29820,1,38,M,PA,No Finding,images_012.tar.gz,official_test
+00029820_003.png,29820,3,38,M,PA,Nodule,images_012.tar.gz,official_test
+00029820_004.png,29820,4,38,M,PA,Nodule,images_012.tar.gz,official_test
+00029827_000.png,29827,0,7,M,PA,No Finding,images_012.tar.gz,official_test
+00029827_002.png,29827,2,7,M,AP,No Finding,images_012.tar.gz,official_test
+00029832_000.png,29832,0,46,F,PA,No Finding,images_012.tar.gz,official_test
+00029834_000.png,29834,0,28,M,PA,No Finding,images_012.tar.gz,official_test
+00029836_000.png,29836,0,19,M,PA,No Finding,images_012.tar.gz,official_test
+00029843_000.png,29843,0,53,F,PA,No Finding,images_012.tar.gz,official_test
+00029843_004.png,29843,4,53,F,AP,Atelectasis|Effusion|Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00029848_000.png,29848,0,42,F,PA,No Finding,images_012.tar.gz,official_test
+00029849_000.png,29849,0,42,F,PA,No Finding,images_012.tar.gz,official_test
+00029850_000.png,29850,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00029860_000.png,29860,0,54,F,PA,No Finding,images_012.tar.gz,official_test
+00029861_000.png,29861,0,63,F,PA,Fibrosis|Nodule,images_012.tar.gz,official_test
+00029861_004.png,29861,3,63,F,PA,No Finding,images_012.tar.gz,official_test
+00029861_005.png,29861,6,63,F,PA,No Finding,images_012.tar.gz,official_test
+00029861_009.png,29861,9,63,F,PA,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00029861_012.png,29861,12,63,F,AP,Edema|Effusion|Pneumonia,images_012.tar.gz,official_test
+00029862_001.png,29862,1,54,M,PA,No Finding,images_012.tar.gz,official_test
+00029879_000.png,29879,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00029880_000.png,29880,0,66,M,PA,Effusion|Pleural_Thickening,images_012.tar.gz,official_test
+00029880_001.png,29880,3,66,M,PA,Atelectasis|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00029880_005.png,29880,7,66,M,PA,No Finding,images_012.tar.gz,official_test
+00029888_000.png,29888,0,29,M,PA,No Finding,images_012.tar.gz,official_test
+00029894_000.png,29894,0,55,F,PA,Effusion,images_012.tar.gz,official_test
+00029895_000.png,29895,0,54,F,PA,No Finding,images_012.tar.gz,official_test
+00029899_000.png,29899,0,18,M,PA,No Finding,images_012.tar.gz,official_test
+00029905_000.png,29905,0,63,F,PA,No Finding,images_012.tar.gz,official_test
+00029907_000.png,29907,0,62,F,PA,No Finding,images_012.tar.gz,official_test
+00029908_000.png,29908,0,33,F,PA,No Finding,images_012.tar.gz,official_test
+00029910_000.png,29910,0,41,F,PA,No Finding,images_012.tar.gz,official_test
+00029911_000.png,29911,0,38,F,PA,No Finding,images_012.tar.gz,official_test
+00029915_000.png,29915,0,48,F,PA,No Finding,images_012.tar.gz,official_test
+00029915_003.png,29915,3,49,F,PA,No Finding,images_012.tar.gz,official_test
+00029918_002.png,29918,2,76,M,AP,Emphysema,images_012.tar.gz,official_test
+00029925_000.png,29925,0,37,M,PA,No Finding,images_012.tar.gz,official_test
+00029930_000.png,29930,0,65,M,AP,No Finding,images_012.tar.gz,official_test
+00029935_001.png,29935,1,70,M,AP,No Finding,images_012.tar.gz,official_test
+00029937_000.png,29937,0,55,F,PA,No Finding,images_012.tar.gz,official_test
+00029939_001.png,29939,1,11,F,PA,No Finding,images_012.tar.gz,official_test
+00029943_005.png,29943,5,64,F,PA,Emphysema|Mass|Pneumothorax,images_012.tar.gz,official_test
+00029943_006.png,29943,7,64,F,PA,Emphysema|Mass|Pneumothorax,images_012.tar.gz,official_test
+00029943_009.png,29943,9,64,F,PA,No Finding,images_012.tar.gz,official_test
+00029943_010.png,29943,10,64,F,PA,Nodule,images_012.tar.gz,official_test
+00029943_014.png,29943,14,65,F,AP,Atelectasis|Effusion|Infiltration|Mass,images_012.tar.gz,official_test
+00029943_020.png,29943,20,65,F,AP,Effusion,images_012.tar.gz,official_test
+00029943_021.png,29943,21,65,F,AP,No Finding,images_012.tar.gz,official_test
+00029943_022.png,29943,22,65,F,AP,Effusion|Nodule,images_012.tar.gz,official_test
+00029943_031.png,29943,31,65,F,AP,Consolidation,images_012.tar.gz,official_test
+00029943_033.png,29943,32,65,F,AP,Atelectasis|Consolidation,images_012.tar.gz,official_test
+00029943_034.png,29943,35,65,F,AP,Mass|Pleural_Thickening,images_012.tar.gz,official_test
+00029943_036.png,29943,36,65,F,AP,Pleural_Thickening,images_012.tar.gz,official_test
+00029943_037.png,29943,37,65,F,AP,Pleural_Thickening,images_012.tar.gz,official_test
+00029943_038.png,29943,38,65,F,AP,No Finding,images_012.tar.gz,official_test
+00029943_039.png,29943,39,65,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00029944_000.png,29944,0,49,M,PA,No Finding,images_012.tar.gz,official_test
+00029950_003.png,29950,3,36,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00029950_009.png,29950,9,36,F,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00029950_015.png,29950,15,36,F,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00029950_020.png,29950,20,36,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00029952_000.png,29952,0,24,M,PA,No Finding,images_012.tar.gz,official_test
+00029958_000.png,29958,0,73,F,PA,No Finding,images_012.tar.gz,official_test
+00029966_000.png,29966,0,53,F,PA,No Finding,images_012.tar.gz,official_test
+00029968_000.png,29968,0,21,F,PA,No Finding,images_012.tar.gz,official_test
+00029970_000.png,29970,0,75,M,PA,No Finding,images_012.tar.gz,official_test
+00029972_001.png,29972,1,44,M,PA,No Finding,images_012.tar.gz,official_test
+00029982_000.png,29982,0,17,M,PA,No Finding,images_012.tar.gz,official_test
+00029984_000.png,29984,0,56,M,PA,Atelectasis,images_012.tar.gz,official_test
+00029984_004.png,29984,4,56,M,AP,No Finding,images_012.tar.gz,official_test
+00029984_008.png,29984,8,56,M,AP,Effusion,images_012.tar.gz,official_test
+00029984_010.png,29984,10,56,M,AP,No Finding,images_012.tar.gz,official_test
+00029988_000.png,29988,0,72,M,PA,No Finding,images_012.tar.gz,official_test
+00030005_001.png,30005,1,64,M,PA,No Finding,images_012.tar.gz,official_test
+00030006_000.png,30006,0,68,M,AP,No Finding,images_012.tar.gz,official_test
+00030016_000.png,30016,0,41,M,PA,No Finding,images_012.tar.gz,official_test
+00030019_000.png,30019,0,51,F,PA,No Finding,images_012.tar.gz,official_test
+00030032_000.png,30032,0,65,M,PA,No Finding,images_012.tar.gz,official_test
+00030035_000.png,30035,0,76,M,PA,No Finding,images_012.tar.gz,official_test
+00030039_000.png,30039,0,51,M,PA,Mass,images_012.tar.gz,official_test
+00030039_004.png,30039,4,52,M,PA,Atelectasis|Cardiomegaly,images_012.tar.gz,official_test
+00030039_013.png,30039,13,52,M,PA,No Finding,images_012.tar.gz,official_test
+00030039_019.png,30039,19,52,M,PA,No Finding,images_012.tar.gz,official_test
+00030041_000.png,30041,0,57,F,PA,No Finding,images_012.tar.gz,official_test
+00030042_000.png,30042,0,67,M,PA,No Finding,images_012.tar.gz,official_test
+00030046_000.png,30046,0,68,F,PA,No Finding,images_012.tar.gz,official_test
+00030046_004.png,30046,8,68,F,PA,No Finding,images_012.tar.gz,official_test
+00030046_005.png,30046,2,68,F,AP,Emphysema,images_012.tar.gz,official_test
+00030046_010.png,30046,10,68,F,PA,Emphysema,images_012.tar.gz,official_test
+00030056_000.png,30056,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00030062_000.png,30062,0,23,M,PA,No Finding,images_012.tar.gz,official_test
+00030065_000.png,30065,0,58,M,PA,No Finding,images_012.tar.gz,official_test
+00030067_000.png,30067,0,53,M,PA,No Finding,images_012.tar.gz,official_test
+00030071_001.png,30071,1,67,M,PA,No Finding,images_012.tar.gz,official_test
+00030077_002.png,30077,2,65,F,AP,Pneumothorax,images_012.tar.gz,official_test
+00030077_004.png,30077,4,65,F,PA,No Finding,images_012.tar.gz,official_test
+00030077_005.png,30077,5,65,F,AP,Atelectasis|Effusion|Pneumothorax,images_012.tar.gz,official_test
+00030077_010.png,30077,10,65,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00030077_012.png,30077,12,65,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00030079_001.png,30079,1,16,M,AP,No Finding,images_012.tar.gz,official_test
+00030079_005.png,30079,6,16,M,AP,Edema|Effusion,images_012.tar.gz,official_test
+00030079_007.png,30079,7,16,M,AP,Edema|Effusion,images_012.tar.gz,official_test
+00030079_012.png,30079,12,16,M,AP,Consolidation|Infiltration,images_012.tar.gz,official_test
+00030079_013.png,30079,13,16,M,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00030079_023.png,30079,23,16,M,AP,Consolidation,images_012.tar.gz,official_test
+00030079_025.png,30079,25,16,M,AP,Infiltration,images_012.tar.gz,official_test
+00030079_026.png,30079,26,16,M,AP,Infiltration,images_012.tar.gz,official_test
+00030079_032.png,30079,33,16,M,AP,Consolidation,images_012.tar.gz,official_test
+00030079_034.png,30079,34,16,M,AP,Consolidation,images_012.tar.gz,official_test
+00030079_041.png,30079,41,16,M,AP,No Finding,images_012.tar.gz,official_test
+00030079_042.png,30079,42,16,M,AP,Infiltration|Nodule,images_012.tar.gz,official_test
+00030079_044.png,30079,46,16,M,AP,No Finding,images_012.tar.gz,official_test
+00030079_049.png,30079,49,16,M,AP,Nodule,images_012.tar.gz,official_test
+00030079_051.png,30079,51,16,M,AP,Infiltration|Nodule,images_012.tar.gz,official_test
+00030079_056.png,30079,56,16,M,AP,Infiltration|Nodule,images_012.tar.gz,official_test
+00030079_058.png,30079,58,16,M,AP,Infiltration,images_012.tar.gz,official_test
+00030079_061.png,30079,61,16,M,AP,Consolidation|Effusion,images_012.tar.gz,official_test
+00030079_062.png,30079,62,16,M,AP,Consolidation|Effusion,images_012.tar.gz,official_test
+00030079_064.png,30079,64,16,M,AP,Infiltration,images_012.tar.gz,official_test
+00030079_067.png,30079,67,16,M,AP,Edema|Infiltration|Pneumonia,images_012.tar.gz,official_test
+00030079_072.png,30079,72,16,M,AP,No Finding,images_012.tar.gz,official_test
+00030083_000.png,30083,0,54,M,PA,No Finding,images_012.tar.gz,official_test
+00030086_000.png,30086,0,42,F,PA,No Finding,images_012.tar.gz,official_test
+00030087_000.png,30087,0,46,M,PA,No Finding,images_012.tar.gz,official_test
+00030090_000.png,30090,0,44,M,PA,No Finding,images_012.tar.gz,official_test
+00030091_000.png,30091,0,46,F,PA,No Finding,images_012.tar.gz,official_test
+00030101_001.png,30101,1,68,M,AP,No Finding,images_012.tar.gz,official_test
+00030101_002.png,30101,2,68,M,AP,No Finding,images_012.tar.gz,official_test
+00030101_004.png,30101,4,68,M,AP,No Finding,images_012.tar.gz,official_test
+00030103_000.png,30103,0,57,M,PA,No Finding,images_012.tar.gz,official_test
+00030106_000.png,30106,0,73,M,AP,Effusion,images_012.tar.gz,official_test
+00030106_002.png,30106,2,73,M,AP,Atelectasis|Effusion,images_012.tar.gz,official_test
+00030106_003.png,30106,3,73,M,AP,No Finding,images_012.tar.gz,official_test
+00030106_006.png,30106,6,73,M,AP,Effusion|Infiltration|Mass,images_012.tar.gz,official_test
+00030111_000.png,30111,0,50,M,PA,Effusion,images_012.tar.gz,official_test
+00030111_003.png,30111,4,51,M,AP,Atelectasis|Effusion|Emphysema|Mass,images_012.tar.gz,official_test
+00030111_004.png,30111,5,51,M,AP,No Finding,images_012.tar.gz,official_test
+00030111_008.png,30111,8,51,M,AP,Infiltration,images_012.tar.gz,official_test
+00030111_009.png,30111,9,51,M,AP,Infiltration,images_012.tar.gz,official_test
+00030111_011.png,30111,11,51,M,PA,Effusion|Emphysema,images_012.tar.gz,official_test
+00030111_012.png,30111,12,51,M,PA,No Finding,images_012.tar.gz,official_test
+00030111_014.png,30111,14,51,M,PA,No Finding,images_012.tar.gz,official_test
+00030111_015.png,30111,15,51,M,PA,Effusion,images_012.tar.gz,official_test
+00030114_000.png,30114,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00030118_000.png,30118,0,21,F,PA,No Finding,images_012.tar.gz,official_test
+00030123_000.png,30123,0,48,M,PA,No Finding,images_012.tar.gz,official_test
+00030128_002.png,30128,2,35,M,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00030130_000.png,30130,0,29,M,PA,No Finding,images_012.tar.gz,official_test
+00030135_000.png,30135,0,23,F,PA,No Finding,images_012.tar.gz,official_test
+00030139_001.png,30139,1,36,M,PA,No Finding,images_012.tar.gz,official_test
+00030144_001.png,30144,1,36,M,AP,No Finding,images_012.tar.gz,official_test
+00030145_000.png,30145,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00030145_002.png,30145,2,40,F,PA,No Finding,images_012.tar.gz,official_test
+00030149_000.png,30149,0,22,F,PA,No Finding,images_012.tar.gz,official_test
+00030150_000.png,30150,0,38,F,AP,No Finding,images_012.tar.gz,official_test
+00030162_000.png,30162,0,15,M,PA,No Finding,images_012.tar.gz,official_test
+00030162_001.png,30162,1,15,M,AP,Mass|Pneumothorax,images_012.tar.gz,official_test
+00030162_007.png,30162,7,15,M,AP,No Finding,images_012.tar.gz,official_test
+00030162_010.png,30162,10,15,M,AP,Atelectasis|Effusion|Pneumothorax,images_012.tar.gz,official_test
+00030162_012.png,30162,12,15,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00030162_016.png,30162,16,15,M,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00030162_019.png,30162,19,15,M,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00030162_021.png,30162,21,15,M,AP,No Finding,images_012.tar.gz,official_test
+00030162_023.png,30162,23,15,M,PA,Atelectasis|Effusion|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00030162_024.png,30162,24,15,M,PA,No Finding,images_012.tar.gz,official_test
+00030162_026.png,30162,26,15,M,AP,Infiltration|Nodule|Pneumothorax,images_012.tar.gz,official_test
+00030162_031.png,30162,31,15,M,AP,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00030162_033.png,30162,33,15,M,AP,Nodule|Pneumothorax,images_012.tar.gz,official_test
+00030164_000.png,30164,0,22,F,PA,No Finding,images_012.tar.gz,official_test
+00030166_000.png,30166,0,32,M,PA,No Finding,images_012.tar.gz,official_test
+00030190_001.png,30190,1,66,M,PA,No Finding,images_012.tar.gz,official_test
+00030194_000.png,30194,0,21,M,PA,No Finding,images_012.tar.gz,official_test
+00030195_000.png,30195,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00030197_000.png,30197,0,18,F,PA,No Finding,images_012.tar.gz,official_test
+00030201_000.png,30201,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00030203_000.png,30203,0,29,F,PA,No Finding,images_012.tar.gz,official_test
+00030206_000.png,30206,0,45,F,AP,Infiltration,images_012.tar.gz,official_test
+00030206_004.png,30206,4,45,F,AP,No Finding,images_012.tar.gz,official_test
+00030206_012.png,30206,12,46,F,AP,Atelectasis,images_012.tar.gz,official_test
+00030212_000.png,30212,0,44,F,PA,Infiltration,images_012.tar.gz,official_test
+00030212_002.png,30212,2,44,F,AP,No Finding,images_012.tar.gz,official_test
+00030221_000.png,30221,0,51,M,PA,No Finding,images_012.tar.gz,official_test
+00030228_001.png,30228,1,74,M,AP,No Finding,images_012.tar.gz,official_test
+00030231_000.png,30231,0,46,M,PA,No Finding,images_012.tar.gz,official_test
+00030232_000.png,30232,0,21,F,PA,No Finding,images_012.tar.gz,official_test
+00030242_000.png,30242,0,32,F,PA,No Finding,images_012.tar.gz,official_test
+00030246_001.png,30246,1,68,M,PA,No Finding,images_012.tar.gz,official_test
+00030248_000.png,30248,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00030258_000.png,30258,0,20,M,PA,No Finding,images_012.tar.gz,official_test
+00030260_000.png,30260,0,74,F,PA,No Finding,images_012.tar.gz,official_test
+00030260_007.png,30260,7,74,F,PA,Emphysema|Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00030260_011.png,30260,12,75,F,PA,Infiltration,images_012.tar.gz,official_test
+00030266_000.png,30266,0,55,M,PA,No Finding,images_012.tar.gz,official_test
+00030269_000.png,30269,0,10,M,PA,No Finding,images_012.tar.gz,official_test
+00030277_000.png,30277,0,42,F,PA,No Finding,images_012.tar.gz,official_test
+00030278_000.png,30278,0,37,F,PA,No Finding,images_012.tar.gz,official_test
+00030279_001.png,30279,1,72,M,PA,No Finding,images_012.tar.gz,official_test
+00030279_005.png,30279,4,72,M,AP,Cardiomegaly|Pneumothorax,images_012.tar.gz,official_test
+00030279_006.png,30279,6,72,M,AP,Atelectasis|Cardiomegaly|Consolidation,images_012.tar.gz,official_test
+00030279_007.png,30279,7,72,M,AP,Cardiomegaly|Consolidation,images_012.tar.gz,official_test
+00030279_011.png,30279,11,72,M,AP,Pneumothorax,images_012.tar.gz,official_test
+00030279_013.png,30279,13,72,M,PA,No Finding,images_012.tar.gz,official_test
+00030285_000.png,30285,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00030286_002.png,30286,2,41,M,AP,No Finding,images_012.tar.gz,official_test
+00030286_004.png,30286,4,41,M,AP,No Finding,images_012.tar.gz,official_test
+00030288_000.png,30288,0,31,M,PA,No Finding,images_012.tar.gz,official_test
+00030291_000.png,30291,0,59,F,PA,No Finding,images_012.tar.gz,official_test
+00030302_000.png,30302,0,53,F,PA,No Finding,images_012.tar.gz,official_test
+00030303_000.png,30303,0,10,F,AP,No Finding,images_012.tar.gz,official_test
+00030309_000.png,30309,0,27,F,PA,No Finding,images_012.tar.gz,official_test
+00030314_000.png,30314,0,64,M,PA,No Finding,images_012.tar.gz,official_test
+00030316_000.png,30316,0,63,M,PA,No Finding,images_012.tar.gz,official_test
+00030318_000.png,30318,0,16,F,PA,No Finding,images_012.tar.gz,official_test
+00030321_000.png,30321,0,53,M,PA,No Finding,images_012.tar.gz,official_test
+00030323_000.png,30323,0,31,F,PA,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00030323_005.png,30323,5,31,F,AP,Effusion|Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00030323_018.png,30323,18,31,F,AP,Infiltration,images_012.tar.gz,official_test
+00030323_021.png,30323,22,31,F,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00030323_024.png,30323,24,31,F,AP,Effusion|Infiltration,images_012.tar.gz,official_test
+00030323_026.png,30323,26,31,F,AP,No Finding,images_012.tar.gz,official_test
+00030323_029.png,30323,29,31,F,AP,Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00030323_041.png,30323,41,32,F,AP,Consolidation,images_012.tar.gz,official_test
+00030323_044.png,30323,44,32,F,AP,Effusion,images_012.tar.gz,official_test
+00030323_045.png,30323,45,32,F,AP,Infiltration,images_012.tar.gz,official_test
+00030323_048.png,30323,48,32,F,AP,Consolidation|Infiltration,images_012.tar.gz,official_test
+00030328_000.png,30328,0,34,M,PA,No Finding,images_012.tar.gz,official_test
+00030340_000.png,30340,0,11,M,AP,No Finding,images_012.tar.gz,official_test
+00030340_001.png,30340,1,11,M,AP,No Finding,images_012.tar.gz,official_test
+00030342_001.png,30342,2,36,F,AP,No Finding,images_012.tar.gz,official_test
+00030342_002.png,30342,1,36,F,AP,No Finding,images_012.tar.gz,official_test
+00030345_000.png,30345,0,36,M,PA,No Finding,images_012.tar.gz,official_test
+00030347_000.png,30347,0,63,F,PA,No Finding,images_012.tar.gz,official_test
+00030354_001.png,30354,1,38,F,PA,No Finding,images_012.tar.gz,official_test
+00030357_000.png,30357,0,42,M,PA,No Finding,images_012.tar.gz,official_test
+00030358_001.png,30358,1,49,M,AP,No Finding,images_012.tar.gz,official_test
+00030358_003.png,30358,3,49,M,AP,No Finding,images_012.tar.gz,official_test
+00030360_001.png,30360,1,56,M,PA,No Finding,images_012.tar.gz,official_test
+00030363_000.png,30363,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00030368_000.png,30368,0,46,F,PA,No Finding,images_012.tar.gz,official_test
+00030371_000.png,30371,0,18,F,PA,No Finding,images_012.tar.gz,official_test
+00030373_000.png,30373,0,67,M,PA,No Finding,images_012.tar.gz,official_test
+00030375_001.png,30375,1,64,M,PA,No Finding,images_012.tar.gz,official_test
+00030384_000.png,30384,0,27,M,PA,No Finding,images_012.tar.gz,official_test
+00030384_001.png,30384,1,27,M,PA,No Finding,images_012.tar.gz,official_test
+00030389_000.png,30389,0,30,F,PA,Mass,images_012.tar.gz,official_test
+00030389_005.png,30389,5,30,F,PA,Atelectasis|Effusion|Pneumothorax,images_012.tar.gz,official_test
+00030389_007.png,30389,7,30,F,PA,Pneumothorax,images_012.tar.gz,official_test
+00030389_008.png,30389,8,30,F,PA,Infiltration|Pneumothorax,images_012.tar.gz,official_test
+00030389_012.png,30389,12,30,F,PA,Effusion|Pneumothorax,images_012.tar.gz,official_test
+00030394_003.png,30394,3,60,M,AP,No Finding,images_012.tar.gz,official_test
+00030394_004.png,30394,4,60,M,PA,No Finding,images_012.tar.gz,official_test
+00030397_000.png,30397,0,21,M,PA,No Finding,images_012.tar.gz,official_test
+00030405_000.png,30405,0,53,F,PA,No Finding,images_012.tar.gz,official_test
+00030408_002.png,30408,2,67,M,PA,No Finding,images_012.tar.gz,official_test
+00030408_003.png,30408,3,67,M,AP,Cardiomegaly|Effusion,images_012.tar.gz,official_test
+00030408_013.png,30408,13,67,M,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00030408_017.png,30408,17,67,M,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00030412_000.png,30412,0,75,F,AP,Atelectasis|Cardiomegaly|Effusion|Infiltration,images_012.tar.gz,official_test
+00030412_002.png,30412,2,75,F,AP,Cardiomegaly|Effusion,images_012.tar.gz,official_test
+00030418_001.png,30418,1,22,M,PA,No Finding,images_012.tar.gz,official_test
+00030421_000.png,30421,0,60,M,PA,No Finding,images_012.tar.gz,official_test
+00030422_000.png,30422,0,15,M,PA,No Finding,images_012.tar.gz,official_test
+00030424_001.png,30424,1,28,M,PA,No Finding,images_012.tar.gz,official_test
+00030427_001.png,30427,1,70,M,PA,No Finding,images_012.tar.gz,official_test
+00030428_000.png,30428,0,72,F,PA,No Finding,images_012.tar.gz,official_test
+00030433_000.png,30433,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00030434_000.png,30434,0,53,M,PA,Atelectasis,images_012.tar.gz,official_test
+00030442_000.png,30442,0,57,F,PA,No Finding,images_012.tar.gz,official_test
+00030446_000.png,30446,0,78,F,PA,No Finding,images_012.tar.gz,official_test
+00030447_000.png,30447,0,22,F,PA,No Finding,images_012.tar.gz,official_test
+00030448_000.png,30448,0,44,F,PA,No Finding,images_012.tar.gz,official_test
+00030450_000.png,30450,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00030450_001.png,30450,1,33,M,AP,No Finding,images_012.tar.gz,official_test
+00030450_003.png,30450,3,33,M,PA,No Finding,images_012.tar.gz,official_test
+00030467_000.png,30467,0,25,F,PA,No Finding,images_012.tar.gz,official_test
+00030478_000.png,30478,0,60,M,PA,No Finding,images_012.tar.gz,official_test
+00030480_000.png,30480,0,51,M,PA,No Finding,images_012.tar.gz,official_test
+00030486_000.png,30486,0,51,M,AP,No Finding,images_012.tar.gz,official_test
+00030492_000.png,30492,0,56,F,PA,No Finding,images_012.tar.gz,official_test
+00030493_000.png,30493,0,6,M,PA,No Finding,images_012.tar.gz,official_test
+00030495_000.png,30495,0,5,F,AP,No Finding,images_012.tar.gz,official_test
+00030501_001.png,30501,1,38,M,AP,No Finding,images_012.tar.gz,official_test
+00030508_000.png,30508,0,54,F,PA,No Finding,images_012.tar.gz,official_test
+00030510_000.png,30510,0,38,M,PA,No Finding,images_012.tar.gz,official_test
+00030517_001.png,30517,1,62,F,AP,No Finding,images_012.tar.gz,official_test
+00030521_000.png,30521,0,55,F,PA,No Finding,images_012.tar.gz,official_test
+00030532_000.png,30532,0,49,M,PA,No Finding,images_012.tar.gz,official_test
+00030535_003.png,30535,3,51,F,PA,No Finding,images_012.tar.gz,official_test
+00030539_000.png,30539,0,27,M,PA,No Finding,images_012.tar.gz,official_test
+00030543_000.png,30543,0,77,F,PA,No Finding,images_012.tar.gz,official_test
+00030552_000.png,30552,0,50,F,PA,No Finding,images_012.tar.gz,official_test
+00030553_000.png,30553,0,74,M,PA,No Finding,images_012.tar.gz,official_test
+00030556_000.png,30556,0,65,F,PA,No Finding,images_012.tar.gz,official_test
+00030563_000.png,30563,0,58,M,PA,No Finding,images_012.tar.gz,official_test
+00030573_000.png,30573,0,26,M,PA,No Finding,images_012.tar.gz,official_test
+00030573_010.png,30573,10,26,M,AP,No Finding,images_012.tar.gz,official_test
+00030573_012.png,30573,11,26,M,AP,Infiltration|Pleural_Thickening,images_012.tar.gz,official_test
+00030573_015.png,30573,14,26,M,AP,Infiltration,images_012.tar.gz,official_test
+00030573_018.png,30573,18,26,M,AP,Infiltration|Nodule,images_012.tar.gz,official_test
+00030576_000.png,30576,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00030578_000.png,30578,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00030584_000.png,30584,0,36,M,PA,No Finding,images_012.tar.gz,official_test
+00030589_000.png,30589,0,25,M,PA,No Finding,images_012.tar.gz,official_test
+00030591_000.png,30591,0,37,F,PA,No Finding,images_012.tar.gz,official_test
+00030606_003.png,30606,3,58,M,PA,Emphysema,images_012.tar.gz,official_test
+00030606_005.png,30606,5,58,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00030606_012.png,30606,12,58,M,PA,No Finding,images_012.tar.gz,official_test
+00030606_013.png,30606,13,58,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00030606_014.png,30606,14,58,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00030608_000.png,30608,0,40,F,PA,Cardiomegaly,images_012.tar.gz,official_test
+00030608_001.png,30608,1,40,F,AP,Cardiomegaly,images_012.tar.gz,official_test
+00030608_004.png,30608,4,40,F,AP,No Finding,images_012.tar.gz,official_test
+00030623_000.png,30623,0,35,M,PA,No Finding,images_012.tar.gz,official_test
+00030624_000.png,30624,0,28,F,PA,No Finding,images_012.tar.gz,official_test
+00030627_000.png,30627,0,24,F,PA,No Finding,images_012.tar.gz,official_test
+00030630_000.png,30630,0,41,F,AP,No Finding,images_012.tar.gz,official_test
+00030635_006.png,30635,6,50,F,AP,Atelectasis|Effusion|Infiltration,images_012.tar.gz,official_test
+00030635_010.png,30635,10,50,F,PA,Consolidation|Effusion,images_012.tar.gz,official_test
+00030636_002.png,30636,2,45,M,PA,Atelectasis,images_012.tar.gz,official_test
+00030636_003.png,30636,3,45,M,AP,Infiltration,images_012.tar.gz,official_test
+00030636_004.png,30636,4,45,M,AP,Atelectasis|Infiltration,images_012.tar.gz,official_test
+00030636_014.png,30636,14,45,M,PA,Atelectasis|Effusion|Pneumothorax,images_012.tar.gz,official_test
+00030636_017.png,30636,17,45,M,PA,No Finding,images_012.tar.gz,official_test
+00030636_024.png,30636,24,45,M,PA,No Finding,images_012.tar.gz,official_test
+00030636_025.png,30636,25,45,M,PA,Consolidation|Effusion,images_012.tar.gz,official_test
+00030637_002.png,30637,2,48,M,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00030637_003.png,30637,3,48,M,PA,Emphysema|Pneumothorax,images_012.tar.gz,official_test
+00030637_012.png,30637,12,48,M,PA,Pneumothorax,images_012.tar.gz,official_test
+00030637_022.png,30637,22,48,M,PA,Infiltration,images_012.tar.gz,official_test
+00030641_000.png,30641,0,60,M,PA,No Finding,images_012.tar.gz,official_test
+00030645_000.png,30645,0,58,M,PA,No Finding,images_012.tar.gz,official_test
+00030664_000.png,30664,0,33,M,PA,No Finding,images_012.tar.gz,official_test
+00030665_000.png,30665,0,75,F,PA,No Finding,images_012.tar.gz,official_test
+00030666_000.png,30666,0,62,F,PA,No Finding,images_012.tar.gz,official_test
+00030684_000.png,30684,0,19,M,PA,No Finding,images_012.tar.gz,official_test
+00030685_000.png,30685,0,25,M,PA,No Finding,images_012.tar.gz,official_test
+00030704_000.png,30704,0,51,F,PA,No Finding,images_012.tar.gz,official_test
+00030709_001.png,30709,1,48,M,AP,No Finding,images_012.tar.gz,official_test
+00030714_000.png,30714,0,15,F,AP,No Finding,images_012.tar.gz,official_test
+00030718_000.png,30718,0,38,M,PA,No Finding,images_012.tar.gz,official_test
+00030725_000.png,30725,0,71,M,PA,No Finding,images_012.tar.gz,official_test
+00030730_000.png,30730,0,22,M,PA,No Finding,images_012.tar.gz,official_test
+00030735_000.png,30735,0,39,M,PA,No Finding,images_012.tar.gz,official_test
+00030742_000.png,30742,0,47,F,PA,No Finding,images_012.tar.gz,official_test
+00030743_000.png,30743,0,61,M,PA,No Finding,images_012.tar.gz,official_test
+00030745_000.png,30745,0,56,M,PA,No Finding,images_012.tar.gz,official_test
+00030765_000.png,30765,0,54,F,PA,No Finding,images_012.tar.gz,official_test
+00030768_000.png,30768,0,40,F,PA,No Finding,images_012.tar.gz,official_test
+00030773_000.png,30773,0,9,M,PA,No Finding,images_012.tar.gz,official_test
+00030773_001.png,30773,1,9,M,PA,No Finding,images_012.tar.gz,official_test
+00030776_000.png,30776,0,23,M,PA,No Finding,images_012.tar.gz,official_test
+00030788_000.png,30788,0,60,F,PA,No Finding,images_012.tar.gz,official_test
+00030796_000.png,30796,0,43,M,PA,No Finding,images_012.tar.gz,official_test
+00030797_000.png,30797,0,23,M,PA,No Finding,images_012.tar.gz,official_test
+00030804_000.png,30804,0,29,F,PA,No Finding,images_012.tar.gz,official_test
