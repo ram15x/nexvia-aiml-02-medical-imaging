@@ -124,6 +124,19 @@ python evaluate_segmentation.py --dataset-json <dataset.json> --dataset-root <fo
     --split results/spleen/case_split.json --checkpoint artifacts/best_spleen_unet_20261109.pt --output <result.json>
 ```
 
+## Tech stack
+
+| Area | Tools |
+|---|---|
+| Models | PyTorch, torchvision DenseNet-121 (ImageNet-pretrained, fine-tuned), MONAI 3D U-Net |
+| Explainability | Grad-CAM, KernelSHAP |
+| Data and versioning | NIH ChestX-ray14, MSD Task09 Spleen, pydicom, DVC |
+| Backend | FastAPI, audit log in JSONL with model SHA-256 |
+| Imaging server | Orthanc (Docker Compose profile) |
+| Frontend | React 19, Vite |
+| Packaging and demo | Docker Compose, Gradio on a Hugging Face Space |
+| Testing | pytest (96 pass, 4 skipped), live Orthanc check |
+
 ## Security notes
 
 - Secrets stay in `.env`, which git ignores. The Docker images run as a non-root user and exclude `.env`, data and training volumes.
