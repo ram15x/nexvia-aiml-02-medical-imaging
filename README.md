@@ -91,6 +91,8 @@ cd web && npm ci && VITE_API_URL=http://127.0.0.1:18080 npm run dev -- --port 15
 
 The two model files are in `artifacts/`.
 
+If Orthanc sync or CT segmentation answers 500 with `PermissionError` under Docker, the files in `demo/` were created by a different user. Move the old `demo/orthanc_*` files and `demo/orthanc_masks/` aside and the API will recreate them.
+
 ## Tests
 
 `python -m pytest -q` runs 100 tests. On a clean checkout 96 pass and 4 skip (checked on a fresh clone, Python 3.13, CPU): three need the NIH sample images (`dvc pull`) and one needs the demo image. `python tools/check_baseline.py results/nih_sample/per_label_intervals.json` fails if a new evaluation of the classifier falls below the frozen baseline in `results/nih_sample/baseline.json`. What the tests cover, and what they don't, is in [docs/test_results.md](docs/test_results.md).

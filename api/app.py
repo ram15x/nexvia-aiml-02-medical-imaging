@@ -241,6 +241,12 @@ def _image_tensor(image: Image.Image) -> torch.Tensor:
     return image_to_tensor(image).unsqueeze(0)
 
 
+
+def _storage_error(message: str, exc: Exception) -> str:
+    """Name the failure so a read-only or wrongly owned demo/ folder is easy to spot."""
+    hint = " The demo/ folder must be writable by the container user (UID 1000)." if isinstance(exc, PermissionError) else ""
+    return f"{message} ({type(exc).__name__}).{hint}"
+
 @app.get("/health")
 def health() -> dict[str, Any]:
     available = CHECKPOINT.is_file()
@@ -385,7 +391,7 @@ def segment_orthanc_ct_series(series_id: str, expected_instances: int | None = N
         try:
             mask_bytes = base64.b64decode(result["output_mask_nii_gz_base64"], validate=True)
         except (KeyError, ValueError) as exc:
-            raise HTTPException(status_code=500, detail="Segmentation mask could not be stored.") from exc
+            raise HTTPException(status_code=500, detail=_storage_error("Segmentation mask could not be stored", exc)) from exc
 
         ORTHANC_SEGMENTATION_MASK_DIR.mkdir(parents=True, exist_ok=True)
         mask_filename = f"{record_id}.nii.gz"
@@ -397,7 +403,7 @@ def segment_orthanc_ct_series(series_id: str, expected_instances: int | None = N
             os.replace(pending_mask_path, mask_path)
         except OSError as exc:
             pending_mask_path.unlink(missing_ok=True)
-            raise HTTPException(status_code=500, detail="Segmentation mask could not be stored.") from exc
+            raise HTTPException(status_code=500, detail=_storage_error("Segmentation mask could not be stored", exc)) from exc
 
         mask_url = f"/orthanc/series/{series_id}/segmentation-results/{record_id}/mask"
         runtime = _segmentation_runtime_info()
@@ -433,7 +439,7 @@ def segment_orthanc_ct_series(series_id: str, expected_instances: int | None = N
                 stream.write(json.dumps(record, ensure_ascii=False) + "\n")
         except OSError as exc:
             mask_path.unlink(missing_ok=True)
-            raise HTTPException(status_code=500, detail="Segmentation result could not be stored.") from exc
+            raise HTTPException(status_code=500, detail=_storage_error("Segmentation result could not be stored", exc)) from exc
         return result
 
 
@@ -923,7 +929,7 @@ def sync_orthanc_studies(limit: int = 16) -> dict[str, Any]:
             "results_path": str(ORTHANC_RESULTS_PATH),
         }
     except (OSError, json.JSONDecodeError) as exc:
-        raise HTTPException(status_code=500, detail="Could not update Orthanc result log") from exc
+        raise HTTPException(status_code=500, detail=_storage_error("Could not update Orthanc result log", exc)) from exc
     finally:
         _orthanc_sync_lock.release()
 
