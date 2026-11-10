@@ -1,0 +1,133 @@
+{
+ "started_utc": "2026-11-10T10:59:45Z",
+ "checks": [
+  {
+   "check": "API /health",
+   "ok": true,
+   "detail": "http 200"
+  },
+  {
+   "check": "Orthanc reachable with auth",
+   "ok": true,
+   "detail": "http 200, version 1.13.0"
+  },
+  {
+   "check": "Orthanc rejects unauthenticated requests",
+   "ok": true,
+   "detail": "http 401"
+  },
+  {
+   "check": "upload 00028173_004.dcm to Orthanc",
+   "ok": true,
+   "detail": "http 200"
+  },
+  {
+   "check": "upload 00028173_005.dcm to Orthanc",
+   "ok": true,
+   "detail": "http 200"
+  },
+  {
+   "check": "upload 00028173_009.dcm to Orthanc",
+   "ok": true,
+   "detail": "http 200"
+  },
+  {
+   "check": "upload CT series (41 slices)",
+   "ok": true,
+   "detail": "41 uploaded"
+  },
+  {
+   "check": "API pulled and scored all uploaded radiographs",
+   "ok": true,
+   "detail": "3/3 after 8 s"
+  },
+  {
+   "check": "DICOM-via-Orthanc scores equal the offline scores",
+   "ok": true,
+   "detail": "max |diff| 0.00e+00"
+  },
+  {
+   "check": "CT slice is skipped by the chest classifier",
+   "ok": true,
+   "detail": "[('skipped', 'unsupported_modality')]"
+  },
+  {
+   "check": "spleen segmentation of the Orthanc CT series",
+   "ok": true,
+   "detail": "http 200, 13 s, expected_instances supplied"
+  },
+  {
+   "check": "voxel count equals the direct-NIfTI result",
+   "ok": true,
+   "detail": "79016 vs 79016"
+  },
+  {
+   "check": "stored mask downloads and matches its recorded hash",
+   "ok": true,
+   "detail": "58454 bytes"
+  },
+  {
+   "check": "approve decision recorded in the audit log",
+   "ok": true,
+   "detail": "http 201"
+  }
+ ],
+ "api_health": {
+  "status": "ready",
+  "model_available": true,
+  "model_loaded": true,
+  "model": {
+   "architecture": "densenet121",
+   "model_name": "DenseNet-121 weight soup (8k+10k)",
+   "best_epoch": null,
+   "validation_metrics": null,
+   "promotion_evaluation": null,
+   "label_graph_source": null,
+   "checkpoint_sha256": "082bc9dc5ff0399a6eeb07ae4dd9146ab258c39829e2c19a5c3eccc2c1cd8cc8"
+  },
+  "load_error": null,
+  "segmentation": {
+   "checkpoint_path": "/app/artifacts/best_spleen_unet_20261109.pt",
+   "checkpoint_sha256": "5628229f2b1742981a9b3b4ebef28ef780fb2ed81001550651c9f754c76ebbbb",
+   "roi_size": [
+    96,
+    96,
+    96
+   ],
+   "threshold": 0.5,
+   "flip_tta": false,
+   "status": "available",
+   "architecture": "monai_unet_3d"
+  },
+  "question_answering": {
+   "configured": true,
+   "model": "openrouter/free"
+  },
+  "orthanc": {
+   "enabled": true
+  },
+  "disclaimer": "Educational demonstration only. Model scores are not a diagnosis and must not be used for clinical decisions. A qualified clinician must review all images."
+ },
+ "orthanc_version": "1.13.0",
+ "ct_series_orthanc_status": "Unknown",
+ "ct_series_instances_in_orthanc": 41,
+ "seconds_until_all_radiographs_processed": 8,
+ "max_score_difference_vs_offline": 0.0,
+ "ct_segmentation_seconds": 13,
+ "ct_needed_expected_instances": true,
+ "ct_result": {
+  "predicted_spleen_voxels": 79016,
+  "estimated_predicted_volume_ml": 218.77,
+  "dicom_instance_count": 41,
+  "input_shape": [
+   512,
+   512,
+   41
+  ],
+  "orthanc_series_status": "Unknown",
+  "completeness_basis": "operator_supplied_count_match",
+  "mask_sha256": "93089ecadf63976583a5ca8fed54c64419f3f107aaae4c467528c4d17b3a8fde"
+ },
+ "finished_utc": "2026-11-10T11:01:58Z",
+ "all_passed": true
+}

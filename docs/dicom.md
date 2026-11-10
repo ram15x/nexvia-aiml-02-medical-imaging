@@ -15,7 +15,8 @@
 | Upload scoring, generated image | same image as PNG and as DICOM | Scores identical to 1e-5. |
 | Rejection | DICOM with modality CT sent to `/predict` | HTTP 422. |
 | Real radiographs | three NIH ChestX-ray14 images from the sample, converted to DX DICOM | Scores identical to 0.0 difference, all 14 labels, all three images. Test: `test_real_dicom_sample.py`. |
-| Orthanc CT, public series | one de-identified 81-slice TCIA CT series, run through Orthanc | Reported as processed in an earlier run on the developer's Docker, with an operator-supplied instance count because Orthanc reported the series status as Unknown. This repository does not contain that run's output, so it is not re-verified here. |
+| Orthanc CT, MSD spleen_9 as 41 DICOM slices | `tools/nifti_to_dicom_series.py` (lossless round trip through the API's DICOM reader), uploaded to Orthanc and segmented through `/orthanc/series/{id}/segment/spleen` | Verified live on 2026-11-10 (`results/live_orthanc_check.json`): 79,016 predicted spleen voxels, identical to the direct NIfTI run. Orthanc reported the series status as Unknown, so the instance count (41) was supplied by the operator, as the API requires. |
+| Orthanc CT, TCIA series (earlier run) | one de-identified 81-slice TCIA CT series | Reported as processed in an earlier run on the developer's Docker; that run's output is not in this repository. |
 
 The DX conversion tool, `tools/png_to_dicom_dx.py`, writes anonymised test objects. It sets the patient name to `ANONYMISED` and carries only the sample identifier as patient ID.
 

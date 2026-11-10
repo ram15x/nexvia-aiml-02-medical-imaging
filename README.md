@@ -126,7 +126,7 @@ python evaluate_segmentation.py --dataset-json <dataset.json> --dataset-root <fo
 
 - **NIH ChestX-ray14:** public. The 999-image sample is tracked with DVC; the manifest and protocol are in git.
 - **Medical Segmentation Decathlon, Task09 Spleen:** public, not included here.
-- **DICOM:** the public sets are PNG and NIfTI. DICOM comes in through upload and the Orthanc connector; tests use DICOM files generated from NIH images. See [docs/dicom.md](docs/dicom.md).
+- **DICOM:** the public sets are PNG and NIfTI. DICOM comes in through upload and the Orthanc connector; tests use DICOM files generated from NIH images, and the Orthanc path has a live end-to-end check (`tools/live_orthanc_check.py`, results in `results/live_orthanc_check.json`). See [docs/dicom.md](docs/dicom.md).
 
 ## Known limits
 

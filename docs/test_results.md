@@ -16,6 +16,6 @@ Tests that depend on data or checkpoints skip with a reason when those files are
 
 ## Not covered by these tests
 
-- Live Orthanc: the sync and CT routes have no tests against a running or mocked Orthanc server. Only the interval timer is tested (`test_orthanc_auto_sync.py`).
+- Live Orthanc in CI: the pytest suite does not start an Orthanc server. The sync and CT routes were instead checked end to end on a running Docker stack with `tools/live_orthanc_check.py` (14 of 14 checks passed on 2026-11-10; evidence in `results/live_orthanc_check.json`): three NIH radiographs converted to DICOM and a 41-slice MSD spleen CT series were uploaded to Orthanc, the API pulled and scored them, the radiograph scores equal the offline scores, the CT slices were skipped by the chest classifier, the CT series was segmented (79,016 voxels, identical to the direct NIfTI run, 218.77 mL), the stored mask matched its recorded hash, and an approve decision reached the audit log. The sync cursor reset after an Orthanc database reset is covered by `test_orthanc_reset.py`.
 - Docker: the images are not built in CI. `scripts/smoke_docker.ps1` builds the stack and checks it on a machine with Docker; the browser flow was checked by driving the built UI against the running API (predict, Grad-CAM, review log, spleen segmentation).
 - Spleen accuracy: not part of the pytest suite. The held-out evaluation is a separate run (`evaluate_segmentation.py`) whose result is in `results/spleen/test_result.json`; it needs the MSD Task09 volumes, which are not in this repository.
