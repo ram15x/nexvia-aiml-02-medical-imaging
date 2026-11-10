@@ -75,6 +75,15 @@ powershell -ExecutionPolicy Bypass -File scripts/smoke_docker.ps1
 
 For the optional Orthanc DICOM server, set `ORTHANC_PASSWORD` in `.env`, then run `docker compose --profile orthanc up -d`. Orthanc listens on `127.0.0.1:18042` (HTTP) and `127.0.0.1:14242` (DICOM). The API checks it every `ORTHANC_AUTO_SYNC_SECONDS` seconds (60 by default, `0` turns it off).
 
+To check the Orthanc path end to end on your own stack, build the fixtures once and run the check (it uploads three radiographs and a 41-slice CT series, then verifies the API's scores, the spleen mask and the audit entry):
+
+```bash
+python tools/make_live_fixtures.py --nih-images <folder with the NIH PNGs> --spleen-nifti <spleen_9.nii.gz> --out demo/live_fixtures
+python tools/live_orthanc_check.py --fixtures demo/live_fixtures
+```
+
+The last run passed 14 of 14 checks on Docker Desktop (`results/live_orthanc_check.json`).
+
 ## Run it without Docker
 
 Python 3.10 or later and Node.js 20 or later.
@@ -119,7 +128,7 @@ python evaluate_segmentation.py --dataset-json <dataset.json> --dataset-root <fo
 
 - Secrets stay in `.env`, which git ignores. The Docker images run as a non-root user and exclude `.env`, data and training volumes.
 - Uploads have size and pixel limits, and checkpoints load with `weights_only=True`.
-- The API has no user accounts. For a public deployment, `deploy/hf-space/Dockerfile` builds a single container (API plus UI) for any Docker host, with request guards switched on: Orthanc routes are disabled, POST requests are rate-limited per client, and the Q&A route (which spends API credit) has a stricter hourly cap. See `api/guards.py`. The public Space above uses a Gradio front end instead of that container, because its account cannot run Docker Spaces.
+- The API has no user accounts. For a public deployment, `deploy/hf-space/Dockerfile` builds a single container (API plus UI) for any Docker host, with request guards switched on: Orthanc routes are disabled, POST requests are rate-limited per client, and the Q&A route (which spends API credit) has a stricter hourly cap. See `api/guards.py`. The public Space above uses a Gradio front end instead of that container, because its account cannot run Docker Spaces; its source and deploy notes are in `deploy/hf-space-gradio/`.
 - Dependencies are pinned in `requirements-api.lock.txt` and checked with `pip-audit`.
 
 ## Data
