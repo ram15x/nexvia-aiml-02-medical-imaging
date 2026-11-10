@@ -1,0 +1,8 @@
+torch==2.13.0
+torchvision==0.28.0
+monai==1.6.1
+nibabel==5.4.2
+pydicom==3.0.2
+python-multipart==0.0.33
+requests
+scipy==1.18.1
