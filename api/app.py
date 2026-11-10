@@ -774,6 +774,18 @@ def sync_orthanc_studies(limit: int = 16) -> dict[str, Any]:
         except (OSError, json.JSONDecodeError, ValueError) as exc:
             raise HTTPException(status_code=500, detail="Orthanc sync state is unreadable") from exc
 
+        if state["last_seq"] > 0:
+            # If Orthanc's database was reset (new container or volume), its change counter restarts
+            # below our saved cursor and every new study would be missed. Start again from zero.
+            try:
+                try:
+                    from .orthanc import get_orthanc_last_sequence
+                except ImportError:
+                    from orthanc import get_orthanc_last_sequence
+                if get_orthanc_last_sequence() < state["last_seq"]:
+                    state = {"last_seq": 0, "pending_studies": []}
+            except Exception:
+                pass  # leave the cursor alone; the changes request below reports the real error
         try:
             changes = get_orthanc_changes(state["last_seq"], 500)
         except Exception as exc:

@@ -31,6 +31,17 @@ def _client() -> tuple[str, tuple[str, str]]:
     return base, (username, password)
 
 
+def get_orthanc_last_sequence() -> int:
+    """Return the newest sequence number in Orthanc's changes log (0 for an empty or reset database)."""
+    base, auth = _client()
+    response = requests.get(f"{base}/changes", params={"last": ""}, auth=auth, timeout=(5, 20))
+    response.raise_for_status()
+    last = response.json().get("Last", 0)
+    if not isinstance(last, int) or last < 0:
+        raise ValueError("Orthanc returned an invalid last sequence")
+    return last
+
+
 def get_orthanc_changes(since: int, limit: int) -> dict:
     """Read one page of Orthanc's persistent changes log."""
     if since < 0 or limit < 1:

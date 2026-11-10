@@ -10,7 +10,7 @@ Run with `python -m pytest -q` from the repository root, after `pip install torc
 | Frozen classifier baseline (`test_baseline.py`) | 3 | The committed metrics match `results/nih_sample/baseline.json`, and a macro or per-label AUROC drop is reported as a regression |
 | Real DICOM sample (`test_real_dicom_sample.py`) | 3 | DICOM and PNG scores match on NIH images; skipped when the sample images are absent |
 
-Current result with a clean venv on the pinned API dependencies (Python 3.13, CPU, NIH sample images and demo image absent): 94 passed, 4 skipped, 0 failed. The skips are three real-sample DICOM tests (`dvc pull` supplies the images) and one SHAP test that needs the demo image. With those files present the earlier full run was 85 of 85 before the guard and baseline tests were added.
+Current result with a clean venv on the pinned API dependencies (Python 3.13, CPU, NIH sample images and demo image absent): 96 passed, 4 skipped, 0 failed. The skips are three real-sample DICOM tests (`dvc pull` supplies the images) and one SHAP test that needs the demo image. With those files present the earlier full run was 85 of 85 before the guard and baseline tests were added.
 
 Tests that depend on data or checkpoints skip with a reason when those files are absent. The real-sample DICOM tests need the NIH sample images (`dvc pull`).
 

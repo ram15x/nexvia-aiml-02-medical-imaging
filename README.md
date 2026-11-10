@@ -93,7 +93,7 @@ The two model files are in `artifacts/`.
 
 ## Tests
 
-`python -m pytest -q` runs 98 tests. On a clean checkout 94 pass and 4 skip (checked on a fresh clone, Python 3.13, CPU): three need the NIH sample images (`dvc pull`) and one needs the demo image. `python tools/check_baseline.py results/nih_sample/per_label_intervals.json` fails if a new evaluation of the classifier falls below the frozen baseline in `results/nih_sample/baseline.json`. What the tests cover, and what they don't, is in [docs/test_results.md](docs/test_results.md).
+`python -m pytest -q` runs 100 tests. On a clean checkout 96 pass and 4 skip (checked on a fresh clone, Python 3.13, CPU): three need the NIH sample images (`dvc pull`) and one needs the demo image. `python tools/check_baseline.py results/nih_sample/per_label_intervals.json` fails if a new evaluation of the classifier falls below the frozen baseline in `results/nih_sample/baseline.json`. What the tests cover, and what they don't, is in [docs/test_results.md](docs/test_results.md).
 
 ## Reproduce the numbers
 
