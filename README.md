@@ -12,7 +12,7 @@ An educational prototype that scores chest X-rays and segments the spleen on CT,
 
 Two separate models share one review screen. They don't share weights or data.
 
-- **Chest X-ray findings.** A DenseNet-121 gives 14 scores (the NIH ChestX-ray14 labels) for a PNG, JPEG or single-frame DICOM. A Grad-CAM overlay and a sampled SHAP view show which regions moved a score.
+- **Chest X-ray findings.** An ImageNet-pretrained DenseNet-121, fine-tuned on NIH ChestX-ray14 (transfer learning), gives 14 scores (the NIH ChestX-ray14 labels) for a PNG, JPEG or single-frame DICOM. A Grad-CAM overlay and a sampled SHAP view show which regions moved a score.
 - **Spleen segmentation.** A MONAI 3D U-Net takes a NIfTI CT volume and returns a binary mask with axial, coronal and sagittal previews.
 - **Review and audit.** A reviewer can mark a result "Approve (demo only)", "Reject output" or "Needs review". Every action is appended to a log with the hash of the model file that produced the result.
 - **Optional extras.** A guarded Q&A panel (needs an `OPENROUTER_API_KEY`) answers questions about one result using only its scores. An Orthanc connector pulls new chest radiographs and CT series from a local DICOM server.
@@ -81,7 +81,8 @@ Python 3.10 or later and Node.js 20 or later.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+pip install torch torchvision          # CPU wheels are fine; Docker uses requirements-torch-cpu.lock.txt
+pip install -r requirements-api.txt pytest
 python -m pytest -q
 
 python -m uvicorn api.app:app --env-file .env --host 127.0.0.1 --port 18080
@@ -92,7 +93,7 @@ The two model files are in `artifacts/`.
 
 ## Tests
 
-`python -m pytest -q` runs 96 tests. On a clean checkout 92 pass and 4 skip: three need the NIH sample images (`dvc pull`) and one needs the demo image. `python tools/check_baseline.py results/nih_sample/per_label_intervals.json` fails if a new evaluation of the classifier falls below the frozen baseline in `results/nih_sample/baseline.json`. What the tests cover, and what they don't, is in [docs/test_results.md](docs/test_results.md).
+`python -m pytest -q` runs 98 tests. On a clean checkout 94 pass and 4 skip (checked on a fresh clone, Python 3.13, CPU): three need the NIH sample images (`dvc pull`) and one needs the demo image. `python tools/check_baseline.py results/nih_sample/per_label_intervals.json` fails if a new evaluation of the classifier falls below the frozen baseline in `results/nih_sample/baseline.json`. What the tests cover, and what they don't, is in [docs/test_results.md](docs/test_results.md).
 
 ## Reproduce the numbers
 

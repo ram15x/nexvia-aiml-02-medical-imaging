@@ -19,7 +19,7 @@
 
 ## Remote
 
-The DVC remote is named `storage`. In this project it is a folder, `../dvc-storage` relative to the repository. To reproduce on another machine, copy that folder from the developer's machine or from the submission folder, then run:
+The DVC remote is named `storage`. In this project it is a folder, `../dvc-storage` relative to the repository. The remote folder is not part of the GitHub repository. Without it, `dvc pull` cannot fetch the images; download the NIH ChestX-ray14 images listed in `data/nih_test_sample_1000/selected_1000.txt` from the NIH release instead, or copy that folder from the developer's machine or from the submission folder, then run:
 
 ```bash
 dvc pull
