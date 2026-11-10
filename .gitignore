@@ -57,3 +57,4 @@ dvc-demo-store/
 
 # Built UI copied into the hosted container (generated)
 web_dist/
+demo/live_fixtures/
