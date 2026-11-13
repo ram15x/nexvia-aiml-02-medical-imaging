@@ -150,10 +150,4 @@ python evaluate_segmentation.py --dataset-json <dataset.json> --dataset-root <fo
 - **Medical Segmentation Decathlon, Task09 Spleen:** public, not included here.
 - **DICOM:** the public sets are PNG and NIfTI. DICOM comes in through upload and the Orthanc connector; tests use DICOM files generated from NIH images, and the Orthanc path has a live end-to-end check (`tools/live_orthanc_check.py`, results in `results/live_orthanc_check.json`). See [docs/dicom.md](docs/dicom.md).
 
-## Known limits
-
-- Scores are uncalibrated, and the labels are noisy.
-- The spleen model was trained on 29 cases of one public dataset and has not been tested on other scanners or on abnormal anatomy.
-- Orthanc CT completeness relies on an instance count a person enters when Orthanc reports the series as Unknown.
-- Orthanc is a test connector, not a PACS integration. Nothing is written back as DICOM SEG or SR.
-- Review logs are local JSONL files. A hosted copy loses them when it restarts.
+local JSONL files. A hosted copy loses them when it restarts.
